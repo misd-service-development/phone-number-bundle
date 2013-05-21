@@ -1,0 +1,28 @@
+{
+    "name": "misd/phone-number-bundle",
+    "type": "symfony-bundle",
+    "description": "Integrates libphonenumber into your Symfony2 application",
+    "keywords": ["bundle", "phone-number", "telephone number", "libphonenumber"],
+    "homepage": "https://github.com/misd-service-development/phone-number-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Wilkinson",
+            "email": "chris.wilkinson@admin.cam.ac.uk"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/misd-service-development/phone-number-bundle/issues"
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.0",
+        "practo/libphonenumber-for-php": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Misd\\PhoneNumberBundle": ""
+        }
+    },
+    "target-dir": "Misd/PhoneNumberBundle"
+}
