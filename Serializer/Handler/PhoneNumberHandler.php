@@ -49,12 +49,15 @@ class PhoneNumberHandler
      * @param VisitorInterface $visitor     Serialization visitor.
      * @param PhoneNumber      $phoneNumber Phone number.
      * @param array            $type        Type.
+     * @param mixed            $context     Context.
      *
      * @return mixed Serialized phone number.
      */
-    public function serializePhoneNumber(VisitorInterface $visitor, PhoneNumber $phoneNumber, array $type)
+    public function serializePhoneNumber(VisitorInterface $visitor, PhoneNumber $phoneNumber, array $type, $context)
     {
-        return $visitor->visitString($this->phoneNumberUtil->format($phoneNumber, PhoneNumberFormat::E164), $type);
+        $formatted = $this->phoneNumberUtil->format($phoneNumber, PhoneNumberFormat::E164);
+
+        return $visitor->visitString($formatted, $type, $context);
     }
 
     /**
