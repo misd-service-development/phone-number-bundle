@@ -68,4 +68,12 @@ class PhoneNumberType extends Type
 
         return $util->parse($value, 'ZZ');
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
+    }
 }
