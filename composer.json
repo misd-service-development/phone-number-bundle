@@ -22,12 +22,14 @@
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
         "symfony/form": "~2.0",
+        "jms/serializer-bundle": ">=0.11.0",
         "symfony/templating": "~2.0",
         "symfony/twig-bundle": "~2.0",
         "symfony/validator": "~2.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
+        "jms/serializer-bundle": "Serialize/deserialize phone numbers",
         "symfony/form": "Add a data transformer",
         "symfony/templating": "Format phone numbers in templates",
         "symfony/twig-bundle": "Format phone numbers in Twig templates",

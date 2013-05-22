@@ -8,6 +8,7 @@
         <parameter key="libphonenumber.phone_number_util.class">libphonenumber\PhoneNumberUtil</parameter>
         <parameter key="misd_phone_number.templating.helper.format.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper</parameter>
         <parameter key="misd_phone_number.twig.extension.format.class">Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension</parameter>
+        <parameter key="misd_phone_number.serializer.handler.class">Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler</parameter>
     </parameters>
 
     <services>
@@ -26,6 +27,20 @@
                  public="false">
             <tag name="twig.extension"/>
             <argument type="service" id="misd_phone_number.templating.helper.format"/>
+        </service>
+
+        <service id="misd_phone_number.serializer.handler" class="%misd_phone_number.serializer.handler.class%">
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
+                 format="json" method="serializePhoneNumber"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization"
+                 format="json" method="deserializePhoneNumberFromJson"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
+                 format="xml" method="serializePhoneNumber"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization"
+                 format="xml" method="deserializePhoneNumberFromXml"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
+                 format="yml" method="serializePhoneNumber"/>
+            <argument type="service" id="libphonenumber.phone_number_util"/>
         </service>
 
     </services>
