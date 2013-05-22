@@ -6,12 +6,27 @@
 
     <parameters>
         <parameter key="libphonenumber.phone_number_util.class">libphonenumber\PhoneNumberUtil</parameter>
+        <parameter key="misd_phone_number.templating.helper.format.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper</parameter>
+        <parameter key="misd_phone_number.twig.extension.format.class">Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension</parameter>
     </parameters>
 
     <services>
 
         <service id="libphonenumber.phone_number_util" class="%libphonenumber.phone_number_util.class%"
                  factory-class="%libphonenumber.phone_number_util.class%" factory-method="getInstance"/>
+
+        <service id="misd_phone_number.templating.helper.format"
+                 class="%misd_phone_number.templating.helper.format.class%">
+            <tag name="templating.helper" alias="phone_number_format"/>
+            <argument type="service" id="libphonenumber.phone_number_util"/>
+
+        </service>
+
+        <service id="misd_phone_number.twig.extension.format" class="%misd_phone_number.twig.extension.format.class%"
+                 public="false">
+            <tag name="twig.extension"/>
+            <argument type="service" id="misd_phone_number.templating.helper.format"/>
+        </service>
 
     </services>
 
