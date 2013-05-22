@@ -19,6 +19,16 @@
         "symfony/framework-bundle": "~2.0",
         "practo/libphonenumber-for-php": "dev-master"
     },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "~1.0",
+        "symfony/form": "~2.0",
+        "symfony/validator": "~2.0"
+    },
+    "suggest": {
+        "doctrine/doctrine-bundle": "Add a DBAL mapping type",
+        "symfony/form": "Add a data transformer",
+        "symfony/validator": "Add a validation constraint"
+    },
     "autoload": {
         "psr-0": {
             "Misd\\PhoneNumberBundle": ""
