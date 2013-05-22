@@ -34,5 +34,10 @@
             "Misd\\PhoneNumberBundle": ""
         }
     },
-    "target-dir": "Misd/PhoneNumberBundle"
+    "target-dir": "Misd/PhoneNumberBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
