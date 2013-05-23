@@ -23,6 +23,9 @@ use libphonenumber\PhoneNumberUtil;
  */
 class PhoneNumberType extends Type
 {
+    /**
+     * Phone number type name.
+     */
     const NAME = 'phone_number';
 
     /**

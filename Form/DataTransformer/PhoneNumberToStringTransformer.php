@@ -23,9 +23,26 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class PhoneNumberToStringTransformer implements DataTransformerInterface
 {
+    /**
+     * Default region code.
+     *
+     * @var string
+     */
     private $defaultRegion;
+
+    /**
+     * Display format.
+     *
+     * @var int
+     */
     private $format;
 
+    /**
+     * Constructor.
+     *
+     * @param string $defaultRegion Default region code.
+     * @param int    $format        Display format.
+     */
     public function __construct($defaultRegion = 'ZZ', $format = PhoneNumberFormat::INTERNATIONAL)
     {
         $this->defaultRegion = $defaultRegion;
