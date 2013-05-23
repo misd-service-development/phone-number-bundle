@@ -16,15 +16,15 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/framework-bundle": "~2.0",
-        "practo/libphonenumber-for-php": "dev-master"
+        "practo/libphonenumber-for-php": "dev-master",
+        "symfony/framework-bundle": "~2.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
-        "symfony/form": "~2.0",
         "jms/serializer-bundle": ">=0.11.0",
         "symfony/browser-kit": "~2.0",
         "symfony/class-loader": "~2.0",
+        "symfony/form": "~2.0",
         "symfony/templating": "~2.0",
         "symfony/twig-bundle": "~2.0",
         "symfony/validator": "~2.0"
