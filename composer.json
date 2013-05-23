@@ -17,17 +17,18 @@
     "require": {
         "php": ">=5.3.3",
         "practo/libphonenumber-for-php": "dev-master",
-        "symfony/framework-bundle": "~2.0"
+        "symfony/framework-bundle": "~2.1"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
         "jms/serializer-bundle": ">=0.11.0",
-        "symfony/browser-kit": "~2.0",
-        "symfony/class-loader": "~2.0",
-        "symfony/form": "~2.0",
-        "symfony/templating": "~2.0",
-        "symfony/twig-bundle": "~2.0",
-        "symfony/validator": "~2.0"
+        "symfony/browser-kit": "~2.1",
+        "symfony/class-loader": "~2.1",
+        "symfony/form": "~2.1",
+        "symfony/templating": "~2.1",
+        "symfony/twig-bundle": "~2.1",
+        "symfony/validator": "~2.1",
+        "symfony/yaml": "~2.1"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
