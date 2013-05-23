@@ -12,6 +12,8 @@
 namespace Misd\PhoneNumberBundle\Validator\Constraints;
 
 use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumber as PhoneNumberObject;
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -37,16 +39,21 @@ class PhoneNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $value = (string) $value;
-
         $phoneUtil = PhoneNumberUtil::getInstance();
 
-        try {
-            $phoneNumber = $phoneUtil->parse($value, $constraint->defaultRegion);
-        } catch (NumberParseException $e) {
-            $this->addViolation($value, $constraint);
+        if (false === $value instanceof PhoneNumberObject) {
+            $value = (string) $value;
 
-            return;
+            try {
+                $phoneNumber = $phoneUtil->parse($value, $constraint->defaultRegion);
+            } catch (NumberParseException $e) {
+                $this->addViolation($value, $constraint);
+
+                return;
+            }
+        } else {
+            $phoneNumber = $value;
+            $value = $phoneUtil->format($phoneNumber, PhoneNumberFormat::INTERNATIONAL);
         }
 
         if (false === $phoneUtil->isValidNumber($phoneNumber)) {
