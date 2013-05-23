@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Form\DataTransformer;
 
+use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -56,6 +57,10 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
 
         $util = PhoneNumberUtil::getInstance();
 
-        return $util->parse($string, $this->defaultRegion);
+        try {
+            return $util->parse($string, $this->defaultRegion);
+        } catch (NumberParseException $e) {
+            return $string;
+        }
     }
 }
