@@ -144,3 +144,12 @@ You can use the `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber` const
      * @AssertPhoneNumber
      */
     private $phoneNumber;
+
+You can set the default region through the `defaultRegion` property:
+
+    use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+
+    /**
+     * @AssertPhoneNumber(defaultRegion="GB")
+     */
+    private $phoneNumber;
