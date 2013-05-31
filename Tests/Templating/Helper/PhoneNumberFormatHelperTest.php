@@ -81,4 +81,19 @@ class PhoneNumberFormatHelperTest extends TestCase
             array('NATIONAL', PhoneNumberFormat::NATIONAL),
         );
     }
+
+    /**
+     * @expectedException \Misd\PhoneNumberBundle\Exception\InvalidArgumentException
+     */
+    public function testProcessInvalidArgumentException()
+    {
+        $phoneNumber = $this->getMock('libphonenumber\PhoneNumber');
+
+        $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
+            ->disableOriginalConstructor()->getMock();
+
+        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+
+        $helper->format($phoneNumber, 'foo');
+    }
 }

@@ -14,6 +14,7 @@ namespace Misd\PhoneNumberBundle\Templating\Helper;
 use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
 use Symfony\Component\Templating\Helper\HelperInterface;
 
 /**
@@ -75,13 +76,21 @@ class PhoneNumberFormatHelper implements HelperInterface
      * Format a phone number.
      *
      * @param PhoneNumber $phoneNumber Phone number.
-     * @param int         $format      Format.
+     * @param int|string  $format      Format, or format constant name.
      *
      * @return string Formatted phone number.
+     *
+     * @throws InvalidArgumentException If an argument is invalid.
      */
     public function format(PhoneNumber $phoneNumber, $format = PhoneNumberFormat::INTERNATIONAL)
     {
         if (true === is_string($format)) {
+            $constant = '\libphonenumber\PhoneNumberFormat::' . $format;
+
+            if (false === defined($constant)) {
+                throw new InvalidArgumentException('The format must be either a constant value or name in libphonenumber\PhoneNumberFormat');
+            }
+
             $format = constant('\libphonenumber\PhoneNumberFormat::' . $format);
         }
 
