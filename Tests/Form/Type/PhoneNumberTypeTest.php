@@ -34,7 +34,10 @@ class PhoneNumberTypeTest extends TypeTestCase
 
         $this->assertTrue($form->isSynchronized());
 
-        $this->assertSame($output, $form->createView()->vars['value']);
+        $view = $form->createView();
+
+        $this->assertSame('tel', $view->vars['type']);
+        $this->assertSame($output, $view->vars['value']);
     }
 
     public function defaultFormattingProvider()
