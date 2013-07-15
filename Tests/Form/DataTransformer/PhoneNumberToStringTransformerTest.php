@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Form\DataTransformer;
 
+use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
@@ -39,10 +40,10 @@ class PhoneNumberToStringTransformerTest extends TestCase
         $transformer = new PhoneNumberToStringTransformer($defaultRegion, $format);
 
         $phoneNumberUtil = PhoneNumberUtil::getInstance();
-        if (null !== $actual) {
+        try {
             $phoneNumber = $phoneNumberUtil->parse($actual, $defaultRegion);
-        } else {
-            $phoneNumber = null;
+        } catch (NumberParseException $e) {
+            $phoneNumber = $actual;
         }
 
         $transformed = $transformer->transform($phoneNumber);
@@ -60,6 +61,7 @@ class PhoneNumberToStringTransformerTest extends TestCase
     {
         return array(
             array('ZZ', PhoneNumberFormat::INTERNATIONAL, null, ''),
+            array('ZZ', PhoneNumberFormat::INTERNATIONAL, 'foo', 'foo'),
             array('ZZ', PhoneNumberFormat::INTERNATIONAL, '+441234567890', '+44 1234 567890'),
             array('GB', PhoneNumberFormat::NATIONAL, '01234567890', '01234 567890'),
         );
