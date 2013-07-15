@@ -111,22 +111,17 @@ Phone numbers can be deserialized from an international format by setting the ty
 
 ### Using `libphonenumber\PhoneNumber` objects in forms
 
-You can use the `Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToStringTransformer` to transform `libphonenumber\PhoneNumber` objects to strings and back again in your form. For example:
+You can use the `tel` form type to create phone number fields. For example:
 
     use libphonenumber\PhoneNumberFormat;
-    use Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToStringTransformer;
     use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                $builder
-                    ->create('phoneNumber')
-                    ->addModelTransformer(new PhoneNumberToStringTransformer('GB', PhoneNumberFormat::NATIONAL))
-            )
-        ;
+        $builder->add('phone_number', 'tel', array('default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL));
     }
+
+By default the `default_region` and `format` options are `ZZ` and `PhoneNumberFormat::INTERNATIONAL` respectively.
 
 ### Validating phone numbers
 
