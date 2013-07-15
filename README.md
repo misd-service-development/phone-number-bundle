@@ -76,8 +76,6 @@ This creates a `varchar(20)` column with a Doctrine mapping comment.
 
 #### Twig
 
-*Requires `symfony/twig-bundle`.*
-
 The `phone_number_format` function takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberFormat` constant name.
 
 For example, to format an object called `myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format:
@@ -113,8 +111,6 @@ Phone numbers can be deserialized from an international format by setting the ty
 
 ### Using `libphonenumber\PhoneNumber` objects in forms
 
-*Requires `symfony/form`.*
-
 You can use the `Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToStringTransformer` to transform `libphonenumber\PhoneNumber` objects to strings and back again in your form. For example:
 
     use libphonenumber\PhoneNumberFormat;
@@ -133,8 +129,6 @@ You can use the `Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToString
     }
 
 ### Validating phone numbers
-
-*Requires `symfony/validator`.*
 
 You can use the `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber` constraint to make sure that either a `libphonenumber\PhoneNumber` object or a plain string is a valid phone number. For example:
 
