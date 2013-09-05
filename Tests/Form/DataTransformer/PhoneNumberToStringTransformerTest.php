@@ -17,6 +17,7 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToStringTransformer;
 use PHPUnit_Framework_TestCase as TestCase;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * Phone number to string transformer test.
@@ -25,6 +26,8 @@ use PHPUnit_Framework_TestCase as TestCase;
  */
 class PhoneNumberToStringTransformerTest extends TestCase
 {
+    const TRANSFORMATION_FAILED = 'transformation_failed';
+
     public function testConstructor()
     {
         $transformer = new PhoneNumberToStringTransformer();
@@ -74,7 +77,11 @@ class PhoneNumberToStringTransformerTest extends TestCase
     {
         $transformer = new PhoneNumberToStringTransformer($defaultRegion);
 
-        $transformed = $transformer->reverseTransform($actual);
+        try {
+            $transformed = $transformer->reverseTransform($actual);
+        } catch (TransformationFailedException $e) {
+            $transformed = self::TRANSFORMATION_FAILED;
+        }
 
         if ($transformed instanceof PhoneNumber) {
             $transformed = (string) $transformed;
@@ -92,7 +99,7 @@ class PhoneNumberToStringTransformerTest extends TestCase
     {
         return array(
             array('ZZ', null, null),
-            array('ZZ', 'foo', 'foo'),
+            array('ZZ', 'foo', self::TRANSFORMATION_FAILED),
             array('ZZ', '+44 1234 567890', '+441234567890'),
             array('GB', '01234 567890', '+441234567890'),
         );
