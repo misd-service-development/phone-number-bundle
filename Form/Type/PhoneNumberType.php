@@ -54,6 +54,7 @@ class PhoneNumberType extends AbstractType
                 'compound' => false,
                 'default_region' => 'ZZ',
                 'format' => PhoneNumberFormat::INTERNATIONAL,
+                'invalid_message' => 'This is not a valid phone number.',
             )
         );
     }

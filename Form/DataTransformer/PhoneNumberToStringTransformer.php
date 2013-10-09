@@ -16,6 +16,7 @@ use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * Phone number to string transformer.
@@ -80,7 +81,7 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
         try {
             return $util->parse($string, $this->defaultRegion);
         } catch (NumberParseException $e) {
-            return $string;
+            throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
         }
     }
 }
