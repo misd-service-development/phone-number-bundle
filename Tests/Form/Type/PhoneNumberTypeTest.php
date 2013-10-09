@@ -46,7 +46,6 @@ class PhoneNumberTypeTest extends TypeTestCase
             array('+441234567890', array(), '+44 1234 567890'),
             array('+44 1234 567890', array('format' => PhoneNumberFormat::NATIONAL), '01234 567890'),
             array('01234 567890', array('default_region' => 'GB'), '+44 1234 567890'),
-            array('foo', array(), 'foo'),
             array('', array(), ''),
         );
     }
