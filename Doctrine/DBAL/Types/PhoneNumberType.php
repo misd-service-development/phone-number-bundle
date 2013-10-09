@@ -41,7 +41,7 @@ class PhoneNumberType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        return $platform->getVarcharTypeDeclarationSQL(array('length' => 20));
+        return $platform->getVarcharTypeDeclarationSQL(array('length' => 35));
     }
 
     /**
