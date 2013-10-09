@@ -13,7 +13,6 @@ namespace Misd\PhoneNumberBundle\Test\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\Tests\DBAL\Mocks\MockPlatform;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType;
 use PHPUnit_Framework_TestCase as TestCase;
@@ -42,14 +41,19 @@ class PhoneNumberTypeTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-        require_once __DIR__ . '/../../../../vendor/doctrine/dbal/tests/Doctrine/Tests/DBAL/Mocks/MockPlatform.php';
-
         Type::addType('phone_number', 'Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType');
     }
 
     protected function setUp()
     {
-        $this->platform = new MockPlatform();
+        $this->platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')
+            ->setMethods(array('getVarcharTypeDeclarationSQL'))
+            ->getMockForAbstractClass();
+
+        $this->platform->expects($this->any())
+            ->method('getVarcharTypeDeclarationSQL')
+            ->will($this->returnValue('DUMMYVARCHAR()'));
+
         $this->type = Type::getType('phone_number');
         $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
     }
