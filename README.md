@@ -70,7 +70,7 @@ You can then use the `phone_number` mapping:
      */
     private $phoneNumber;
 
-This creates a `varchar(20)` column with a Doctrine mapping comment.
+This creates a `varchar(35)` column with a Doctrine mapping comment.
 
 ### Formatting `libphonenumber\PhoneNumber` objects
 
