@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "practo/libphonenumber-for-php": "dev-master",
+        "giggsey/libphonenumber-for-php": "~5.7",
         "symfony/framework-bundle": "~2.1"
     },
     "require-dev": {
