@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Misd\PhoneNumberBundle\Test\Doctrine\DBAL\Types;
+namespace Misd\PhoneNumberBundle\Tests\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
