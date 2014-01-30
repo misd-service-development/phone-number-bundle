@@ -1,5 +1,4 @@
-.idea
-vendor
-composer.phar
 composer.lock
+composer.phar
 phpunit.xml
+vendor/
