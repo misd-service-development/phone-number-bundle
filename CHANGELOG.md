@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.0.2
+-----
+
+27 February 2014.
+
+* Confirm libphonenumber 6.0 compatibility.
+
 1.0.1
 -----
 
