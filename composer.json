@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "giggsey/libphonenumber-for-php": "~5.7",
+        "giggsey/libphonenumber-for-php": "~5.7|~6.0",
         "symfony/framework-bundle": "~2.1"
     },
     "require-dev": {

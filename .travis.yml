@@ -7,11 +7,12 @@ php:
   - 5.5
 
 env:
-  - SYMFONY_VERSION="2.1.0"
-  - SYMFONY_VERSION="~2.1"
+  - SYMFONY_VERSION="2.1.0" LIBPHONENUMBER_VERSION="~5.7"
+  - SYMFONY_VERSION="~2.1" LIBPHONENUMBER_VERSION="~6.0"
 
 before_script:
   - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
+  - composer require giggsey/libphonenumber-for-php:${LIBPHONENUMBER_VERSION} --no-update
   - composer install --dev --prefer-source
 
 script: ./vendor/bin/phpunit --coverage-text
