@@ -13,7 +13,7 @@ Authors
 Installation
 ------------
 
- 1. Add PhoneNumberBundle to your dependencies:
+ 1. Add the PhoneNumberBundle to your dependencies:
 
         // composer.json
 
@@ -46,7 +46,7 @@ Usage
 
 ### `PhoneNumberUtil` service
 
-The `libphonenumber\PhoneNumberUtil` class is available in the `libphonenumber.phone_number_util` service:
+The `libphonenumber\PhoneNumberUtil` class is available as the `libphonenumber.phone_number_util` service:
 
     $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string, 'ZZ');
 
@@ -98,7 +98,7 @@ By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat:
 
 *Requires `jms/serializer-bundle`.*
 
-Instance of `libphonenumber\PhoneNumber` are automatically serialized in the E.164 format.
+Instances of `libphonenumber\PhoneNumber` are automatically serialized in the E.164 format.
 
 Phone numbers can be deserialized from an international format by setting the type to `libphonenumber\PhoneNumber`. For example:
 
