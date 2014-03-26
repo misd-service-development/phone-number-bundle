@@ -41,11 +41,10 @@
         "symfony/validator": "Add a validation constraint"
     },
     "autoload": {
-        "psr-0": {
-            "Misd\\PhoneNumberBundle": ""
+        "psr-4": {
+            "Misd\\PhoneNumberBundle\\": ""
         }
     },
-    "target-dir": "Misd/PhoneNumberBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
