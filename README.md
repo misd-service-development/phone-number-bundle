@@ -86,11 +86,15 @@ By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat:
 
 #### PHP template
 
-The `format()` method in the `phone_number_format` helper takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberFormat` constant name.
+The `format()` method in the `phone_number_format` helper takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberFormat` constant name or value.
 
-For example, to format `$myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format:
+For example, to format `$myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format, either use:
 
     <?php echo $view['phone_number_format']->format($myPhoneNumber, 'NATIONAL') ?>
+
+or:
+
+    <?php echo $view['phone_number_format']->format($myPhoneNumber, \libphonenumber\PhoneNumberFormat::NATIONAL) ?>
 
 By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
 
