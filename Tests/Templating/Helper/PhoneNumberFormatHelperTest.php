@@ -77,7 +77,7 @@ class PhoneNumberFormatHelperTest extends TestCase
     public function processProvider()
     {
         return array(
-            array(0, 0),
+            array(PhoneNumberFormat::NATIONAL, PhoneNumberFormat::NATIONAL),
             array('NATIONAL', PhoneNumberFormat::NATIONAL),
         );
     }
