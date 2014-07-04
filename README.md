@@ -54,7 +54,7 @@ The `libphonenumber\PhoneNumberUtil` class is available as the `libphonenumber.p
 
 *Requires `doctrine/doctrine-bundle`.*
 
-To use the `Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType` mapping, add it to your application's config:
+To persist `libphonenumber\PhoneNumber` objects, add the `Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType` mapping to your application's config:
 
     // app/config.yml
 
