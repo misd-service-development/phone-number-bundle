@@ -33,7 +33,7 @@ class PhoneNumberValidatorTest extends TestCase
     /**
      * @dataProvider validateProvider
      */
-    public function testValidate($value, $violates, $defaultRegion = 'ZZ')
+    public function testValidate($value, $violates, $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION)
     {
         $validator = new PhoneNumberValidator();
         $context = $this->getMock('Symfony\Component\Validator\ExecutionContextInterface');
@@ -61,8 +61,8 @@ class PhoneNumberValidatorTest extends TestCase
         return array(
             array(null, false),
             array('', false),
-            array(PhoneNumberUtil::getInstance()->parse('+441234567890', 'ZZ'), false),
-            array(PhoneNumberUtil::getInstance()->parse('+44123456789', 'ZZ'), true),
+            array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false),
+            array(PhoneNumberUtil::getInstance()->parse('+44123456789', PhoneNumberUtil::UNKNOWN_REGION), true),
             array('+441234567890', false),
             array('01234 567890', false, 'GB'),
             array('foo', true),

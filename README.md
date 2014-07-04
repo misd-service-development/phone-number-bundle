@@ -48,7 +48,7 @@ Usage
 
 The `libphonenumber\PhoneNumberUtil` class is available as the `libphonenumber.phone_number_util` service:
 
-    $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string, 'ZZ');
+    $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string);
 
 ### Doctrine mapping
 
@@ -125,7 +125,7 @@ You can use the `tel` form type to create phone number fields. For example:
         $builder->add('phone_number', 'tel', array('default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL));
     }
 
-By default the `default_region` and `format` options are `ZZ` and `PhoneNumberFormat::INTERNATIONAL` respectively.
+By default the `default_region` and `format` options are `PhoneNumberUtil::UNKNOWN_REGION` and `PhoneNumberFormat::INTERNATIONAL` respectively.
 
 ### Validating phone numbers
 

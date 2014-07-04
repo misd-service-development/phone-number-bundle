@@ -80,7 +80,7 @@ class PhoneNumberTypeTest extends TestCase
 
     public function testConvertToDatabaseValueWithPhoneNumber()
     {
-        $phoneNumber = $this->phoneNumberUtil->parse('+441234567890', 'ZZ');
+        $phoneNumber = $this->phoneNumberUtil->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION);
 
         $this->assertSame('+441234567890', $this->type->convertToDatabaseValue($phoneNumber, $this->platform));
     }

@@ -63,9 +63,14 @@ class PhoneNumberToStringTransformerTest extends TestCase
     public function transformProvider()
     {
         return array(
-            array('ZZ', PhoneNumberFormat::INTERNATIONAL, null, ''),
-            array('ZZ', PhoneNumberFormat::INTERNATIONAL, 'foo', 'foo'),
-            array('ZZ', PhoneNumberFormat::INTERNATIONAL, '+441234567890', '+44 1234 567890'),
+            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, null, ''),
+            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, 'foo', 'foo'),
+            array(
+                PhoneNumberUtil::UNKNOWN_REGION,
+                PhoneNumberFormat::INTERNATIONAL,
+                '+441234567890',
+                '+44 1234 567890',
+            ),
             array('GB', PhoneNumberFormat::NATIONAL, '01234567890', '01234 567890'),
         );
     }
@@ -98,9 +103,9 @@ class PhoneNumberToStringTransformerTest extends TestCase
     public function reverseTransformProvider()
     {
         return array(
-            array('ZZ', null, null),
-            array('ZZ', 'foo', self::TRANSFORMATION_FAILED),
-            array('ZZ', '+44 1234 567890', '+441234567890'),
+            array(PhoneNumberUtil::UNKNOWN_REGION, null, null),
+            array(PhoneNumberUtil::UNKNOWN_REGION, 'foo', self::TRANSFORMATION_FAILED),
+            array(PhoneNumberUtil::UNKNOWN_REGION, '+44 1234 567890', '+441234567890'),
             array('GB', '01234 567890', '+441234567890'),
         );
     }

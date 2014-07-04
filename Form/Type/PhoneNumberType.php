@@ -12,6 +12,7 @@
 namespace Misd\PhoneNumberBundle\Form\Type;
 
 use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToStringTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -52,7 +53,7 @@ class PhoneNumberType extends AbstractType
         $resolver->setDefaults(
             array(
                 'compound' => false,
-                'default_region' => 'ZZ',
+                'default_region' => PhoneNumberUtil::UNKNOWN_REGION,
                 'format' => PhoneNumberFormat::INTERNATIONAL,
                 'invalid_message' => 'This is not a valid phone number.',
             )

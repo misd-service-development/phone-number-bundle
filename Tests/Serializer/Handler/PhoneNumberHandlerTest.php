@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Serializer\Handler;
 
+use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler;
 use PHPUnit_Framework_TestCase as TestCase;
 use SimpleXMLElement;
@@ -67,7 +68,8 @@ class PhoneNumberHandlerTest extends TestCase
 
         $test = '+441234567890';
 
-        $phoneNumberUtil->expects($this->once())->method('parse')->with($test, 'ZZ')->will($this->returnValue('foo'));
+        $phoneNumberUtil->expects($this->once())->method('parse')->with($test, PhoneNumberUtil::UNKNOWN_REGION)
+            ->will($this->returnValue('foo'));
 
         $this->assertSame('foo', $handler->deserializePhoneNumberFromJson($visitor, $test, array()));
     }
@@ -117,7 +119,8 @@ class PhoneNumberHandlerTest extends TestCase
 
         $xml = new SimpleXMLElement(sprintf('<phone_number>%s</phone_number>', $test));
 
-        $phoneNumberUtil->expects($this->once())->method('parse')->with($test, 'ZZ')->will($this->returnValue('foo'));
+        $phoneNumberUtil->expects($this->once())->method('parse')->with($test, PhoneNumberUtil::UNKNOWN_REGION)
+            ->will($this->returnValue('foo'));
 
         $this->assertSame('foo', $handler->deserializePhoneNumberFromXml($visitor, $xml, array()));
     }

@@ -75,7 +75,7 @@ class PhoneNumberHandler
             return null;
         }
 
-        return $this->phoneNumberUtil->parse($data, 'ZZ');
+        return $this->phoneNumberUtil->parse($data, PhoneNumberUtil::UNKNOWN_REGION);
     }
 
     /**
@@ -97,6 +97,6 @@ class PhoneNumberHandler
             return null;
         }
 
-        return $this->phoneNumberUtil->parse($data, 'ZZ');
+        return $this->phoneNumberUtil->parse($data, PhoneNumberUtil::UNKNOWN_REGION);
     }
 }

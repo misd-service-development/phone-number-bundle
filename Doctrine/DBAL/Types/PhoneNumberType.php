@@ -69,7 +69,7 @@ class PhoneNumberType extends Type
 
         $util = PhoneNumberUtil::getInstance();
 
-        return $util->parse($value, 'ZZ');
+        return $util->parse($value, PhoneNumberUtil::UNKNOWN_REGION);
     }
 
     /**

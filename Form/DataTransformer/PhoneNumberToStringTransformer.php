@@ -45,8 +45,10 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
      * @param string $defaultRegion Default region code.
      * @param int    $format        Display format.
      */
-    public function __construct($defaultRegion = 'ZZ', $format = PhoneNumberFormat::INTERNATIONAL)
-    {
+    public function __construct(
+        $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION,
+        $format = PhoneNumberFormat::INTERNATIONAL
+    ) {
         $this->defaultRegion = $defaultRegion;
         $this->format = $format;
     }

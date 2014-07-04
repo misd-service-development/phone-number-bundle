@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Validator\Constraints;
 
+use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -24,5 +25,5 @@ class PhoneNumber extends Constraint
 {
     public $message = 'This value is not a valid {{ type }} number.';
     public $type = 'phone';
-    public $defaultRegion = 'ZZ';
+    public $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION;
 }
