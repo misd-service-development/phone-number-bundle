@@ -2,7 +2,7 @@
     "name": "misd/phone-number-bundle",
     "type": "symfony-bundle",
     "description": "Integrates libphonenumber into your Symfony2 application",
-    "keywords": ["bundle", "phone-number", "telephone number", "libphonenumber"],
+    "keywords": ["bundle", "phone-number", "phonenumber", "telephone number", "libphonenumber"],
     "homepage": "https://github.com/misd-service-development/phone-number-bundle",
     "license": "MIT",
     "authors": [
