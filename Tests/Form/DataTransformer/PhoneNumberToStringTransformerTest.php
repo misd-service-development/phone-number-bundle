@@ -49,7 +49,11 @@ class PhoneNumberToStringTransformerTest extends TestCase
             $phoneNumber = $actual;
         }
 
-        $transformed = $transformer->transform($phoneNumber);
+        try {
+            $transformed = $transformer->transform($phoneNumber);
+        } catch (TransformationFailedException $e) {
+            $transformed = self::TRANSFORMATION_FAILED;
+        }
 
         $this->assertSame($expected, $transformed);
     }
@@ -64,7 +68,7 @@ class PhoneNumberToStringTransformerTest extends TestCase
     {
         return array(
             array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, null, ''),
-            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, 'foo', 'foo'),
+            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, 'foo', self::TRANSFORMATION_FAILED),
             array(
                 PhoneNumberUtil::UNKNOWN_REGION,
                 PhoneNumberFormat::INTERNATIONAL,

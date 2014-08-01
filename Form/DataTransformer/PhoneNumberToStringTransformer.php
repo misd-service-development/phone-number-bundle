@@ -61,7 +61,7 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
         if (null === $phoneNumber) {
             return '';
         } elseif (false === $phoneNumber instanceof PhoneNumber) {
-            return $phoneNumber;
+            throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
         }
 
         $util = PhoneNumberUtil::getInstance();
