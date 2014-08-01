@@ -11,6 +11,8 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Validator\Constraints;
 
+use libphonenumber\PhoneNumber as PhoneNumberObject;
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
@@ -33,17 +35,32 @@ class PhoneNumberValidatorTest extends TestCase
     /**
      * @dataProvider validateProvider
      */
-    public function testValidate($value, $violates, $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION)
+    public function testValidate($value, $violates, $type = null, $defaultRegion = null)
     {
         $validator = new PhoneNumberValidator();
         $context = $this->getMock('Symfony\Component\Validator\ExecutionContextInterface');
         $validator->initialize($context);
 
         $constraint = new PhoneNumber();
-        $constraint->defaultRegion = $defaultRegion;
+        if (null !== $type) {
+            $constraint->type = $type;
+        }
+        if (null !== $defaultRegion) {
+            $constraint->defaultRegion = $defaultRegion;
+        }
 
         if (true === $violates) {
-            $context->expects($this->once())->method('addViolation');
+            if ($value instanceof PhoneNumberObject) {
+                $constraintValue = PhoneNumberUtil::getInstance()->format($value, PhoneNumberFormat::INTERNATIONAL);
+            } else {
+                $constraintValue = (string) $value;
+            }
+
+            $context->expects($this->once())->method('addViolation')
+                ->with(
+                    $constraint->getMessage(),
+                    array('{{ type }}' => $constraint->type, '{{ value }}' => $constraintValue)
+                );
         } else {
             $context->expects($this->never())->method('addViolation');
         }
@@ -54,7 +71,8 @@ class PhoneNumberValidatorTest extends TestCase
     /**
      * 0 => Value
      * 1 => Violates?
-     * 2 => Default region (optional)
+     * 2 => Type (optional)
+     * 3 => Default region (optional)
      */
     public function validateProvider()
     {
@@ -64,7 +82,8 @@ class PhoneNumberValidatorTest extends TestCase
             array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false),
             array(PhoneNumberUtil::getInstance()->parse('+44123456789', PhoneNumberUtil::UNKNOWN_REGION), true),
             array('+441234567890', false),
-            array('01234 567890', false, 'GB'),
+            array('+44123456789', true, 'mobile'),
+            array('01234 567890', false, null, 'GB'),
             array('foo', true),
         );
     }
