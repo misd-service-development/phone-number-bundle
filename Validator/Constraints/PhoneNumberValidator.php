@@ -14,6 +14,7 @@ namespace Misd\PhoneNumberBundle\Validator\Constraints;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -61,6 +62,29 @@ class PhoneNumberValidator extends ConstraintValidator
 
             return;
         }
+
+        switch ($constraint->getType()) {
+            case PhoneNumber::FIXED_LINE:
+                $validTypes = array(PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                break;
+            case PhoneNumber::MOBILE:
+                $validTypes = array(PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                break;
+            default:
+                $validTypes = array();
+                break;
+        }
+
+        if (count($validTypes)) {
+            $type = $phoneUtil->getNumberType($phoneNumber);
+
+            if (false === in_array($type, $validTypes)) {
+                $this->addViolation($value, $constraint);
+
+                return;
+            }
+
+        }
     }
 
     /**
@@ -72,8 +96,8 @@ class PhoneNumberValidator extends ConstraintValidator
     private function addViolation($value, Constraint $constraint)
     {
         $this->context->addViolation(
-            $constraint->message,
-            array('{{ type }}' => $constraint->type, '{{ value }}' => $value)
+            $constraint->getMessage(),
+            array('{{ type }}' => $constraint->getType(), '{{ value }}' => $value)
         );
     }
 }

@@ -29,4 +29,38 @@ class PhoneNumberTest extends TestCase
         $this->assertObjectHasAttribute('type', $phoneNumber);
         $this->assertObjectHasAttribute('defaultRegion', $phoneNumber);
     }
+
+    /**
+     * @dataProvider messageProvider
+     */
+    public function testMessage($message = null, $type = null, $expectedMessage)
+    {
+        $phoneNumber = new PhoneNumber();
+
+        if (null !== $message) {
+            $phoneNumber->message = $message;
+        }
+        if (null !== $type) {
+            $phoneNumber->type = $type;
+        }
+
+        $this->assertSame($expectedMessage, $phoneNumber->getMessage());
+    }
+
+    /**
+     * 0 => Message (optional)
+     * 1 => Type (optional)
+     * 2 => Expected message
+     */
+    public function messageProvider()
+    {
+        return array(
+            array(null, null, 'This value is not a valid phone number.'),
+            array(null, 'fixed_line', 'This value is not a valid fixed-line number.'),
+            array(null, 'mobile', 'This value is not a valid mobile number.'),
+            array('foo', null, 'foo'),
+            array('foo', 'fixed_line', 'foo'),
+            array('foo', 'mobile', 'foo'),
+        );
+    }
 }
