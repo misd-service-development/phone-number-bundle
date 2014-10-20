@@ -146,3 +146,10 @@ You can set the default region through the `defaultRegion` property:
      * @AssertPhoneNumber(defaultRegion="GB")
      */
     private $phoneNumber;
+
+By default any valid phone number will be accepted. You can restrict the type through the `type` property, recognised values are `mobile` and `fixed_line`. (Note the libphonenumber cannot always distinguish between mobile and fixed-line numbers (eg in the USA), in which case it will be accepted.)
+
+    /**
+     * @AssertPhoneNumber(type="mobile")
+     */
+    private $mobilePhoneNumber;
