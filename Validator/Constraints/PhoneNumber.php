@@ -23,7 +23,19 @@ use Symfony\Component\Validator\Constraint;
  */
 class PhoneNumber extends Constraint
 {
-    public $message = 'This value is not a valid {{ type }} number.';
+    private $defaultMessage = 'This value is not a valid phone number.';
+    private $typedMessage = 'This value is not a valid {{ type }} number.';
+
+    public $message = 'This value is not a valid phone number.';
     public $type = 'phone';
     public $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION;
+
+    public function getMessage()
+    {
+        if ('phone' !== $this->type && $this->message === $this->defaultMessage) {
+            return strtr($this->typedMessage, array('{{ type }}' => $this->type));
+        }
+
+        return $this->message;
+    }
 }

@@ -72,7 +72,7 @@ class PhoneNumberValidator extends ConstraintValidator
     private function addViolation($value, Constraint $constraint)
     {
         $this->context->addViolation(
-            $constraint->message,
+            $constraint->getMessage(),
             array('{{ type }}' => $constraint->type, '{{ value }}' => $value)
         );
     }
