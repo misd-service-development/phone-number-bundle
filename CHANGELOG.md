@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.0.3
+-----
+
+20 October 2014.
+
+* Handle international numbers correctly when using the national format and a default region.
+* Throw a `TransformationFailedException` when required in the form data transformer. 
+
 1.0.2
 -----
 
