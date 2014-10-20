@@ -66,6 +66,10 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
 
         $util = PhoneNumberUtil::getInstance();
 
+        if (PhoneNumberFormat::NATIONAL === $this->format) {
+            return $util->formatOutOfCountryCallingNumber($phoneNumber, $this->defaultRegion);
+        }
+
         return $util->format($phoneNumber, $this->format);
     }
 
