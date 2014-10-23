@@ -12,7 +12,10 @@
 namespace Misd\PhoneNumberBundle\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 
@@ -51,6 +54,8 @@ class PhoneNumberType extends Type
     {
         if (null === $value) {
             return null;
+        } elseif (false === $value instanceof PhoneNumber) {
+            throw new ConversionException('Expected \libphonenumber\PhoneNumber, got ' . gettype($value));
         }
 
         $util = PhoneNumberUtil::getInstance();
@@ -69,7 +74,11 @@ class PhoneNumberType extends Type
 
         $util = PhoneNumberUtil::getInstance();
 
-        return $util->parse($value, PhoneNumberUtil::UNKNOWN_REGION);
+        try {
+            return $util->parse($value, PhoneNumberUtil::UNKNOWN_REGION);
+        } catch (NumberParseException $e) {
+            throw ConversionException::conversionFailed($value, self::NAME);
+        }
     }
 
     /**
