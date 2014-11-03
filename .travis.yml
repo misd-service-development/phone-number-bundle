@@ -14,7 +14,7 @@ matrix:
 
 env:
   - SYMFONY_VERSION="2.1.0" LIBPHONENUMBER_VERSION="~5.7"
-  - SYMFONY_VERSION="~2.1" LIBPHONENUMBER_VERSION="~6.0"
+  - SYMFONY_VERSION="~2.1" LIBPHONENUMBER_VERSION="~7.0"
 
 before_install:
   - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update --no-interaction
