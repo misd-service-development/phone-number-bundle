@@ -153,3 +153,11 @@ By default any valid phone number will be accepted. You can restrict the type th
      * @AssertPhoneNumber(type="mobile")
      */
     private $mobilePhoneNumber;
+
+### Translations
+
+The bundle contains translations for the form field and validation constraints.
+
+In cases where a language uses multiple terms for mobile phones, the generic language locale will use the term 'mobile', while country-specific locales will use the relevant term. So in English, for example, `en` uses 'mobile', `en_US` uses 'cell' and `en_SG` uses 'handphone'.
+
+If your language doesn't yet have translations, feel free to open a pull request to add them in!
