@@ -85,6 +85,14 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertSame('+441234567890', $this->type->convertToDatabaseValue($phoneNumber, $this->platform));
     }
 
+    /**
+     * @expectedException \Doctrine\DBAL\Types\ConversionException
+     */
+    public function testConvertToDatabaseValueFailure()
+    {
+        $this->type->convertToDatabaseValue('foo', $this->platform);
+    }
+
     public function testConvertToPHPValueWithNull()
     {
         $this->assertNull($this->type->convertToPHPValue(null, $this->platform));
@@ -96,6 +104,14 @@ class PhoneNumberTypeTest extends TestCase
 
         $this->assertInstanceOf('libphoneNumber\PhoneNumber', $phoneNumber);
         $this->assertSame('+441234567890', (string) $phoneNumber);
+    }
+
+    /**
+     * @expectedException \Doctrine\DBAL\Types\ConversionException
+     */
+    public function testConvertToPHPValueFailure()
+    {
+        $this->type->convertToPHPValue('foo', $this->platform);
     }
 
     public function testRequiresSQLCommentHint()
