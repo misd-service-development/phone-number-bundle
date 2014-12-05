@@ -44,11 +44,21 @@ Installation
 Usage
 -----
 
-### `PhoneNumberUtil` service
+### Services
 
-The `libphonenumber\PhoneNumberUtil` class is available as the `libphonenumber.phone_number_util` service:
+The following services are available:
 
-    $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string);
+| Service                                               | ID                                                 | libphonenumber version |
+| ----------------------------------------------------- | -------------------------------------------------- | ---------------------- |
+| `libphonenumber\PhoneNumberUtil`                      | `libphonenumber.phone_number_util`                 |                        |
+| `libphonenumber\geocoding\PhoneNumberOfflineGeocoder` | `libphonenumber.phone_number_offline_geocoder`     | >=5.8.8                |
+| `libphonenumber\ShortNumberInfo`                      | `libphonenumber.short_number_info`                 | >=5.8                  |
+| `libphonenumber\PhoneNumberToCarrierMapper`           | `libphonenumber.phone_number_to_carrier_mapper`    | >=5.8.8                |
+| `libphonenumber\PhoneNumberToTimeZonesMapper`         | `libphonenumber.phone_number_to_time_zones_mapper` | >=5.8.8                |
+
+So to parse a string into a `libphonenumber\PhoneNumber` object:
+
+    $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string, PhoneNumberUtil::UNKNOWN_REGION);
 
 ### Doctrine mapping
 
