@@ -3,7 +3,7 @@ PhoneNumberBundle
 
 [![Build Status](https://travis-ci.org/misd-service-development/phone-number-bundle.png?branch=master)](https://travis-ci.org/misd-service-development/phone-number-bundle)
 
-This bundle integrates [Google's libphonenumber](https://code.google.com/p/libphonenumber/) into your Symfony2 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
+This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony2 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
 
 Authors
 -------
