@@ -12,7 +12,7 @@
             </trans-unit>
             <trans-unit id="3">
                 <source>This value is not a valid mobile number.</source>
-                <target>Questo valore non è un valido per una linea telefonica mobile.</target>
+                <target>Questo valore non è valido per una linea telefonica mobile.</target>
             </trans-unit>
         </body>
     </file>
