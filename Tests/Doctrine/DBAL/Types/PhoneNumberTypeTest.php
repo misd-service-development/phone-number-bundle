@@ -106,6 +106,15 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertSame('+441234567890', (string) $phoneNumber);
     }
 
+    public function testConvertToPHPValueWithAPhoneNumberInstance()
+    {
+        $expectedPhoneNumber = $this->phoneNumberUtil->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION);
+
+        $phoneNumber = $this->type->convertToPHPValue($expectedPhoneNumber, $this->platform);
+
+        $this->assertEquals($expectedPhoneNumber, $phoneNumber);
+    }
+
     /**
      * @expectedException \Doctrine\DBAL\Types\ConversionException
      */
