@@ -72,6 +72,41 @@ You can then use the `phone_number` mapping:
 
 This creates a `varchar(35)` column with a Doctrine mapping comment.
 
+### Forms
+
+To use phonenumbers in your forms just add the `PhoneNumberType`:
+
+	$builder->add('phoneNumber', new PhoneNumberType(), array(
+    	'label' => 'Phone'
+    ));
+    
+This form type provides additional options:
+
+#### `default_region`
+
+This option expects the alpha2 code of your region like `DE`. Default is `ZZ` and stands for unknow region.
+
+	
+#### `format`
+
+The class `libphonenumber\PhoneNumberFormat` provides some predefined formats:
+
+- PhoneNumberFormat::NATIONAL
+- PhoneNumberFormat::INTERNATIONAL
+- PhoneNumberFormat::E164
+- PhoneNumberFormat::RFC3966
+
+#### Full example
+
+This example is configured for phonenumber located in germany
+
+	$builder->add('phoneNumber', new PhoneNumberType(), array(
+    	'label' => 'Phone',
+    	'default_region' => 'DE',
+        'format' => PhoneNumberFormat::NATIONAL
+    ));
+
+
 ### Formatting `libphonenumber\PhoneNumber` objects
 
 #### Twig
