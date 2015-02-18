@@ -74,9 +74,9 @@ This creates a `varchar(35)` column with a Doctrine mapping comment.
 
 ### Forms
 
-To use phonenumbers in your forms just add the `PhoneNumberType`:
+To use phonenumbers in your forms just add the `tel` type:
 
-	$builder->add('phoneNumber', new PhoneNumberType(), array(
+	$builder->add('phoneNumber', 'tel', array(
     	'label' => 'Phone'
     ));
     
@@ -100,7 +100,9 @@ The class `libphonenumber\PhoneNumberFormat` provides some predefined formats:
 
 This example is configured for phonenumber located in germany
 
-	$builder->add('phoneNumber', new PhoneNumberType(), array(
+	use libphonenumber\PhoneNumberFormat;
+
+	$builder->add('phoneNumber', 'tel', array(
     	'label' => 'Phone',
     	'default_region' => 'DE',
         'format' => PhoneNumberFormat::NATIONAL
