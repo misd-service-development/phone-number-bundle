@@ -11,6 +11,9 @@
 
 namespace Misd\PhoneNumberBundle;
 
+use Misd\PhoneNumberBundle\DependencyInjection\Compiler\ParentLocalesCompilerPass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -20,4 +23,14 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class MisdPhoneNumberBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(
+          new ParentLocalesCompilerPass(),
+          PassConfig::TYPE_BEFORE_REMOVING
+        );
+    }
 }
