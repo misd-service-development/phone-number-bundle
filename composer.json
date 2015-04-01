@@ -28,6 +28,9 @@
         "symfony/twig-bundle": "~2.1",
         "symfony/validator": "~2.1"
     },
+    "conflict": {
+        "twig/twig": "<1.12.0"
+    },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
         "jms/serializer-bundle": "Serialize/deserialize phone numbers",
