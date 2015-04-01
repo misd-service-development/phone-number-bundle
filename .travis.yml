@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.3.3
   - 5.3
   - 5.4
   - 5.5
@@ -11,16 +10,11 @@ php:
 matrix:
     allow_failures:
         - php: hhvm
-
-env:
-  - SYMFONY_VERSION="2.1.0" LIBPHONENUMBER_VERSION="~5.7"
-  - SYMFONY_VERSION="~2.1" LIBPHONENUMBER_VERSION="~7.0"
-
-before_install:
-  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update --no-interaction
-  - composer require giggsey/libphonenumber-for-php:${LIBPHONENUMBER_VERSION} --no-update --no-interaction
+    include:
+        - php: 5.3.3
+          env: dependencies=lowest
 
 install:
-  - composer install --dev --prefer-source --no-interaction
+  - if [ "$dependencies" = "lowest" ]; then composer update --dev --prefer-lowest --prefer-stable --prefer-source --no-interaction; else composer install --dev --prefer-source --no-interaction; fi;
 
 script: ./vendor/bin/phpunit --coverage-text
