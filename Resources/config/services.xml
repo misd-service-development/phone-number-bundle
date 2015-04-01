@@ -6,6 +6,10 @@
 
     <parameters>
         <parameter key="libphonenumber.phone_number_util.class">libphonenumber\PhoneNumberUtil</parameter>
+        <parameter key="libphonenumber.phone_number_offline_geocoder.class">libphonenumber\geocoding\PhoneNumberOfflineGeocoder</parameter>
+        <parameter key="libphonenumber.short_number_info.class">libphonenumber\ShortNumberInfo</parameter>
+        <parameter key="libphonenumber.phone_number_to_carrier_mapper.class">libphonenumber\PhoneNumberToCarrierMapper</parameter>
+        <parameter key="libphonenumber.phone_number_to_time_zones_mapper.class">libphonenumber\PhoneNumberToTimeZonesMapper</parameter>
         <parameter key="misd_phone_number.templating.helper.format.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper</parameter>
         <parameter key="misd_phone_number.twig.extension.format.class">Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension</parameter>
         <parameter key="misd_phone_number.form.type.class">Misd\PhoneNumberBundle\Form\Type\PhoneNumberType</parameter>
@@ -16,6 +20,18 @@
 
         <service id="libphonenumber.phone_number_util" class="%libphonenumber.phone_number_util.class%"
                  factory-class="%libphonenumber.phone_number_util.class%" factory-method="getInstance"/>
+
+        <service id="libphonenumber.phone_number_offline_geocoder" class="%libphonenumber.phone_number_offline_geocoder.class%"
+                 factory-class="%libphonenumber.phone_number_offline_geocoder.class%" factory-method="getInstance"/>
+
+        <service id="libphonenumber.short_number_info" class="%libphonenumber.short_number_info.class%"
+                 factory-class="%libphonenumber.short_number_info.class%" factory-method="getInstance"/>
+
+        <service id="libphonenumber.phone_number_to_carrier_mapper" class="%libphonenumber.phone_number_to_carrier_mapper.class%"
+                 factory-class="%libphonenumber.phone_number_to_carrier_mapper.class%" factory-method="getInstance"/>
+
+        <service id="libphonenumber.phone_number_to_time_zones_mapper" class="%libphonenumber.phone_number_to_time_zones_mapper.class%"
+                 factory-class="%libphonenumber.phone_number_to_time_zones_mapper.class%" factory-method="getInstance"/>
 
         <service id="misd_phone_number.templating.helper.format"
                  class="%misd_phone_number.templating.helper.format.class%">
