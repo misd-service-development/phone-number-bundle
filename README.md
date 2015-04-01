@@ -82,6 +82,8 @@ You can then use the `phone_number` mapping:
 
 This creates a `varchar(35)` column with a Doctrine mapping comment.
 
+Note that if you're putting the `phone_number` type on an already-existing schema the current values must be converted to the `libphonenumber\PhoneNumberFormat::E164` format.
+
 ### Formatting `libphonenumber\PhoneNumber` objects
 
 #### Twig
