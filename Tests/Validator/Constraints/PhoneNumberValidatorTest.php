@@ -38,7 +38,12 @@ class PhoneNumberValidatorTest extends TestCase
     public function testValidate($value, $violates, $type = null, $defaultRegion = null)
     {
         $validator = new PhoneNumberValidator();
-        $context = $this->getMockBuilder('Symfony\Component\Validator\ExecutionContext')
+        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
+            $executionContextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
+        } else {
+            $executionContextClass = 'Symfony\Component\Validator\ExecutionContext';
+        }
+        $context = $this->getMockBuilder($executionContextClass)
           ->disableOriginalConstructor()->getMock();
         $validator->initialize($context);
 
