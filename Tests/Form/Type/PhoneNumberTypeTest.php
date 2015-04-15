@@ -13,7 +13,7 @@ namespace Misd\PhoneNumberBundle\Tests\Form\Type;
 
 use libphonenumber\PhoneNumberFormat;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
-use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * Phone number form type test.
@@ -30,7 +30,7 @@ class PhoneNumberTypeTest extends TypeTestCase
         $type = new PhoneNumberType();
         $form = $this->factory->create($type, null, $options);
 
-        $form->bind($input);
+        $form->submit($input);
 
         $this->assertTrue($form->isSynchronized());
 
