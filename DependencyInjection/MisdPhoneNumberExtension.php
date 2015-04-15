@@ -34,6 +34,10 @@ class MisdPhoneNumberExtension extends Extension
         $loader->load('services.xml');
 
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_util'));
+        $this->setFactory($container->getDefinition('libphonenumber.phone_number_offline_geocoder'));
+        $this->setFactory($container->getDefinition('libphonenumber.short_number_info'));
+        $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_carrier_mapper'));
+        $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_time_zones_mapper'));
     }
 
     /**
