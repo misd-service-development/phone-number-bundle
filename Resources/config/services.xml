@@ -18,8 +18,7 @@
 
     <services>
 
-        <service id="libphonenumber.phone_number_util" class="%libphonenumber.phone_number_util.class%"
-                 factory-class="%libphonenumber.phone_number_util.class%" factory-method="getInstance"/>
+        <service id="libphonenumber.phone_number_util" class="%libphonenumber.phone_number_util.class%"/>
 
         <service id="libphonenumber.phone_number_offline_geocoder" class="%libphonenumber.phone_number_offline_geocoder.class%"
                  factory-class="%libphonenumber.phone_number_offline_geocoder.class%" factory-method="getInstance"/>
