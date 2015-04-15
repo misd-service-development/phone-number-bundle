@@ -23,7 +23,7 @@
         "doctrine/doctrine-bundle": "~1.0",
         "jms/serializer-bundle": "~0.11",
         "phpunit/phpunit": "~4.0",
-        "symfony/form": "~2.1",
+        "symfony/form": "~2.3",
         "symfony/templating": "~2.1",
         "symfony/twig-bundle": "~2.1",
         "symfony/validator": "~2.1"
