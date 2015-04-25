@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>This value is not a valid phone number.</source>
+                <target>Значение не является допустимым номером телефона.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>This value is not a valid fixed-line number.</source>
+                <target>Значение не является допустимым номером фиксированной связи.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>This value is not a valid mobile number.</source>
+                <target>Значение не является допустимым мобильным номером.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
