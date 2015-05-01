@@ -70,6 +70,30 @@ class PhoneNumberValidator extends ConstraintValidator
             case PhoneNumber::MOBILE:
                 $validTypes = array(PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
                 break;
+            case PhoneNumber::PAGER:
+                $validTypes = array(PhoneNumberType::PAGER);
+                break;
+            case PhoneNumber::PERSONAL_NUMBER:
+                $validTypes = array(PhoneNumberType::PERSONAL_NUMBER);
+                break;
+            case PhoneNumber::PREMIUM_RATE:
+                $validTypes = array(PhoneNumberType::PREMIUM_RATE);
+                break;
+            case PhoneNumber::SHARED_COST:
+                $validTypes = array(PhoneNumberType::SHARED_COST);
+                break;
+            case PhoneNumber::TOLL_FREE:
+                $validTypes = array(PhoneNumberType::TOLL_FREE);
+                break;
+            case PhoneNumber::UAN:
+                $validTypes = array(PhoneNumberType::UAN);
+                break;
+            case PhoneNumber::VOIP:
+                $validTypes = array(PhoneNumberType::VOIP);
+                break;
+            case PhoneNumber::VOICEMAIL:
+                $validTypes = array(PhoneNumberType::VOICEMAIL);
+                break;
             default:
                 $validTypes = array();
                 break;

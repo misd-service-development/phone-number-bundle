@@ -159,7 +159,21 @@ You can set the default region through the `defaultRegion` property:
      */
     private $phoneNumber;
 
-By default any valid phone number will be accepted. You can restrict the type through the `type` property, recognised values are `mobile` and `fixed_line`. (Note the libphonenumber cannot always distinguish between mobile and fixed-line numbers (eg in the USA), in which case it will be accepted.)
+By default any valid phone number will be accepted. You can restrict the type through the `type` property, recognised values:
+
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::ANY` (default)
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::FIXED_LINE`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::MOBILE`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::PAGER`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::PERSONAL_NUMBER`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::PREMIUM_RATE`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::SHARED_COST`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::TOLL_FREE`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::UAN`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::VOIP`
+- `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::VOICEMAIL`
+
+(Note that libphonenumber cannot always distinguish between mobile and fixed-line numbers (eg in the USA), in which case it will be accepted.)
 
     /**
      * @AssertPhoneNumber(type="mobile")

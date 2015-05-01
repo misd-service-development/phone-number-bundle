@@ -6,6 +6,10 @@
                 <source>This value is not a valid mobile number.</source>
                 <target>This value is not a valid cell number.</target>
             </trans-unit>
+            <trans-unit id="5">
+                <source>This value is not a valid personal number.</source>
+                <target>This value is not a valid follow-me number.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
