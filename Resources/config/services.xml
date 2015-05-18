@@ -11,8 +11,8 @@
         <parameter key="libphonenumber.short_number_info.class">libphonenumber\ShortNumberInfo</parameter>
         <parameter key="libphonenumber.phone_number_to_carrier_mapper.class">libphonenumber\PhoneNumberToCarrierMapper</parameter>
         <parameter key="libphonenumber.phone_number_to_time_zones_mapper.class">libphonenumber\PhoneNumberToTimeZonesMapper</parameter>
-        <parameter key="misd_phone_number.templating.helper.format.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper</parameter>
-        <parameter key="misd_phone_number.twig.extension.format.class">Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension</parameter>
+        <parameter key="misd_phone_number.templating.helper.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper</parameter>
+        <parameter key="misd_phone_number.twig.extension.class">Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension</parameter>
         <parameter key="misd_phone_number.form.type.class">Misd\PhoneNumberBundle\Form\Type\PhoneNumberType</parameter>
         <parameter key="misd_phone_number.serializer.handler.class">Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler</parameter>
     </parameters>
@@ -29,17 +29,14 @@
 
         <service id="libphonenumber.phone_number_to_time_zones_mapper" class="libphonenumber\PhoneNumberToTimeZonesMapper"/>
 
-        <service id="misd_phone_number.templating.helper.format"
-                 class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper">
-            <tag name="templating.helper" alias="phone_number_format"/>
+        <service id="misd_phone_number.templating.helper" class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper">
+            <tag name="templating.helper" alias="phone_number_helper"/>
             <argument type="service" id="libphonenumber.phone_number_util"/>
-
         </service>
 
-        <service id="misd_phone_number.twig.extension.format" class="Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension"
-                 public="false">
+        <service id="misd_phone_number.twig.extension.format" class="Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension" public="false">
             <tag name="twig.extension"/>
-            <argument type="service" id="misd_phone_number.templating.helper.format"/>
+            <argument type="service" id="misd_phone_number.templating.helper"/>
         </service>
 
         <service id="misd_phone_number.form.type" class="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType">

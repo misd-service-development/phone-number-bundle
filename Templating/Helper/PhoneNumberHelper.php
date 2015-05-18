@@ -13,14 +13,15 @@ namespace Misd\PhoneNumberBundle\Templating\Helper;
 
 use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
 use Symfony\Component\Templating\Helper\HelperInterface;
 
 /**
- * Phone number format templating helper.
+ * Phone number templating helper.
  */
-class PhoneNumberFormatHelper implements HelperInterface
+class PhoneNumberHelper implements HelperInterface
 {
     /**
      * Phone number utility.
@@ -93,5 +94,17 @@ class PhoneNumberFormatHelper implements HelperInterface
         }
 
         return $this->phoneNumberUtil->format($phoneNumber, $format);
+    }
+
+    /**
+     * Returns true if PhoneNumber is a mobile or "fixed line or mobile" number.
+     *
+     * @param PhoneNumber $phoneNumber
+     *
+     * @return bool
+     */
+    public function isMobile(PhoneNumber $phoneNumber)
+    {
+        return in_array($this->phoneNumberUtil->getNumberType($phoneNumber), array(PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE));
     }
 }

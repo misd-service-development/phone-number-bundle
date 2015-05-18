@@ -11,28 +11,26 @@
 
 namespace Misd\PhoneNumberBundle\Twig\Extension;
 
-use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper;
+use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 
 /**
- * Phone number format Twig extension.
- *
- * @author Stefano Arlandini <sarlandini@alice.it>
+ * Phone number helper Twig extension.
  */
-class PhoneNumberFormatExtension extends \Twig_Extension
+class PhoneNumberHelperExtension extends \Twig_Extension
 {
     /**
-     * Phone number format helper.
+     * Phone number helper.
      *
-     * @var PhoneNumberFormatHelper
+     * @var PhoneNumberHelper
      */
     protected $helper;
 
     /**
      * Constructor.
      *
-     * @param PhoneNumberFormatHelper $helper Phone number format helper.
+     * @param PhoneNumberHelper $helper Phone number helper.
      */
-    public function __construct(PhoneNumberFormatHelper $helper)
+    public function __construct(PhoneNumberHelper $helper)
     {
         $this->helper = $helper;
     }
@@ -54,6 +52,7 @@ class PhoneNumberFormatExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('phone_number_format', array($this->helper, 'format')),
+            new \Twig_SimpleFilter('phone_number_is_mobile', array($this->helper, 'isMobile')),
         );
     }
 
@@ -62,6 +61,6 @@ class PhoneNumberFormatExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'phone_number_format';
+        return 'phone_number_helper';
     }
 }

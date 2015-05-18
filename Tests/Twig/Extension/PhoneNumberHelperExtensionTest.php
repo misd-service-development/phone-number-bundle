@@ -11,30 +11,32 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Twig\Extension;
 
-use Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension;
+
+use Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension;
+
 
 /**
- * Phone number format Twig extension test.
+ * Phone number helper Twig extension test.
  */
-class PhoneNumberFormatExtensionTest extends \PHPUnit_Framework_TestCase
+class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper
      */
     private $helper;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension
      */
     private $extension;
 
     protected function setUp()
     {
-        $this->helper = $this->getMockBuilder('Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper')
+        $this->helper = $this->getMockBuilder('Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->extension = new PhoneNumberFormatExtension($this->helper);
+        $this->extension = new PhoneNumberHelperExtension($this->helper);
     }
 
     public function testConstructor()
@@ -58,16 +60,24 @@ class PhoneNumberFormatExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testGetFilters()
     {
-        $filters = $this->extension->getFunctions();
+        $filters = $this->extension->getFilters();
 
-        $this->assertCount(1, $filters);
-        $this->assertInstanceOf('Twig_SimpleFunction', $filters[0]);
+        $this->assertCount(2, $filters);
+        $this->assertInstanceOf('Twig_SimpleFilter', $filters[0]);
         $this->assertSame('phone_number_format', $filters[0]->getName());
 
         $callable = $filters[0]->getCallable();
 
         $this->assertSame($this->helper, $callable[0]);
         $this->assertSame('format', $callable[1]);
+
+        $this->assertInstanceOf('Twig_SimpleFilter', $filters[1]);
+        $this->assertSame('phone_number_is_mobile', $filters[1]->getName());
+
+        $callable = $filters[1]->getCallable();
+
+        $this->assertSame($this->helper, $callable[0]);
+        $this->assertSame('isMobile', $callable[1]);
     }
 
     public function testGetName()
