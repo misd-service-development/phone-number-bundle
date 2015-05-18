@@ -71,10 +71,11 @@ This creates a `varchar(35)` column with a Doctrine mapping comment.
 
 Note that if you're putting the `phone_number` type on an already-existing schema the current values must be converted to the `libphonenumber\PhoneNumberFormat::E164` format.
 
-### Formatting `libphonenumber\PhoneNumber` objects
+### Templating
 
 #### Twig
 
+##### phone_number_format
 The `phone_number_format` filter can be used to format a phone number object. A `libphonenumber\PhoneNumberFormat` constant can be passed as argument to specify in which format the number should be printed.
 
 For example, to format an object called `myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format:
@@ -83,19 +84,45 @@ For example, to format an object called `myPhoneNumber` in the `libphonenumber\P
 
 By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
 
+###### phone_number_is_type
+
+The `phone_number_is_type` function takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberType` constant name.
+
+For example, to check if an object called `myPhoneNumber` is a `libphonenumber\PhoneNumberType::MOBILE` type:
+
+    {% if phone_number_is_type(myPhoneNumber, 'MOBILE') }} %} ... {% endif %}
+
 #### PHP template
 
-The `format()` method in the `phone_number_format` helper takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberFormat` constant name or value.
+##### format()
+
+The `format()` method in the `phone_number_helper` takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberFormat` constant name or value.
 
 For example, to format `$myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format, either use:
 
-    <?php echo $view['phone_number_format']->format($myPhoneNumber, 'NATIONAL') ?>
+    <?php echo $view['phone_number_helper']->format($myPhoneNumber, 'NATIONAL') ?>
 
 or:
 
-    <?php echo $view['phone_number_format']->format($myPhoneNumber, \libphonenumber\PhoneNumberFormat::NATIONAL) ?>
+    <?php echo $view['phone_number_helper']->format($myPhoneNumber, \libphonenumber\PhoneNumberFormat::NATIONAL) ?>
 
 By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
+
+###### isType()
+
+The `isType()` method in the `phone_number_helper` takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberType` constant name or value.
+
+For example, to check if $myPhoneNumber` is a `libphonenumber\PhoneNumberType::MOBILE` type:
+
+    <?php if $view['phone_number_helper']->isType($myPhoneNumber, 'MOBILE'): ?>
+    ...
+    <?php endif; ?>
+
+or:
+
+    <?php if $view['phone_number_helper']->isType($myPhoneNumber, \libphonenumber\PhoneNumberType::MOBILE): ?>
+    ...
+    <?php endif; ?>
 
 ### Serializing `libphonenumber\PhoneNumber` objects
 
