@@ -68,7 +68,7 @@ class PhoneNumberHelper implements HelperInterface
      */
     public function getName()
     {
-        return 'phone_number_format';
+        return 'phone_number_helper';
     }
 
     /**
@@ -97,14 +97,25 @@ class PhoneNumberHelper implements HelperInterface
     }
 
     /**
-     * Returns true if PhoneNumber is a mobile or "fixed line or mobile" number.
-     *
-     * @param PhoneNumber $phoneNumber
+     * @param PhoneNumber $phoneNumber Phone number.
+     * @param int|string  $type      PhoneNumberType, or PhoneNumberType constant name.
      *
      * @return bool
+     *
+     * @throws InvalidArgumentException If type argument is invalid.
      */
-    public function isMobile(PhoneNumber $phoneNumber)
+    public function isType(PhoneNumber $phoneNumber, $type = PhoneNumberType::UNKNOWN)
     {
-        return in_array($this->phoneNumberUtil->getNumberType($phoneNumber), array(PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE));
+        if (true === is_string($type)) {
+            $constant = '\libphonenumber\PhoneNumberType::' . $type;
+
+            if (false === defined($constant)) {
+                throw new InvalidArgumentException('The format must be either a constant value or name in libphonenumber\PhoneNumberType');
+            }
+
+            $type = constant('\libphonenumber\PhoneNumberType::' . $type);
+        }
+
+        return $this->phoneNumberUtil->getNumberType($phoneNumber) === $type ? true : false;
     }
 }
