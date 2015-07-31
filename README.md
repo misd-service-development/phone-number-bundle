@@ -13,10 +13,9 @@ Authors
 Installation
 ------------
 
- 1. Add the PhoneNumberBundle to your dependencies:
+ 1. Use Composer to download and install the PhoneNumberBundle: 
 
-        // composer.json
-
+        # composer.json
         {
            // ...
            "require": {
@@ -24,12 +23,14 @@ Installation
                "misd/phone-number-bundle": "~1.0"
            }
         }
-
- 2. Use Composer to download and install the PhoneNumberBundle:
-
+        
         $ php composer.phar update misd/phone-number-bundle
 
- 3. Register the bundle in your application:
+ or
+
+        $ php composer.phar require misd/phone-number-bundle:~1.0
+
+ 2. Register the bundle in your application:
 
         // app/AppKernel.php
 
