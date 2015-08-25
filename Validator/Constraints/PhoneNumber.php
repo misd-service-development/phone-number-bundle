@@ -27,9 +27,9 @@ class PhoneNumber extends Constraint
     const FIXED_LINE = 'fixed_line';
     const MOBILE = 'mobile';
 
-    private $anyMessage = 'This value is not a valid phone number.';
-    private $fixedLineMessage = 'This value is not a valid fixed-line number.';
-    private $mobileMessage = 'This value is not a valid mobile number.';
+    private $anyMessage = 'invalid_phone_number';
+    private $fixedLineMessage = 'invalid_fixed_phone_number';
+    private $mobileMessage = 'invalid_mobile_phone_number';
 
     public $message = null;
     public $type = self::ANY;

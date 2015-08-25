@@ -3,15 +3,15 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>This value is not a valid phone number.</source>
+                <source>invalid_phone_number</source>
                 <target>Cette valeur n'est pas un numéro de téléphone valide.</target>
             </trans-unit>
             <trans-unit id="2">
-                <source>This value is not a valid fixed-line number.</source>
+                <source>invalid_fixed_phone_number</source>
                 <target>Cette valeur n'est pas un numéro de téléphone fixe valide.</target>
             </trans-unit>
             <trans-unit id="3">
-                <source>This value is not a valid mobile number.</source>
+                <source>invalid_mobile_phone_number</source>
                 <target>Cette valeur n'est pas un numéro de téléphone mobile valide.</target>
             </trans-unit>
         </body>

@@ -55,9 +55,9 @@ class PhoneNumberTest extends TestCase
     public function messageProvider()
     {
         return array(
-            array(null, null, 'This value is not a valid phone number.'),
-            array(null, 'fixed_line', 'This value is not a valid fixed-line number.'),
-            array(null, 'mobile', 'This value is not a valid mobile number.'),
+            array(null, null, 'invalid_phone_number'),
+            array(null, 'fixed_line', 'invalid_fixed_phone_number'),
+            array(null, 'mobile', 'invalid_mobile_phone_number'),
             array('foo', null, 'foo'),
             array('foo', 'fixed_line', 'foo'),
             array('foo', 'mobile', 'foo'),
