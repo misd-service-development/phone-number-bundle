@@ -28,6 +28,16 @@ class PhoneNumberToStringTransformerTest extends TestCase
 {
     const TRANSFORMATION_FAILED = 'transformation_failed';
 
+    /**
+     * @var PhoneNumberUtil
+     */
+    protected $phoneNumberUtil;
+
+    protected function setUp()
+    {
+        $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
+    }
+
     public function testConstructor()
     {
         $transformer = new PhoneNumberToStringTransformer();
@@ -93,7 +103,7 @@ class PhoneNumberToStringTransformerTest extends TestCase
         }
 
         if ($transformed instanceof PhoneNumber) {
-            $transformed = (string) $transformed;
+            $transformed = $this->phoneNumberUtil->format($transformed, PhoneNumberFormat::E164);
         }
 
         $this->assertSame($expected, $transformed);
