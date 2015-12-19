@@ -13,6 +13,7 @@ namespace Misd\PhoneNumberBundle\Tests\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType;
 use PHPUnit_Framework_TestCase as TestCase;
@@ -103,7 +104,7 @@ class PhoneNumberTypeTest extends TestCase
         $phoneNumber = $this->type->convertToPHPValue('+441234567890', $this->platform);
 
         $this->assertInstanceOf('libphoneNumber\PhoneNumber', $phoneNumber);
-        $this->assertSame('+441234567890', (string) $phoneNumber);
+        $this->assertSame('+441234567890', $this->phoneNumberUtil->format($phoneNumber, PhoneNumberFormat::E164));
     }
 
     /**
