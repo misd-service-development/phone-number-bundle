@@ -1,3 +1,5 @@
+sudo: false
+
 language: php
 
 php:
@@ -9,6 +11,7 @@ php:
   - hhvm
 
 matrix:
+    fast_failure: true
     allow_failures:
         - php: nightly
     include:
@@ -16,6 +19,6 @@ matrix:
           env: dependencies=lowest
 
 install:
-  - if [ "$dependencies" = "lowest" ]; then composer update --dev --prefer-lowest --prefer-stable --prefer-source --no-interaction; else composer install --dev --prefer-source --no-interaction; fi;
+  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --prefer-source --no-interaction; else composer install --prefer-source --no-interaction; fi;
 
 script: ./vendor/bin/phpunit --coverage-text
