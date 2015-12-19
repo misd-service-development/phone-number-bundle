@@ -3,7 +3,7 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="3">
-                <source>This value is not a valid mobile number.</source>
+                <source>invalid_mobile_phone_number</source>
                 <target>This value is not a valid handphone number.</target>
             </trans-unit>
         </body>
