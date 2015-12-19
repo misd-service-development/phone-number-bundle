@@ -5,6 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <!-- .class parameters are deprecated and will be removed in 2.0 -->
         <parameter key="libphonenumber.phone_number_util.class">libphonenumber\PhoneNumberUtil</parameter>
         <parameter key="libphonenumber.phone_number_offline_geocoder.class">libphonenumber\geocoding\PhoneNumberOfflineGeocoder</parameter>
         <parameter key="libphonenumber.short_number_info.class">libphonenumber\ShortNumberInfo</parameter>
@@ -18,34 +19,34 @@
 
     <services>
 
-        <service id="libphonenumber.phone_number_util" class="%libphonenumber.phone_number_util.class%"/>
+        <service id="libphonenumber.phone_number_util" class="libphonenumber\PhoneNumberUtil"/>
 
-        <service id="libphonenumber.phone_number_offline_geocoder" class="%libphonenumber.phone_number_offline_geocoder.class%"/>
+        <service id="libphonenumber.phone_number_offline_geocoder" class="libphonenumber\geocoding\PhoneNumberOfflineGeocoder"/>
 
-        <service id="libphonenumber.short_number_info" class="%libphonenumber.short_number_info.class%"/>
+        <service id="libphonenumber.short_number_info" class="libphonenumber\ShortNumberInfo"/>
 
-        <service id="libphonenumber.phone_number_to_carrier_mapper" class="%libphonenumber.phone_number_to_carrier_mapper.class%"/>
+        <service id="libphonenumber.phone_number_to_carrier_mapper" class="libphonenumber\PhoneNumberToCarrierMapper"/>
 
-        <service id="libphonenumber.phone_number_to_time_zones_mapper" class="%libphonenumber.phone_number_to_time_zones_mapper.class%"/>
+        <service id="libphonenumber.phone_number_to_time_zones_mapper" class="libphonenumber\PhoneNumberToTimeZonesMapper"/>
 
         <service id="misd_phone_number.templating.helper.format"
-                 class="%misd_phone_number.templating.helper.format.class%">
+                 class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper">
             <tag name="templating.helper" alias="phone_number_format"/>
             <argument type="service" id="libphonenumber.phone_number_util"/>
 
         </service>
 
-        <service id="misd_phone_number.twig.extension.format" class="%misd_phone_number.twig.extension.format.class%"
+        <service id="misd_phone_number.twig.extension.format" class="Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberFormatExtension"
                  public="false">
             <tag name="twig.extension"/>
             <argument type="service" id="misd_phone_number.templating.helper.format"/>
         </service>
 
-        <service id="misd_phone_number.form.type" class="%misd_phone_number.form.type.class%">
+        <service id="misd_phone_number.form.type" class="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType">
             <tag name="form.type" alias="tel"/>
         </service>
 
-        <service id="misd_phone_number.serializer.handler" class="%misd_phone_number.serializer.handler.class%">
+        <service id="misd_phone_number.serializer.handler" class="Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler">
             <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
                  format="json" method="serializePhoneNumber"/>
             <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization"
