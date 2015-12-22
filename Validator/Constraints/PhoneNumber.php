@@ -26,10 +26,14 @@ class PhoneNumber extends Constraint
     const ANY = 'any';
     const FIXED_LINE = 'fixed_line';
     const MOBILE = 'mobile';
-
-    private $anyMessage = 'This value is not a valid phone number.';
-    private $fixedLineMessage = 'This value is not a valid fixed-line number.';
-    private $mobileMessage = 'This value is not a valid mobile number.';
+    const PAGER = 'pager';
+    const PERSONAL_NUMBER = 'personal_number';
+    const PREMIUM_RATE = 'premium_rate';
+    const SHARED_COST = 'shared_cost';
+    const TOLL_FREE = 'toll_free';
+    const UAN = 'uan';
+    const VOIP = 'voip';
+    const VOICEMAIL = 'voicemail';
 
     public $message = null;
     public $type = self::ANY;
@@ -40,6 +44,14 @@ class PhoneNumber extends Constraint
         switch ($this->type) {
             case self::FIXED_LINE:
             case self::MOBILE:
+            case self::PAGER:
+            case self::PERSONAL_NUMBER:
+            case self::PREMIUM_RATE:
+            case self::SHARED_COST:
+            case self::TOLL_FREE:
+            case self::UAN:
+            case self::VOIP:
+            case self::VOICEMAIL:
                 return $this->type;
         }
 
@@ -54,11 +66,27 @@ class PhoneNumber extends Constraint
 
         switch ($this->type) {
             case self::FIXED_LINE:
-                return $this->fixedLineMessage;
+                return 'This value is not a valid fixed-line number.';
             case self::MOBILE:
-                return $this->mobileMessage;
+                return 'This value is not a valid mobile number.';
+            case self::PAGER:
+                return 'This value is not a valid pager number.';
+            case self::PERSONAL_NUMBER:
+                return 'This value is not a valid personal number.';
+            case self::PREMIUM_RATE:
+                return 'This value is not a valid premium-rate number.';
+            case self::SHARED_COST:
+                return 'This value is not a valid shared-cost number.';
+            case self::TOLL_FREE:
+                return 'This value is not a valid toll-free number.';
+            case self::UAN:
+                return 'This value is not a valid UAN.';
+            case self::VOIP:
+                return 'This value is not a valid VoIP number.';
+            case self::VOICEMAIL:
+                return 'This value is not a valid voicemail access number.';
         }
 
-        return $this->anyMessage;
+        return 'This value is not a valid phone number.';
     }
 }
