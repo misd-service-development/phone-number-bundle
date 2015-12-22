@@ -54,7 +54,9 @@ class PhoneNumberType extends Type
     {
         if (null === $value) {
             return null;
-        } elseif (false === $value instanceof PhoneNumber) {
+        }
+
+        if (!$value instanceof PhoneNumber) {
             throw new ConversionException('Expected \libphonenumber\PhoneNumber, got ' . gettype($value));
         }
 
@@ -68,8 +70,8 @@ class PhoneNumberType extends Type
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        if (null === $value) {
-            return null;
+        if (null === $value || $value instanceof PhoneNumber) {
+            return $value;
         }
 
         $util = PhoneNumberUtil::getInstance();
