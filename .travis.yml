@@ -17,6 +17,6 @@ matrix:
           env: dependencies=lowest
 
 install:
-  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --prefer-source --no-interaction; else composer install --prefer-source --no-interaction; fi;
+  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction; else composer install --prefer-dist --no-interaction; fi;
 
 script: ./vendor/bin/phpunit --coverage-text
