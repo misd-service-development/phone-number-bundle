@@ -18,7 +18,6 @@
     </parameters>
 
     <services>
-
         <service id="libphonenumber.phone_number_util" class="libphonenumber\PhoneNumberUtil"/>
 
         <service id="libphonenumber.phone_number_offline_geocoder" class="libphonenumber\geocoding\PhoneNumberOfflineGeocoder"/>
@@ -42,18 +41,13 @@
         <service id="misd_phone_number.form.type" class="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType">
             <tag name="form.type" alias="tel"/>
         </service>
-
+        
         <service id="misd_phone_number.serializer.handler" class="Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler">
-            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
-                 format="json" method="serializePhoneNumber"/>
-            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization"
-                 format="json" method="deserializePhoneNumberFromJson"/>
-            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
-                 format="xml" method="serializePhoneNumber"/>
-            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization"
-                 format="xml" method="deserializePhoneNumberFromXml"/>
-            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
-                 format="yml" method="serializePhoneNumber"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization" format="json" method="serializePhoneNumber"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization" format="json" method="deserializePhoneNumberFromJson"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization" format="xml" method="serializePhoneNumber"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization" format="xml" method="deserializePhoneNumberFromXml"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization" format="yml" method="serializePhoneNumber"/>
             <argument type="service" id="libphonenumber.phone_number_util"/>
         </service>
 
@@ -63,5 +57,4 @@
             <argument type="service" id="libphonenumber.phone_number_util" />
         </service>
     </services>
-
 </container>
