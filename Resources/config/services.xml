@@ -30,6 +30,8 @@
 
         <service id="misd_phone_number.templating.helper" class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper">
             <tag name="templating.helper" alias="phone_number_helper"/>
+            <!-- phone_number_format is deprecated and will be removed in 2.0 (use phone_number_helper instead) -->
+            <tag name="templating.helper" alias="phone_number_format"/>
             <argument type="service" id="libphonenumber.phone_number_util"/>
         </service>
 
@@ -41,7 +43,7 @@
         <service id="misd_phone_number.form.type" class="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType">
             <tag name="form.type" alias="tel"/>
         </service>
-        
+
         <service id="misd_phone_number.serializer.handler" class="Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler">
             <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization" format="json" method="serializePhoneNumber"/>
             <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization" format="json" method="deserializePhoneNumberFromJson"/>
