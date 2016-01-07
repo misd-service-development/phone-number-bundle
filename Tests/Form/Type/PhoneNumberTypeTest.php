@@ -37,7 +37,12 @@ class PhoneNumberTypeTest extends TypeTestCase
      */
     public function testSingleField($input, $options, $output)
     {
-        $type = new PhoneNumberType();
+        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
+            $type = new PhoneNumberType();
+        } else {
+            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
+        }
+        
         $form = $this->factory->create($type, null, $options);
 
         $form->submit($input);
