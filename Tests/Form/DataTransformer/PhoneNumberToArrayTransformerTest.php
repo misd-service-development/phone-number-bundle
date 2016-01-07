@@ -13,6 +13,7 @@ namespace Misd\PhoneNumberBundle\Tests\Form\DataTransformer;
 
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToArrayTransformer;
 use PHPUnit_Framework_TestCase as TestCase;
@@ -26,6 +27,16 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 class PhoneNumberToArrayTransformerTest extends TestCase
 {
     const TRANSFORMATION_FAILED = 'transformation_failed';
+
+    /**
+     * @var PhoneNumberUtil
+     */
+    protected $phoneNumberUtil;
+
+    protected function setUp()
+    {
+        $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
+    }
 
     public function testConstructor()
     {
@@ -41,11 +52,9 @@ class PhoneNumberToArrayTransformerTest extends TestCase
     {
         $transformer = new PhoneNumberToArrayTransformer($countryChoices);
 
-        $phoneNumberUtil = PhoneNumberUtil::getInstance();
-
         if (is_array($actual)) {
             try {
-                $phoneNumber = $phoneNumberUtil->parse($actual['number'], $actual['country']);
+                $phoneNumber = $this->phoneNumberUtil->parse($actual['number'], $actual['country']);
             } catch (NumberParseException $e) {
                 $phoneNumber = $actual['number'];
             }
@@ -117,7 +126,7 @@ class PhoneNumberToArrayTransformerTest extends TestCase
         }
 
         if ($transformed instanceof PhoneNumber) {
-            $transformed = (string) $transformed;
+            $transformed = $this->phoneNumberUtil->format($transformed, PhoneNumberFormat::E164);
         }
 
         $this->assertSame($expected, $transformed);
