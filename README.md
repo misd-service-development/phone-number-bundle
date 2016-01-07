@@ -5,6 +5,8 @@ PhoneNumberBundle
 
 This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony2 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
 
+The following assumes that you are using [Symfony bundles](http://symfony.com/doc/current/book/bundles.html), but you can use individual parts if you are only using a single [Symfony component](http://symfony.com/doc/current/components/index.html) for example. 
+
 Installation
 ------------
 
