@@ -67,8 +67,10 @@ class PhoneNumberType extends AbstractType
                     continue;
                 }
 
-                $countryChoices[$region] = sprintf('%s (+%s)', $name, $countries[$region]);
+                $countryChoices[sprintf('%s (+%s)', $name, $countries[$region])] = $region;
             }
+
+            $transformerChoices = array_values($countryChoices);
 
             $countryOptions = $numberOptions = array(
                 'error_bubbling' => true,
@@ -77,15 +79,26 @@ class PhoneNumberType extends AbstractType
                 'translation_domain' => $options['translation_domain'],
             );
 
+            if (method_exists('Symfony\\Component\\Form\\AbstractType', 'getBlockPrefix')) {
+                $choiceType = 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType';
+                $textType = 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType';
+                $countryOptions['choice_translation_domain'] = false;
+                $countryOptions['choices_as_values'] = true;
+            } else {
+                // To be removed when dependency on Symfony Form is bumped to 2.7.
+                $choiceType = 'choice';
+                $textType = 'text';
+                $countryChoices = array_flip($countryChoices);
+            }
+
             $countryOptions['required'] = true;
             $countryOptions['choices'] = $countryChoices;
             $countryOptions['preferred_choices'] = $options['preferred_country_choices'];
-            $countryOptions['choice_translation_domain'] = false;
 
             $builder
-                ->add('country', 'choice', $countryOptions)
-                ->add('number', 'text', $numberOptions)
-                ->addViewTransformer(new PhoneNumberToArrayTransformer(array_keys($countryChoices)));
+                ->add('country', $choiceType, $countryOptions)
+                ->add('number', $textType, $numberOptions)
+                ->addViewTransformer(new PhoneNumberToArrayTransformer($transformerChoices));
         } else {
             $builder->addViewTransformer(
                 new PhoneNumberToStringTransformer($options['default_region'], $options['format'])

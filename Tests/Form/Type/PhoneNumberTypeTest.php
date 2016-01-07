@@ -27,7 +27,7 @@ class PhoneNumberTypeTest extends TypeTestCase
 {
     protected function setUp()
     {
-        IntlTestHelper::requireIntl($this);
+        Locale::setDefault('en');
 
         parent::setUp();
     }
@@ -47,7 +47,11 @@ class PhoneNumberTypeTest extends TypeTestCase
 
         $form->submit($input);
 
-        $this->assertTrue($form->isSynchronized());
+        if(method_exists($form, 'getTransformationFailure') && $failure = $form->getTransformationFailure()) {
+            throw $failure;
+        } else {
+            $this->assertTrue($form->isSynchronized());
+        }
 
         $view = $form->createView();
 
@@ -78,11 +82,20 @@ class PhoneNumberTypeTest extends TypeTestCase
     public function testCountryChoiceValues($input, $options, $output)
     {
         $options['widget'] = PhoneNumberType::WIDGET_COUNTRY_CHOICE;
-        $form = $this->factory->create(new PhoneNumberType(), null, $options);
+        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
+            $type = new PhoneNumberType();
+        } else {
+            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
+        }
+        $form = $this->factory->create($type, null, $options);
 
         $form->submit($input);
 
-        $this->assertTrue($form->isSynchronized());
+        if(method_exists($form, 'getTransformationFailure') && $failure = $form->getTransformationFailure()) {
+            throw $failure;
+        } else {
+            $this->assertTrue($form->isSynchronized());
+        }
 
         $view = $form->createView();
 
@@ -111,7 +124,14 @@ class PhoneNumberTypeTest extends TypeTestCase
      */
     public function testCountryChoiceChoices(array $choices, $expectedChoicesCount, array $expectedChoices)
     {
-        $form = $this->factory->create(new PhoneNumberType(), null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices));
+        IntlTestHelper::requireIntl($this);
+
+        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
+            $type = new PhoneNumberType();
+        } else {
+            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
+        }
+        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices));
 
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];
@@ -134,23 +154,23 @@ class PhoneNumberTypeTest extends TypeTestCase
                 array(),
                 count(PhoneNumberUtil::getInstance()->getSupportedRegions()),
                 array(
-                    $this->createChoiceView('United Kingdom (+44)', 'GB', 'GB'),
+                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
                 ),
             ),
             array(
                 array('GB', 'US'),
                 2,
                 array(
-                    $this->createChoiceView('United Kingdom (+44)', 'GB', 'GB'),
-                    $this->createChoiceView('United States (+1)', 'US', 'US'),
+                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
+                    $this->createChoiceView('United States (+1)', 'US'),
                 ),
             ),
             array(
                 array('GB', 'US', PhoneNumberUtil::UNKNOWN_REGION),
                 2,
                 array(
-                    $this->createChoiceView('United Kingdom (+44)', 'GB', 'GB'),
-                    $this->createChoiceView('United States (+1)', 'US', 'US'),
+                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
+                    $this->createChoiceView('United States (+1)', 'US'),
                 ),
             ),
         );
@@ -166,7 +186,7 @@ class PhoneNumberTypeTest extends TypeTestCase
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];
 
-        $this->assertContains($this->createChoiceView('Royaume-Uni (+44)', 'GB', 'GB'), $choices, '', false, false);
+        $this->assertContains($this->createChoiceView('Royaume-Uni (+44)', 'GB'), $choices, '', false, false);
         $this->assertFalse($view['country']->vars['choice_translation_domain']);
     }
 
@@ -175,10 +195,15 @@ class PhoneNumberTypeTest extends TypeTestCase
      */
     public function testInvalidWidget()
     {
-        $this->factory->create(new PhoneNumberType(), null, array('widget' => 'foo'));
+        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
+            $type = new PhoneNumberType();
+        } else {
+            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
+        }
+        $this->factory->create($type, null, array('widget' => 'foo'));
     }
 
-    private function createChoiceView($data, $value, $label)
+    private function createChoiceView($label, $code)
     {
         if (class_exists('Symfony\Component\Form\ChoiceList\View\ChoiceView')) {
             $class = 'Symfony\Component\Form\ChoiceList\View\ChoiceView';
@@ -186,6 +211,6 @@ class PhoneNumberTypeTest extends TypeTestCase
             $class = 'Symfony\Component\Form\Extension\Core\View\ChoiceView';
         }
 
-        return new $class($data, $value, $label);
+        return new $class($code, $code, $label);
     }
 }
