@@ -18,8 +18,6 @@ use SimpleXMLElement;
 
 /**
  * Phone number serialization handler test.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberHandlerTest extends TestCase
 {

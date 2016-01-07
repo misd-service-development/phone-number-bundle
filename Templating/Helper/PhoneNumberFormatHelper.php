@@ -19,8 +19,6 @@ use Symfony\Component\Templating\Helper\HelperInterface;
 
 /**
  * Phone number format templating helper.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberFormatHelper implements HelperInterface
 {

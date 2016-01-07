@@ -20,8 +20,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Phone number bundle.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class MisdPhoneNumberBundle extends Bundle
 {

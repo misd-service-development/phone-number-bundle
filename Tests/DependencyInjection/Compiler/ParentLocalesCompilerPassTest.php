@@ -19,8 +19,6 @@ use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * Parent locales compiler pass test.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class ParentLocalesCompilerPassTest extends TestCase
 {

@@ -20,8 +20,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * Phone number to array transformer.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberToArrayTransformer implements DataTransformerInterface
 {

@@ -20,8 +20,6 @@ use Symfony\Component\Intl\Util\IntlTestHelper;
 
 /**
  * Phone number form type test.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberTypeTest extends TypeTestCase
 {

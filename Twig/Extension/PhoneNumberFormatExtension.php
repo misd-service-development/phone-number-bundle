@@ -17,8 +17,6 @@ use Twig_SimpleFunction as SimpleFunction;
 
 /**
  * Phone number format Twig extension.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberFormatExtension extends Extension
 {

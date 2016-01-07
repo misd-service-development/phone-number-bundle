@@ -21,8 +21,6 @@ use SimpleXMLElement;
 
 /**
  * Phone number serialization handler.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberHandler
 {

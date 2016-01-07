@@ -26,8 +26,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Phone number form type.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberType extends AbstractType
 {

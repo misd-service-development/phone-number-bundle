@@ -17,8 +17,6 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Phone number constraint.
  *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
- *
  * @Annotation
  */
 class PhoneNumber extends Constraint

@@ -22,8 +22,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
  * Phone number validator.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberValidator extends ConstraintValidator
 {

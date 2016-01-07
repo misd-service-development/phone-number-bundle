@@ -21,8 +21,6 @@ use libphonenumber\PhoneNumberUtil;
 
 /**
  * Phone number Doctrine mapping type.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberType extends Type
 {

@@ -20,8 +20,6 @@ use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Phone number validator test.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberValidatorTest extends TestCase
 {

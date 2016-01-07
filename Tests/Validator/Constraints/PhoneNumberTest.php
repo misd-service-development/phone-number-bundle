@@ -16,8 +16,6 @@ use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Phone number constraint test.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberTest extends TestCase
 {

@@ -22,8 +22,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * to have lots of duplicated translations we add them in here.
  *
  * See https://github.com/symfony/symfony/issues/12319 for further details.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class ParentLocalesCompilerPass implements CompilerPassInterface
 {

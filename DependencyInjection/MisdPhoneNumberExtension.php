@@ -20,8 +20,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * Bundle extension.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class MisdPhoneNumberExtension extends Extension
 {

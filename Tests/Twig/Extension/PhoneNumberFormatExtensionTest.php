@@ -16,8 +16,6 @@ use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Phone number format Twig extension test.
- *
- * @author Chris Wilkinson <chris.wilkinson@admin.cam.ac.uk>
  */
 class PhoneNumberFormatExtensionTest extends TestCase
 {
