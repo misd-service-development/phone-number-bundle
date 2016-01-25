@@ -33,7 +33,6 @@
         "symfony/twig-bundle": "Format phone numbers in Twig templates",
         "symfony/validator": "Add a validation constraint"
     },
-    "minimum-stability": "alpha",
     "autoload": {
         "psr-4": {
             "Misd\\PhoneNumberBundle\\": ""
