@@ -10,6 +10,10 @@ php:
   - 7.0
   - hhvm
 
+cache:
+    directories:
+        - $HOME/.composer/cache/files
+
 matrix:
     fast_failure: true
     include:
@@ -27,6 +31,6 @@ before_install:
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require --dev --no-update symfony/symfony:$SYMFONY_VERSION; fi
 
 install:
-  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --prefer-source --no-interaction; else composer update --prefer-source --no-interaction; fi;
+  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction; else composer update --prefer-dist --no-interaction; fi;
 
 script: ./vendor/bin/phpunit --coverage-text
