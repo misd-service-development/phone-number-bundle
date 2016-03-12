@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.1
+-----
+
+12 March 2016.
+
+* Correct the block prefix for PhoneNumberType in Symfony 3.
+
 1.1.0
 -----
 
