@@ -201,6 +201,14 @@ class PhoneNumberTypeTest extends TypeTestCase
         $this->factory->create($type, null, array('widget' => 'foo'));
     }
 
+    public function testGetNameAndBlockPrefixAreTel()
+    {
+        $type = new PhoneNumberType();
+
+        $this->assertSame('tel', $type->getBlockPrefix());
+        $this->assertSame($type->getBlockPrefix(), $type->getName());
+    }
+
     private function createChoiceView($label, $code)
     {
         if (class_exists('Symfony\Component\Form\ChoiceList\View\ChoiceView')) {
