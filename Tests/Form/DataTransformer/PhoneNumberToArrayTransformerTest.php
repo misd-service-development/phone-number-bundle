@@ -155,6 +155,11 @@ class PhoneNumberToArrayTransformerTest extends TestCase
             ),
             array(
                 array('GB'),
+                array('country' => 'GB', 'number' => ''),
+                null,
+            ),
+            array(
+                array('GB'),
                 array('country' => '', 'number' => 'foo'),
                 self::TRANSFORMATION_FAILED,
             ),
