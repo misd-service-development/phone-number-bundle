@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.1.2
+-----
+
+31 March 2016.
+
+* Allow the country choice form widget to not be required.
+* Add difference between form type in Symfony 2 and 3 to the documentation.
+
 1.1.1
 -----
 
