@@ -110,18 +110,19 @@ Phone numbers can be deserialized from an international format by setting the ty
 
 ### Using `libphonenumber\PhoneNumber` objects in forms
 
-You can use the `tel` form type to create phone number fields. There are two widgets available.
+You can use the `PhoneNumberType` (`tel` for Symfony <= 2.7) form type to create phone number fields. There are two widgets available.
 
 #### Single text field
 
 A single text field allows the user to type in the complete phone number. When an international prefix is not entered, the number is assumed to be part of the set `default_region`. For example:
 
     use libphonenumber\PhoneNumberFormat;
+    use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
     use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('phone_number', 'tel', array('default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL));
+        $builder->add('phone_number', PhoneNumberType::class, array('default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL));
     }
 
 By default the `default_region` and `format` options are `PhoneNumberUtil::UNKNOWN_REGION` and `PhoneNumberFormat::INTERNATIONAL` respectively.
@@ -136,7 +137,7 @@ The phone number can be split into a country choice and phone number text fields
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('phone_number', 'tel', array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => array('GB', 'JE', 'FR', 'US'), 'preferred_country_choices' => array('GB', 'JE')));
+        $builder->add('phone_number', PhoneNumberType::class, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => array('GB', 'JE', 'FR', 'US'), 'preferred_country_choices' => array('GB', 'JE')));
     }
 
 This produces the preferred choices of 'Jersey' and 'United Kingdom', and regular choices of 'France' and 'United States'.
