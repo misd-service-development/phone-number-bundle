@@ -129,7 +129,7 @@ class PhoneNumberTypeTest extends TypeTestCase
         } else {
             $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
         }
-        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices));
+        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices, 'country_placeholder' => 'Choose a Country'));
 
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];
