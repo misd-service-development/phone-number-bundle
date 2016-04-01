@@ -129,7 +129,7 @@ class PhoneNumberTypeTest extends TypeTestCase
         } else {
             $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
         }
-        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices, 'country_placeholder' => 'Choose a Country'));
+        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices));
 
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];
@@ -171,6 +171,48 @@ class PhoneNumberTypeTest extends TypeTestCase
                     $this->createChoiceView('United States (+1)', 'US'),
                 ),
             ),
+        );
+    }
+
+    /**
+     * @dataProvider countryChoicePlaceholderProvider
+     * @param $placeholder
+     * @param $expectedPlaceholder
+     */
+    public function testCountryChoicePlaceholder($placeholder, $expectedPlaceholder)
+    {
+        IntlTestHelper::requireIntl($this);
+        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
+            $type = new PhoneNumberType();
+        } else {
+            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
+        }
+        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_placeholder' => $placeholder));
+
+        $view = $form->createView();
+        $renderedPlaceholder = $view['country']->vars['placeholder'];
+        $this->assertEquals($expectedPlaceholder, $renderedPlaceholder);
+    }
+    /**
+     * 0 => Filled
+     * 1 => not filled
+     * 2 => empty
+     */
+    public function countryChoicePlaceholderProvider()
+    {
+        return array(
+            array(
+                "Choose a country",
+                "Choose a country"
+            ),
+            array(
+                null,
+                null
+            ),
+            array(
+                "",
+                ""
+            )
         );
     }
 
