@@ -166,12 +166,12 @@ class PhoneNumberToArrayTransformerTest extends TestCase
             array(
                 array('GB'),
                 array('country' => 'GB', 'number' => '01234 567890'),
-                'Country Code: 44 National Number: 1234567890 Country Code Source: ',
+                '+441234567890',
             ),
             array(
                 array('GB'),
                 array('country' => 'GB', 'number' => '+44 1234 567890'),
-                'Country Code: 44 National Number: 1234567890 Country Code Source: ',
+                '+441234567890',
             ),
             array(// Country code not in list.
                 array('US'),
