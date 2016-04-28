@@ -64,10 +64,14 @@ class PhoneNumberType extends AbstractType
                 if (false === isset($countries[$region])) {
                     continue;
                 }
+                
+                if (null !== $options['country_widget_label'] && is_callable($options['country_widget_label'])) {
+                    $countryChoices[$options['country_widget_label']($countries, $name, $region)] = $region;
+                } else {
+                    $countryChoices[sprintf('%s (+%s)', $name, $countries[$region])] = $region;
+                }
 
-                $countryChoices[sprintf('%s (+%s)', $name, $countries[$region])] = $region;
             }
-
             $transformerChoices = array_values($countryChoices);
 
             $countryOptions = $numberOptions = array(
@@ -141,6 +145,7 @@ class PhoneNumberType extends AbstractType
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'country_choices' => array(),
+                'country_widget_label' => null,
                 'preferred_country_choices' => array(),
             )
         );
