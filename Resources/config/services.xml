@@ -60,6 +60,11 @@
             <argument type="service" id="libphonenumber.phone_number_util"/>
         </service>
 
+        <service id="misd_phone_number.serializer.normalizer" class="Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer">
+            <tag name="serializer.normalizer" />
+
+            <argument type="service" id="libphonenumber.phone_number_util" />
+        </service>
     </services>
 
 </container>
