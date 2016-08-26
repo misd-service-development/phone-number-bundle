@@ -11,10 +11,6 @@
 
 namespace Misd\PhoneNumberBundle\Twig\Extension;
 
-use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
-use Twig_Extension as Extension;
-use Twig_SimpleFunction as SimpleFunction;
-
 /**
  * @deprecated PhoneNumberFormatExtension is deprecated and will be removed in 2.0. Use PhoneNumberHelperExtension instead
  */
