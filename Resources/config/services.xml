@@ -12,7 +12,9 @@
         <parameter key="libphonenumber.phone_number_to_carrier_mapper.class">libphonenumber\PhoneNumberToCarrierMapper</parameter>
         <parameter key="libphonenumber.phone_number_to_time_zones_mapper.class">libphonenumber\PhoneNumberToTimeZonesMapper</parameter>
         <parameter key="misd_phone_number.templating.helper.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper</parameter>
+        <parameter key="misd_phone_number.templating.helper.format.class">%misd_phone_number.templating.helper.class%</parameter>
         <parameter key="misd_phone_number.twig.extension.class">Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension</parameter>
+        <parameter key="misd_phone_number.twig.extension.format.class">%misd_phone_number.twig.extension.class%</parameter>
         <parameter key="misd_phone_number.form.type.class">Misd\PhoneNumberBundle\Form\Type\PhoneNumberType</parameter>
         <parameter key="misd_phone_number.serializer.handler.class">Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler</parameter>
     </parameters>
