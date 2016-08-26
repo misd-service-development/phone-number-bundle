@@ -29,7 +29,8 @@
 
         <service id="libphonenumber.phone_number_to_time_zones_mapper" class="libphonenumber\PhoneNumberToTimeZonesMapper"/>
 
-        <service id="misd_phone_number.templating.helper" class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper">
+        <service id="misd_phone_number.templating.helper"
+                 class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper">
             <tag name="templating.helper" alias="phone_number_helper"/>
             <!-- phone_number_format is deprecated and will be removed in 2.0 (use phone_number_helper instead) -->
             <tag name="templating.helper" alias="phone_number_format"/>
@@ -37,7 +38,8 @@
 
         </service>
 
-        <service id="misd_phone_number.twig.extension.format" class="Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension" public="false">
+        <service id="misd_phone_number.twig.extension.format" class="Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension"
+                 public="false">
             <tag name="twig.extension"/>
             <argument type="service" id="misd_phone_number.templating.helper"/>
         </service>
