@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.3
+-----
+
+7 September 2016.
+
+* Add basic Danish, Swedish and Finnish translations.
+
 1.1.2
 -----
 
