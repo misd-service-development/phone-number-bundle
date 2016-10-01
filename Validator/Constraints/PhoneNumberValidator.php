@@ -18,6 +18,7 @@ use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
@@ -44,7 +45,7 @@ class PhoneNumberValidator extends ConstraintValidator
             $value = (string) $value;
 
             try {
-                $phoneNumber = $phoneUtil->parse($value, $constraint->defaultRegion);
+                $phoneNumber = $phoneUtil->parse($value, $this->getRegion($constraint));
             } catch (NumberParseException $e) {
                 $this->addViolation($value, $constraint);
 
@@ -121,5 +122,26 @@ class PhoneNumberValidator extends ConstraintValidator
             $constraint->getMessage(),
             array('{{ type }}' => $constraint->getType(), '{{ value }}' => $value)
         );
+    }
+    
+    /**
+     * Select the region.
+     *
+     * @param Constraint $constraint The constraint for the validation.
+     */
+    private function getRegion(Constraint $constraint)
+    {
+        $object = $this->context->getObject();
+        $getter = $constraint->getter;
+        if (null !== $getter) {
+            if (!is_callable(array($object, $getter))) {
+                $message = 'Method "%s" used as region code getter does not exist in class %s';
+                throw new ConstraintDefinitionException(sprintf($message, $getter, get_class($object)));
+            }
+        
+            return $object->$getter();
+        }
+        
+        return $this->defaultRegion;
     }
 }
