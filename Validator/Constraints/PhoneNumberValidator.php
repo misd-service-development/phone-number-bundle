@@ -16,7 +16,7 @@ use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Misd\PhoneNumberBundle\Exception\MissingDependencyException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
@@ -131,6 +131,9 @@ class PhoneNumberValidator extends ConstraintValidator
      * @param Constraint $constraint The constraint for the validation.
      *
      * @return string Region code (2 digits)
+     *
+     * @throws ConstraintDefinitionException
+     * @throws MissingDependencyException
      */
     private function getRegion(Constraint $constraint)
     {
@@ -138,7 +141,10 @@ class PhoneNumberValidator extends ConstraintValidator
         $path = $constraint->path;
         
         if (null !== $path) {
-            $accessor = PropertyAccess::createPropertyAccessor();
+            if (!class_exists('\Symfony\Component\PropertyAccess\PropertyAccess')) {
+                throw new MissingDependencyException('You should install "symfony/property-access" in order to use the "path" attribute.');
+            }
+            $accessor = \Symfony\Component\PropertyAccess\PropertyAccess::createPropertyAccessor();
             if (!$accessor->isReadable($object, $path)) {
                 $message = 'Method or property "%s" used as region code path does not exist in class %s';
                 throw new ConstraintDefinitionException(sprintf($message, $path, get_class($object)));

@@ -31,7 +31,8 @@
         "symfony/form": "Add a data transformer",
         "symfony/templating": "Format phone numbers in templates",
         "symfony/twig-bundle": "Format phone numbers in Twig templates",
-        "symfony/validator": "Add a validation constraint"
+        "symfony/validator": "Add a validation constraint",
+        "symfony/property-access": "Allow the use of dynamic region code"
     },
     "autoload": {
         "psr-4": {
