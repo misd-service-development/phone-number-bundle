@@ -16,6 +16,7 @@ use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
@@ -128,20 +129,24 @@ class PhoneNumberValidator extends ConstraintValidator
      * Select the region.
      *
      * @param Constraint $constraint The constraint for the validation.
+     *
+     * @return string Region code (2 digits)
      */
     private function getRegion(Constraint $constraint)
     {
         $object = $this->context->getObject();
-        $getter = $constraint->getter;
-        if (null !== $getter) {
-            if (!is_callable(array($object, $getter))) {
-                $message = 'Method "%s" used as region code getter does not exist in class %s';
-                throw new ConstraintDefinitionException(sprintf($message, $getter, get_class($object)));
+        $path = $constraint->path;
+        
+        if (null !== $path) {
+            $accessor = PropertyAccess::createPropertyAccessor();
+            if (!$accessor->isReadable($object, $path)) {
+                $message = 'Method or property "%s" used as region code path does not exist in class %s';
+                throw new ConstraintDefinitionException(sprintf($message, $path, get_class($object)));
             }
         
-            return $object->$getter();
+            return $accessor->getValue($object, $path);
         }
         
-        return $this->defaultRegion;
+        return $constraint->defaultRegion;
     }
 }

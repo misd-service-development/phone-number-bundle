@@ -26,7 +26,7 @@ class PhoneNumberTest extends TestCase
         $this->assertObjectHasAttribute('message', $phoneNumber);
         $this->assertObjectHasAttribute('type', $phoneNumber);
         $this->assertObjectHasAttribute('defaultRegion', $phoneNumber);
-        $this->assertObjectHasAttribute('getter', $phoneNumber);
+        $this->assertObjectHasAttribute('path', $phoneNumber);
     }
 
     /**
