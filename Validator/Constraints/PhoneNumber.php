@@ -33,10 +33,10 @@ class PhoneNumber extends Constraint
     const VOIP = 'voip';
     const VOICEMAIL = 'voicemail';
 
-    public $message = null;
-    public $type = self::ANY;
-    public $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION;
-    public $path = null;
+    public $message        = null;
+    public $type           = self::ANY;
+    public $defaultRegion  = PhoneNumberUtil::UNKNOWN_REGION;
+    public $regionProperty = null;
 
     public function getType()
     {

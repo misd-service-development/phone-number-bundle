@@ -163,6 +163,23 @@ You can set the default region through the `defaultRegion` property:
      * @AssertPhoneNumber(defaultRegion="GB")
      */
     private $phoneNumber;
+    
+You can get the region dynamically through the `regionProperty` property:
+
+    use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+
+    /**
+     * @AssertPhoneNumber(regionProperty="countryCode")
+     */
+    private $phoneNumber;
+    
+    private $countryCode;
+    
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+Requires the `symfony/property-access` package to be installed.
 
 By default any valid phone number will be accepted. You can restrict the type through the `type` property, recognised values:
 

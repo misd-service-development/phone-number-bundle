@@ -124,7 +124,7 @@ class PhoneNumberValidator extends ConstraintValidator
             array('{{ type }}' => $constraint->getType(), '{{ value }}' => $value)
         );
     }
-    
+
     /**
      * Select the region.
      *
@@ -138,8 +138,8 @@ class PhoneNumberValidator extends ConstraintValidator
     private function getRegion(Constraint $constraint)
     {
         $object = $this->context->getObject();
-        $path = $constraint->path;
-        
+        $path = $constraint->regionProperty;
+
         if (null !== $path) {
             if (!class_exists('\Symfony\Component\PropertyAccess\PropertyAccess')) {
                 throw new MissingDependencyException('You should install "symfony/property-access" in order to use the "path" attribute.');
@@ -149,10 +149,10 @@ class PhoneNumberValidator extends ConstraintValidator
                 $message = 'Method or property "%s" used as region code path does not exist in class %s';
                 throw new ConstraintDefinitionException(sprintf($message, $path, get_class($object)));
             }
-        
+
             return $accessor->getValue($object, $path);
         }
-        
+
         return $constraint->defaultRegion;
     }
 }
