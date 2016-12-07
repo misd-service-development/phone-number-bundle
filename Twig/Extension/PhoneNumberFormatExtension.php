@@ -12,13 +12,13 @@
 namespace Misd\PhoneNumberBundle\Twig\Extension;
 
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper;
-use Twig_Extension as Extension;
-use Twig_SimpleFunction as SimpleFunction;
 
 /**
  * Phone number format Twig extension.
+ *
+ * @author Stefano Arlandini <sarlandini@alice.it>
  */
-class PhoneNumberFormatExtension extends Extension
+class PhoneNumberFormatExtension extends \Twig_Extension
 {
     /**
      * Phone number format helper.
@@ -43,7 +43,17 @@ class PhoneNumberFormatExtension extends Extension
     public function getFunctions()
     {
         return array(
-            new SimpleFunction('phone_number_format', array($this->helper, 'format'))
+            new \Twig_SimpleFunction('phone_number_format', array($this->helper, 'format'), array('deprecated' => '1.2'))
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('phone_number_format', array($this->helper, 'format')),
         );
     }
 
