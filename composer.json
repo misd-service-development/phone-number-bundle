@@ -27,7 +27,8 @@
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
-        "jms/serializer-bundle": "Serialize/deserialize phone numbers",
+        "jms/serializer-bundle": "Serialize/deserialize phone numbers using JSM library",
+        "symfony/serializer": "Serialize/deserialize phone numbers using Symfony library",
         "symfony/form": "Add a data transformer",
         "symfony/templating": "Format phone numbers in templates",
         "symfony/twig-bundle": "Format phone numbers in Twig templates",
