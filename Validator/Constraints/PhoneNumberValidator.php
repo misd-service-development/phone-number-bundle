@@ -16,6 +16,7 @@ use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -30,6 +31,10 @@ class PhoneNumberValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        if (!$constraint instanceof PhoneNumber) {
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\PhoneNumberValidator');
+        }
+
         if (null === $value || '' === $value) {
             return;
         }
@@ -117,9 +122,18 @@ class PhoneNumberValidator extends ConstraintValidator
      */
     private function addViolation($value, Constraint $constraint)
     {
-        $this->context->addViolation(
-            $constraint->getMessage(),
-            array('{{ type }}' => $constraint->getType(), '{{ value }}' => $value)
-        );
+        /** @var \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber $constraint */
+        if ($this->context instanceof ExecutionContextInterface) {
+            $this->context->buildViolation($constraint->getMessage())
+                ->setParameter('{{ type }}', $constraint->getType())
+                ->setParameter('{{ value }}', $this->formatValue($value))
+                ->setCode(PhoneNumber::INVALID_PHONE_NUMBER_ERROR)
+                ->addViolation();
+        } else {
+            $this->context->addViolation($constraint->getMessage(), array(
+                '{{ type }}' => $constraint->getType(),
+                '{{ value }}' => $value
+            ));
+        }
     }
 }
