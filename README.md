@@ -75,11 +75,11 @@ Note that if you're putting the `phone_number` type on an already-existing schem
 
 #### Twig
 
-The `phone_number_format` function takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberFormat` constant name.
+The `phone_number_format` filter can be used to format a phone number object. A `libphonenumber\PhoneNumberFormat` constant can be passed as argument to specify in which format the number should be printed.
 
 For example, to format an object called `myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format:
 
-    {{ phone_number_format(myPhoneNumber, 'NATIONAL') }}
+    {{ myPhoneNumber|phone_number_format('NATIONAL') }}
 
 By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
 
