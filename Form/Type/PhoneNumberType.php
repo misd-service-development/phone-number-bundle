@@ -83,8 +83,7 @@ class PhoneNumberType extends AbstractType
                 $countryOptions['choice_translation_domain'] = false;
 
                 // To be removed when dependency on Symfony Form is bumped to 3.1.
-                $reflectionClass = new \ReflectionClass('\Symfony\Component\Form\Extension\Core\Type\TextType');
-                if (!$reflectionClass->implementsInterface('\Symfony\Component\Form\DataTransformerInterface')) {
+                if (!in_array('Symfony\\Component\\Form\\DataTransformerInterface', class_implements('Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType'))) {
                     $countryOptions['choices_as_values'] = true;
                 }
             } else {
