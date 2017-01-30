@@ -96,6 +96,10 @@ class PhoneNumberType extends AbstractType
             $countryOptions['required'] = true;
             $countryOptions['choices'] = $countryChoices;
             $countryOptions['preferred_choices'] = $options['preferred_country_choices'];
+            if($options['default_region']!= PhoneNumberUtil::UNKNOWN_REGION) {
+                $countryOptions['data'] = $options['default_region'];
+            }
+
 
             $builder
                 ->add('country', $choiceType, $countryOptions)
