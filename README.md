@@ -7,7 +7,7 @@ PhoneNumberBundle
 [![Latest stable version](https://img.shields.io/packagist/v/misd/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/misd/phone-number-bundle)
 [![License](http://img.shields.io/packagist/l/misd/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/misd/phone-number-bundle)
 
-This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony2 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
+This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony2/Symfony3 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
 
 Installation
 ------------
