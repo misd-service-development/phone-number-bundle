@@ -14,6 +14,7 @@ namespace Misd\PhoneNumberBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -21,7 +22,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * Bundle extension.
  */
-class MisdPhoneNumberExtension extends Extension
+class MisdPhoneNumberExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -36,6 +37,23 @@ class MisdPhoneNumberExtension extends Extension
         $this->setFactory($container->getDefinition('libphonenumber.short_number_info'));
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_carrier_mapper'));
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_time_zones_mapper'));
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $container->prependExtensionConfig('doctrine', array(
+            'dbal' => array(
+                'types' => array(
+                    'phone_number' => array(
+                        'class' => 'Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType',
+                        'commented' => false
+                    )
+                )
+            )
+        ));
     }
 
     /**

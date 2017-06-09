@@ -51,14 +51,7 @@ So to parse a string into a `libphonenumber\PhoneNumber` object:
 
 *Requires `doctrine/doctrine-bundle`.*
 
-To persist `libphonenumber\PhoneNumber` objects, add the `Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType` mapping to your application's config:
-
-    // app/config.yml
-
-    doctrine:
-        dbal:
-            types:
-                phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
+To be able to persist `libphonenumber\PhoneNumber` objects, the `Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType` custom DBAL type is automatically registered in your application config under the `phone_number` key.
 
 You can then use the `phone_number` mapping:
 
