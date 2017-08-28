@@ -71,6 +71,14 @@ class MisdPhoneNumberExtensionTest extends TestCase
           'templating.helper',
           array('alias' => 'phone_number_helper')
         );
+
+        // Assert deprecated 'phone_number_format' alias
+        $this->assertServiceHasTag(
+            'misd_phone_number.templating.helper',
+            'templating.helper',
+            array('alias' => 'phone_number_format')
+        );
+
         $this->assertHasService(
           'misd_phone_number.form.type',
           'Misd\PhoneNumberBundle\Form\Type\PhoneNumberType'
