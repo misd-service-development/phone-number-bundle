@@ -41,7 +41,8 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('phone_number_format', array($this->helper, 'format'), array('deprecated' => '1.2'))
+            new \Twig_SimpleFunction('phone_number_format', array($this->helper, 'format'), array('deprecated' => '1.2')),
+            new \Twig_SimpleFunction('phone_number_is_type', array($this->helper, 'isType'), array('deprecated' => '1.2')),
         );
     }
 
