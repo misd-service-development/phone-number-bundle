@@ -52,7 +52,7 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('phone_number_format', array($this->helper, 'format')),
-            new \Twig_SimpleFilter('phone_number_is_mobile', array($this->helper, 'isMobile')),
+            new \Twig_SimpleFilter('phone_number_is_type', array($this->helper, 'isType')),
         );
     }
 
