@@ -12,6 +12,7 @@
 namespace Misd\PhoneNumberBundle\Tests\Templating\Helper;
 
 use libphonenumber\PhoneNumberFormat;
+use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 use PHPUnit_Framework_TestCase as TestCase;
 
@@ -93,5 +94,14 @@ class PhoneNumberHelperTest extends TestCase
         $helper = new PhoneNumberHelper($phoneNumberUtil);
 
         $helper->format($phoneNumber, 'foo');
+    }
+
+    public function testDeprecatedClassName() {
+        $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
+            ->disableOriginalConstructor()->getMock();
+
+        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+
+        $this->assertInstanceOf('Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper', $helper);
     }
 }
