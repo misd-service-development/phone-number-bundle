@@ -58,7 +58,7 @@ To persist `libphonenumber\PhoneNumber` objects, add the `Misd\PhoneNumberBundle
     doctrine:
         dbal:
             types:
-                phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
+                phonenumber: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
 
 You can then use the `phone_number` mapping:
 
