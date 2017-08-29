@@ -1,9 +1,10 @@
+dist: trusty
+
 sudo: false
 
 language: php
 
 php:
-  - 5.3
   - 5.4
   - 5.5
   - 5.6
@@ -18,7 +19,8 @@ cache:
 matrix:
     fast_failure: true
     include:
-        - php: 5.3
+        - dist: precise
+          php: 5.3
           env: dependencies=lowest
         - php: 7.0
           env: SYMFONY_VERSION=2.3.x
