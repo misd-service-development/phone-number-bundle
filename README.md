@@ -86,11 +86,11 @@ By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat:
 
 ###### phone_number_is_type
 
-The `phone_number_is_type` filter can be used to check a phone number against a type: A `libphonenumber\PhoneNumberType` constant name must be passed to specify to which type a number has to match.
+The `phone_number_of_type` test can be used to check a phone number against a type: A `libphonenumber\PhoneNumberType` constant name must be passed to specify to which type a number has to match.
 
 For example, to check if an object called `myPhoneNumber` is a `libphonenumber\PhoneNumberType::MOBILE` type:
 
-    {% if myPhoneNumber|phone_number_is_type('MOBILE') }} %} ... {% endif %}
+    {% if myPhoneNumber is phone_number_of_type('MOBILE') }} %} ... {% endif %}
 
 #### PHP template
 

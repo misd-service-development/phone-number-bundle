@@ -53,7 +53,16 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('phone_number_format', array($this->helper, 'format')),
-            new \Twig_SimpleFilter('phone_number_is_type', array($this->helper, 'isType')),
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTests()
+    {
+        return array(
+            new \Twig_SimpleTest('phone_number_of_type', array($this->helper, 'isType')),
         );
     }
 

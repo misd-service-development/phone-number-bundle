@@ -70,7 +70,7 @@ class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $filters = $this->extension->getFilters();
 
-        $this->assertCount(2, $filters);
+        $this->assertCount(1, $filters);
         $this->assertInstanceOf('Twig_SimpleFilter', $filters[0]);
         $this->assertSame('phone_number_format', $filters[0]->getName());
 
@@ -78,11 +78,17 @@ class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($this->helper, $callable[0]);
         $this->assertSame('format', $callable[1]);
+    }
 
-        $this->assertInstanceOf('Twig_SimpleFilter', $filters[1]);
-        $this->assertSame('phone_number_is_type', $filters[1]->getName());
+    public function testGetTests()
+    {
+        $tests = $this->extension->getTests();
 
-        $callable = $filters[1]->getCallable();
+        $this->assertCount(1, $tests);
+        $this->assertInstanceOf('Twig_SimpleTest', $tests[0]);
+        $this->assertSame('phone_number_of_type', $tests[0]->getName());
+
+        $callable = $tests[0]->getCallable();
 
         $this->assertSame($this->helper, $callable[0]);
         $this->assertSame('isType', $callable[1]);
