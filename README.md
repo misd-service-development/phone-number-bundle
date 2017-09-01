@@ -84,7 +84,7 @@ For example, to format an object called `myPhoneNumber` in the `libphonenumber\P
 
 By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
 
-###### phone_number_is_type
+###### phone_number_of_type
 
 The `phone_number_of_type` test can be used to check a phone number against a type: A `libphonenumber\PhoneNumberType` constant name must be passed to specify to which type a number has to match.
 
