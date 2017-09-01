@@ -174,6 +174,7 @@ The phone number can be split into a country choice and phone number text fields
 This produces the preferred choices of 'Jersey' and 'United Kingdom', and regular choices of 'France' and 'United States'.
 
 By default the `country_choices` is empty, which means all countries are included, as is `preferred_country_choices`.
+The option `country_placeholder` can be specified to create a placeholder option on above the whole list.
 
 ### Validating phone numbers
 
