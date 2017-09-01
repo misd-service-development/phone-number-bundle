@@ -13,19 +13,20 @@ namespace Misd\PhoneNumberBundle\Tests\Templating\Helper;
 
 use libphonenumber\PhoneNumberFormat;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper;
+use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * Phone number format templating helper test.
+ * Phone number templating helper test.
  */
-class PhoneNumberFormatHelperTest extends TestCase
+class PhoneNumberHelperTest extends TestCase
 {
     public function testConstructor()
     {
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
 
-        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+        $helper = new PhoneNumberHelper($phoneNumberUtil);
 
         $this->assertInstanceOf('Symfony\Component\Templating\Helper\HelperInterface', $helper);
     }
@@ -35,7 +36,7 @@ class PhoneNumberFormatHelperTest extends TestCase
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
 
-        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+        $helper = new PhoneNumberHelper($phoneNumberUtil);
 
         $helper->setCharset('test');
 
@@ -47,7 +48,7 @@ class PhoneNumberFormatHelperTest extends TestCase
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
 
-        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+        $helper = new PhoneNumberHelper($phoneNumberUtil);
 
         $this->assertTrue(is_string($helper->getName()));
     }
@@ -63,7 +64,7 @@ class PhoneNumberFormatHelperTest extends TestCase
             ->disableOriginalConstructor()->getMock();
         $phoneNumberUtil->expects($this->once())->method('format')->with($phoneNumber, $expectedFormat);
 
-        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+        $helper = new PhoneNumberHelper($phoneNumberUtil);
 
         $helper->format($phoneNumber, $format);
     }
@@ -90,8 +91,17 @@ class PhoneNumberFormatHelperTest extends TestCase
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
 
-        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+        $helper = new PhoneNumberHelper($phoneNumberUtil);
 
         $helper->format($phoneNumber, 'foo');
+    }
+
+    public function testDeprecatedClassName() {
+        $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
+            ->disableOriginalConstructor()->getMock();
+
+        $helper = new PhoneNumberFormatHelper($phoneNumberUtil);
+
+        $this->assertInstanceOf('Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper', $helper);
     }
 }
