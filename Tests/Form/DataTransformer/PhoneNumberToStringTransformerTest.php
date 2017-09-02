@@ -77,6 +77,7 @@ class PhoneNumberToStringTransformerTest extends TestCase
         return array(
             array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, null, ''),
             array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, 'foo', self::TRANSFORMATION_FAILED),
+            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, '0', self::TRANSFORMATION_FAILED),
             array(
                 PhoneNumberUtil::UNKNOWN_REGION,
                 PhoneNumberFormat::INTERNATIONAL,
@@ -117,6 +118,7 @@ class PhoneNumberToStringTransformerTest extends TestCase
         return array(
             array(PhoneNumberUtil::UNKNOWN_REGION, null, null),
             array(PhoneNumberUtil::UNKNOWN_REGION, 'foo', self::TRANSFORMATION_FAILED),
+            array(PhoneNumberUtil::UNKNOWN_REGION, '0', self::TRANSFORMATION_FAILED),
             array(PhoneNumberUtil::UNKNOWN_REGION, '+44 1234 567890', '+441234567890'),
             array('GB', '01234 567890', '+441234567890'),
         );
