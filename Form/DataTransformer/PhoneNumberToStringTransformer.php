@@ -76,7 +76,7 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
      */
     public function reverseTransform($string)
     {
-        if (!$string) {
+        if (!$string && $string !== '0') {
             return null;
         }
 
