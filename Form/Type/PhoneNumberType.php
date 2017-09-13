@@ -101,6 +101,10 @@ class PhoneNumberType extends AbstractType
                 $countryOptions['placeholder'] = $options['country_placeholder'];
             }
 
+            if (!empty($countryOptions['preferred_choices'])) {
+                $this->applyPreferredSorting($countryOptions);
+            }
+
             $builder
                 ->add('country', $choiceType, $countryOptions)
                 ->add('number', $textType, $numberOptions)
@@ -110,6 +114,16 @@ class PhoneNumberType extends AbstractType
                 new PhoneNumberToStringTransformer($options['default_region'], $options['format'])
             );
         }
+    }
+
+    private function applyPreferredSorting(&$countryOptions)
+    {
+        $choices = array_flip($countryOptions['choices']);
+        $preferredChoices = array_flip($countryOptions['preferred_choices']);
+        foreach ($preferredChoices as $key => &$value) {
+            $value = $choices[$key];
+        }
+        $countryOptions['choices'] = array_flip($preferredChoices) + $countryOptions['choices'];
     }
 
     /**
