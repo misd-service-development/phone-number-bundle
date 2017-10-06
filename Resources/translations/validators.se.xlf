@@ -4,15 +4,15 @@
         <body>
             <trans-unit id="1">
                 <source>This value is not a valid phone number.</source>
-                <target>Detta är inte ett giltigt telefonnummer.</target>
+                <target>Värdet är inte ett giltigt telefonnummer.</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>This value is not a valid fixed-line number.</source>
-                <target>Detta är inte ett giltigt fast telefonnummer.</target>
+                <target>Värdet är inte ett giltigt fast telefonnummer.</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>This value is not a valid mobile number.</source>
-                <target>Detta är inte ett giltigt mobilnummer.</target>
+                <target>Värdet är inte ett giltigt mobilnummer.</target>
             </trans-unit>
         </body>
     </file>
