@@ -11,47 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Twig\Extension;
 
-use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper;
-use Twig_Extension as Extension;
-use Twig_SimpleFunction as SimpleFunction;
-
 /**
- * Phone number format Twig extension.
+ * @deprecated PhoneNumberFormatExtension is deprecated and will be removed in 2.0. Use PhoneNumberHelperExtension instead
  */
-class PhoneNumberFormatExtension extends Extension
-{
-    /**
-     * Phone number format helper.
-     *
-     * @var PhoneNumberFormatHelper
-     */
-    protected $helper;
-
-    /**
-     * Constructor.
-     *
-     * @param PhoneNumberFormatHelper $helper Phone number format helper.
-     */
-    public function __construct(PhoneNumberFormatHelper $helper)
-    {
-        $this->helper = $helper;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
-    {
-        return array(
-            new SimpleFunction('phone_number_format', array($this->helper, 'format'))
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'phone_number_format';
-    }
-}
+class PhoneNumberFormatExtension extends PhoneNumberHelperExtension {}

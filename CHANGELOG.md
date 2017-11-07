@@ -1,6 +1,16 @@
 Changelog
 =========
 
+1.2.0
+-----
+
+17 December 2016.
+
+* Add Symfony Serializer support.
+* Confirm libphonenumber 8.0 compatibility.
+* Deprecate `phone_number_format` Twig function in favour of a filter.
+* Avoid `choices_as_values` deprecation notice in Symfony 3.1.
+
 1.1.3
 -----
 

@@ -81,7 +81,11 @@ class PhoneNumberType extends AbstractType
                 $choiceType = 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType';
                 $textType = 'Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType';
                 $countryOptions['choice_translation_domain'] = false;
-                $countryOptions['choices_as_values'] = true;
+
+                // To be removed when dependency on Symfony Form is bumped to 3.1.
+                if (!in_array('Symfony\\Component\\Form\\DataTransformerInterface', class_implements('Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType'))) {
+                    $countryOptions['choices_as_values'] = true;
+                }
             } else {
                 // To be removed when dependency on Symfony Form is bumped to 2.7.
                 $choiceType = 'choice';
@@ -92,6 +96,10 @@ class PhoneNumberType extends AbstractType
             $countryOptions['required'] = true;
             $countryOptions['choices'] = $countryChoices;
             $countryOptions['preferred_choices'] = $options['preferred_country_choices'];
+
+            if ($options['country_placeholder']) {
+                $countryOptions['placeholder'] = $options['country_placeholder'];
+            }
 
             $builder
                 ->add('country', $choiceType, $countryOptions)
@@ -141,6 +149,7 @@ class PhoneNumberType extends AbstractType
                 'by_reference' => false,
                 'error_bubbling' => false,
                 'country_choices' => array(),
+                'country_placeholder' => false,
                 'preferred_country_choices' => array(),
             )
         );
