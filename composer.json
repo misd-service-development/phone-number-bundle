@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "giggsey/libphonenumber-for-php": "~5.7|~6.0|~7.0",
+        "giggsey/libphonenumber-for-php": "~5.7|~6.0|~7.0|~8.0",
         "symfony/framework-bundle": "~2.1|~3.0"
     },
     "require-dev": {
@@ -18,6 +18,7 @@
         "jms/serializer-bundle": "~0.11|~1.0",
         "phpunit/phpunit": "~4.0",
         "symfony/form": "~2.3|~3.0",
+        "symfony/serializer": "~2.7|~3.1",
         "symfony/templating": "~2.1|~3.0",
         "symfony/twig-bundle": "~2.1|~3.0",
         "symfony/validator": "~2.5|~3.0"
@@ -27,7 +28,8 @@
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
-        "jms/serializer-bundle": "Serialize/deserialize phone numbers",
+        "jms/serializer-bundle": "Serialize/deserialize phone numbers using JSM library",
+        "symfony/serializer": "Serialize/deserialize phone numbers using Symfony library",
         "symfony/form": "Add a data transformer",
         "symfony/templating": "Format phone numbers in templates",
         "symfony/twig-bundle": "Format phone numbers in Twig templates",
@@ -41,7 +43,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.x-dev"
+            "dev-master": "1.2.x-dev"
         }
     }
 }
