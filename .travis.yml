@@ -40,7 +40,7 @@ before_install:
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require --dev --no-update symfony/symfony:$SYMFONY_VERSION; fi
 
 install:
-  - if [ "$stability" != "" ]; then composer config minimum-stability $stability; endif
+  - if [ "$stability" != "" ]; then composer config minimum-stability $stability; fi
   - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction; else composer update --prefer-dist --no-interaction; fi;
 
 script: ./vendor/bin/phpunit --coverage-text
