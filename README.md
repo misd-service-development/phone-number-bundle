@@ -32,6 +32,15 @@ Installation
         }
 ```
 
+3. Make sure that templating component is enable in your application:
+
+```yaml
+framework:
+...
+    templating:
+        engines: ['twig']
+```
+
 Usage
 -----
 
