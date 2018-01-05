@@ -19,8 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class FormTwigTemplateCompilerPass implements CompilerPassInterface
 {
-    private $telLayout = '@MisdPhoneNumberBundle/Form/tel.html.twig';
-    private $telBootstrapLayout = '@MisdPhoneNumberBundle/Form/tel_bootstrap.html.twig';
+    private $telLayout = '@MisdPhoneNumber/Form/tel.html.twig';
+    private $telBootstrapLayout = '@MisdPhoneNumber/Form/tel_bootstrap.html.twig';
 
     /**
      * {@inheritdoc}
