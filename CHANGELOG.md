@@ -1,6 +1,17 @@
 Changelog
 =========
 
+1.3.0
+-----
+15 January 2018
+
+* Symfony 4 support.
+* Add `phone_number_is_type` Twig test and `isType` test to `PhoneNumberHelper`.
+* Deprecate `PhoneNumberFormatHelper` in favour of `PhoneNumberHelper` and `PhoneNumberFormatExtension` in favour of `PhoneNumberHelperExtension`.
+* Swedish translation improvements. Rename country code `se`->`sv`.
+* Add `country_placeholder` option.
+* Regard `"0"` as an invalid phone number.
+
 1.2.0
 -----
 
