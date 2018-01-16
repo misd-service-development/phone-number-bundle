@@ -16,7 +16,6 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
-use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -158,13 +157,14 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     * @expectedExceptionMessage Expected argument of type "Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber", "string" given
      */
     public function testValidateThrowsUnexpectedTypeException()
     {
         $validator = new PhoneNumberValidator();
         $constraint = new PhoneNumber();
 
-        $validator->validate($this, $constraint);
+        $validator->validate('foo', $constraint);
     }
 
     protected function createValidator()

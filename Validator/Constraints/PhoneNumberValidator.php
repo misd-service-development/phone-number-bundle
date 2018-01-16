@@ -32,7 +32,7 @@ class PhoneNumberValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof PhoneNumber) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\PhoneNumberValidator');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\PhoneNumber');
         }
 
         if (null === $value || '' === $value) {
