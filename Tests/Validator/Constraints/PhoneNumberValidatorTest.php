@@ -16,18 +16,37 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
-use PHPUnit_Framework_TestCase as TestCase;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Phone number validator test.
  */
-class PhoneNumberValidatorTest extends TestCase
+class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 {
-    public function testInstanceOf()
-    {
-        $validator = new PhoneNumberValidator();
+    /**
+     * @var \Symfony\Component\Validator\Context\ExecutionContextInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $context;
 
-        $this->assertInstanceOf('Symfony\Component\Validator\ConstraintValidatorInterface', $validator);
+    /**
+     * @var \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator
+     */
+    protected $validator;
+
+    protected function setUp()
+    {
+        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
+            $executionContextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
+        } else {
+            $executionContextClass = 'Symfony\Component\Validator\ExecutionContext';
+        }
+
+        $this->context = $this->getMockBuilder($executionContextClass)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->validator = new PhoneNumberValidator();
+        $this->validator->initialize($this->context);
     }
 
     /**
@@ -35,20 +54,12 @@ class PhoneNumberValidatorTest extends TestCase
      */
     public function testValidate($value, $violates, $type = null, $defaultRegion = null)
     {
-        $validator = new PhoneNumberValidator();
-        if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
-            $executionContextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
-        } else {
-            $executionContextClass = 'Symfony\Component\Validator\ExecutionContext';
-        }
-        $context = $this->getMockBuilder($executionContextClass)
-          ->disableOriginalConstructor()->getMock();
-        $validator->initialize($context);
-
         $constraint = new PhoneNumber();
+
         if (null !== $type) {
             $constraint->type = $type;
         }
+
         if (null !== $defaultRegion) {
             $constraint->defaultRegion = $defaultRegion;
         }
@@ -60,16 +71,41 @@ class PhoneNumberValidatorTest extends TestCase
                 $constraintValue = (string) $value;
             }
 
-            $context->expects($this->once())->method('addViolation')
-                ->with(
-                    $constraint->getMessage(),
-                    array('{{ type }}' => $constraint->type, '{{ value }}' => $constraintValue)
-                );
+            if ($this->context instanceof ExecutionContextInterface) {
+                $constraintViolationBuilder = $this->getMockBuilder('Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface')
+                    ->getMock();
+
+                $constraintViolationBuilder->expects($this->any())
+                    ->method('setParameter')
+                    ->willReturnSelf();
+
+                $constraintViolationBuilder->expects($this->any())
+                    ->method('setCode')
+                    ->willReturnSelf();
+
+                $this->context->expects($this->once())
+                    ->method('buildViolation')
+                    ->with($constraint->getMessage())
+                    ->willReturn($constraintViolationBuilder);
+            } else {
+                $this->context->expects($this->once())
+                    ->method('addViolation')
+                    ->with($constraint->getMessage(), array(
+                        '{{ type }}' => $constraint->type,
+                        '{{ value }}' => $constraintValue
+                    ));
+            }
         } else {
-            $context->expects($this->never())->method('addViolation');
+            if ($this->context instanceof ExecutionContextInterface) {
+                $this->context->expects($this->never())
+                    ->method('buildViolation');
+            } else {
+                $this->context->expects($this->never())
+                    ->method('addViolation');
+            }
         }
 
-        $validator->validate($value, $constraint);
+        $this->validator->validate($value, $constraint);
     }
 
     /**
@@ -121,12 +157,18 @@ class PhoneNumberValidatorTest extends TestCase
 
     /**
      * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     * @expectedExceptionMessage Expected argument of type "Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber", "string" given
      */
     public function testValidateThrowsUnexpectedTypeException()
     {
         $validator = new PhoneNumberValidator();
         $constraint = new PhoneNumber();
 
-        $validator->validate($this, $constraint);
+        $validator->validate('foo', $constraint);
+    }
+
+    protected function createValidator()
+    {
+        return new PhoneNumberValidator();
     }
 }
