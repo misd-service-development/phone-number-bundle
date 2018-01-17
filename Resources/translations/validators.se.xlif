@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+    This file is deprected and will be removed in 2.0.
+-->
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>This value is not a valid phone number.</source>
+                <target>Värdet är inte ett giltigt telefonnummer.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>This value is not a valid fixed-line number.</source>
+                <target>Värdet är inte ett giltigt fast telefonnummer.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>This value is not a valid mobile number.</source>
+                <target>Värdet är inte ett giltigt mobilnummer.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
