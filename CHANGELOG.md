@@ -1,8 +1,17 @@
 Changelog
 =========
 
+1.3.1
+-----
+
+17 January 2018
+
+* Undo minor breaking change by reinstating and deprecating `se` code for Swedish translations.
+* Validator uses `buildViolation` instead of `addViolation` for Symfony >= 2.5.
+
 1.3.0
 -----
+
 15 January 2018
 
 * Symfony 4 support.
