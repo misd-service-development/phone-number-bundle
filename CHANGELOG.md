@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.0.x-dev
+-----
+
+Upcoming release
+
+* Drop support for Symfony < 2.7
+
 1.3.1
 -----
 
