@@ -157,12 +157,12 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     * @expectedExceptionMessage Expected argument of type "Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber", "string" given
+     * @expectedExceptionMessage Expected argument of type string, object given
      */
-    public function testValidateThrowsUnexpectedTypeException()
+    public function testValidateThrowsUnexpectedTypeExceptionOnBadValue()
     {
         $constraint = new PhoneNumber();
-        $this->validator->validate('foo', $constraint);
+        $this->validator->validate($this, $constraint);
     }
 
     protected function createValidator()
