@@ -157,7 +157,6 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     * @expectedExceptionMessage Expected argument of type string, object given
      */
     public function testValidateThrowsUnexpectedTypeExceptionOnBadValue()
     {
