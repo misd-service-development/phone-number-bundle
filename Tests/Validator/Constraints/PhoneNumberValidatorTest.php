@@ -161,10 +161,8 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateThrowsUnexpectedTypeException()
     {
-        $validator = new PhoneNumberValidator();
         $constraint = new PhoneNumber();
-
-        $validator->validate('foo', $constraint);
+        $this->validator->validate('foo', $constraint);
     }
 
     protected function createValidator()
