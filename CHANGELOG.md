@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.3.2
+-----
+
+17 January 2018
+
+* Fix bad extension on translation file causing "The "xlif" translation loader is not registered."
+
 1.3.1
 -----
 
