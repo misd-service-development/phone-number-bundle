@@ -189,6 +189,24 @@ class PhoneNumberTypeTest extends TypeTestCase
     }
 
     /**
+     * @dataProvider 
+     */
+    public function testDefaultRegionAsSelectedInCountryWidget()
+    {
+        $defaultRegion = 'GB';
+        $form = $this->factory->create(
+            PhoneNumberType::class,
+            null,
+            array(
+                'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+                'default_region' => $defaultRegion,
+            )
+        );
+
+        
+        $this->assertEquals($defaultRegion, $form->get('country')->getViewData());
+    }
+    /**
      * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testInvalidWidget()
