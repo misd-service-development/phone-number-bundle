@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -28,6 +29,8 @@ class MisdPhoneNumberExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $processor = new Processor();
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
@@ -36,6 +39,12 @@ class MisdPhoneNumberExtension extends Extension
         $this->setFactory($container->getDefinition('libphonenumber.short_number_info'));
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_carrier_mapper'));
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_time_zones_mapper'));
+
+        $configuration = new Configuration();
+        $config = $processor->processConfiguration($configuration, $configs);
+
+        $container->setParameter('phone_number.template', $config['template']);
+
     }
 
     /**
