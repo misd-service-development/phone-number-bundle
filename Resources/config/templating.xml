@@ -16,7 +16,7 @@
             <tag name="templating.helper" alias="phone_number_helper"/>
             <!-- phone_number_format is deprecated and will be removed in 2.0 (use phone_number_helper instead) -->
             <tag name="templating.helper" alias="phone_number_format"/>
-            <argument type="service" id="libphonenumber.phone_number_util"/>
+            <argument type="service" id="misd_phone_number.formatter"/>
         </service>
         <service id="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper" alias="misd_phone_number.templating.helper"/>
     </services>

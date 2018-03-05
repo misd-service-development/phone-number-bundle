@@ -30,6 +30,11 @@
         <service id="libphonenumber.phone_number_to_time_zones_mapper" class="libphonenumber\PhoneNumberToTimeZonesMapper"/>
         <service id="libphonenumber\PhoneNumberToTimeZonesMapper" alias="libphonenumber.phone_number_to_time_zones_mapper"/>
 
+        <service id="misd_phone_number.formatter" class="Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter">
+            <argument type="service" id="libphonenumber.phone_number_util"/>
+        </service>
+        <service id="Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter" alias="misd_phone_number.formatter"/>
+
     </services>
 
 </container>

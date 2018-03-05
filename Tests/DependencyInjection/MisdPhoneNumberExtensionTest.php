@@ -142,6 +142,15 @@ class MisdPhoneNumberExtensionTest extends TestCase
             'method' => 'serializePhoneNumber',
           )
         );
+
+        $this->assertHasService(
+            'misd_phone_number.formatter',
+            'Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter'
+        );
+        $this->assertHasService(
+            'Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter',
+            'Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter'
+        );
     }
 
     protected function assertHasService($id, $instanceOf)

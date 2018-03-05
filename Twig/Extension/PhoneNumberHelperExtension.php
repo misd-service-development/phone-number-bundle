@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Twig\Extension;
 
+use Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 
 /**
@@ -19,20 +20,23 @@ use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 class PhoneNumberHelperExtension extends \Twig_Extension
 {
     /**
-     * Phone number helper.
+     * Phone number formatter.
      *
-     * @var PhoneNumberHelper
+     * @var PhoneNumberFormatter
      */
-    protected $helper;
+    protected $formatter;
 
     /**
      * Constructor.
      *
-     * @param PhoneNumberHelper $helper Phone number helper.
+     * @param PhoneNumberFormatter $formatter Phone number formatter.
      */
-    public function __construct(PhoneNumberHelper $helper)
+    public function __construct($formatter)
     {
-        $this->helper = $helper;
+        if ($formatter instanceof PhoneNumberHelper) {
+            // throw deprecation message
+        }
+        $this->formatter = $formatter;
     }
 
     /**
@@ -41,8 +45,8 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('phone_number_format', array($this->helper, 'format'), array('deprecated' => '1.2')),
-            new \Twig_SimpleFunction('phone_number_is_type', array($this->helper, 'isType'), array('deprecated' => '1.2')),
+            new \Twig_SimpleFunction('phone_number_format', array($this->formatter, 'format'), array('deprecated' => '1.2')),
+            new \Twig_SimpleFunction('phone_number_is_type', array($this->formatter, 'isType'), array('deprecated' => '1.2')),
         );
     }
 
@@ -52,7 +56,7 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('phone_number_format', array($this->helper, 'format')),
+            new \Twig_SimpleFilter('phone_number_format', array($this->formatter, 'format')),
         );
     }
 
@@ -62,7 +66,7 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     public function getTests()
     {
         return array(
-            new \Twig_SimpleTest('phone_number_of_type', array($this->helper, 'isType')),
+            new \Twig_SimpleTest('phone_number_of_type', array($this->formatter, 'isType')),
         );
     }
 
