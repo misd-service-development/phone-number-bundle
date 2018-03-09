@@ -104,7 +104,7 @@ class PhoneNumberType extends AbstractType
             $builder
                 ->add('country', $choiceType, $countryOptions)
                 ->add('number', $textType, $numberOptions)
-                ->addViewTransformer(new PhoneNumberToArrayTransformer($transformerChoices));
+                ->addViewTransformer(new PhoneNumberToArrayTransformer($transformerChoices, $options['format']));
         } else {
             $builder->addViewTransformer(
                 new PhoneNumberToStringTransformer($options['default_region'], $options['format'])
