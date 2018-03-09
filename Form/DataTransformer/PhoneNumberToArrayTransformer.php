@@ -39,7 +39,10 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
      * @param array $countryChoices
      * @param int $format
      */
-    public function __construct(array $countryChoices, $format = PhoneNumberFormat::INTERNATIONAL)
+    public function __construct(
+        array $countryChoices,
+        $format = PhoneNumberFormat::INTERNATIONAL
+    )
     {
         $this->countryChoices = $countryChoices;
         $this->format = $format;

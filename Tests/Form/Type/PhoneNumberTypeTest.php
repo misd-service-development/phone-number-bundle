@@ -109,10 +109,10 @@ class PhoneNumberTypeTest extends TypeTestCase
     public function countryChoiceValuesProvider()
     {
         return array(
-            array(array('country' => 'GB', 'number' => '01234 567890'), array(), array('country' => 'GB', 'number' => '01234 567890')),
-            array(array('country' => 'GB', 'number' => '+44 1234 567890'), array(), array('country' => 'GB', 'number' => '01234 567890')),
-            array(array('country' => 'GB', 'number' => '1234 567890'), array(), array('country' => 'GB', 'number' => '01234 567890')),
-            array(array('country' => 'GB', 'number' => '+1 650-253-0000'), array(), array('country' => 'US', 'number' => '(650) 253-0000')),
+            array(array('country' => 'GB', 'number' => '01234 567890'), array('format' => PhoneNumberFormat::NATIONAL), array('country' => 'GB', 'number' => '01234 567890')),
+            array(array('country' => 'GB', 'number' => '+44 1234 567890'), array('format' => PhoneNumberFormat::NATIONAL), array('country' => 'GB', 'number' => '01234 567890')),
+            array(array('country' => 'GB', 'number' => '1234 567890'), array('format' => PhoneNumberFormat::NATIONAL), array('country' => 'GB', 'number' => '01234 567890')),
+            array(array('country' => 'GB', 'number' => '+1 650-253-0000'), array('format' => PhoneNumberFormat::NATIONAL), array('country' => 'US', 'number' => '(650) 253-0000')),
             array(array('country' => '', 'number' => ''), array(), array('country' => '', 'number' => '')),
         );
     }
