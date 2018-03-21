@@ -1,6 +1,5 @@
-{% block tel_widget -%}
+{% block phone_number_widget -%}
     {% if widget is constant('Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType::WIDGET_COUNTRY_CHOICE') %}
-        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) %}
         <div {{ block('widget_container_attributes') }}>
             {{- form_widget(form.country) -}}
             {{- form_widget(form.number) -}}
@@ -8,4 +7,4 @@
     {% else -%}
         {{- block('form_widget_simple') -}}
     {%- endif %}
-{%- endblock tel_widget %}
+{%- endblock phone_number_widget %}
