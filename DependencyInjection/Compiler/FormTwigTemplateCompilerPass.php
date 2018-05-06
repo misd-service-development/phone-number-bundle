@@ -42,6 +42,10 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
             array_splice($parameter, ++$key, 0, array($this->telBootstrapLayout));
         } elseif (($key = array_search('bootstrap_3_layout.html.twig', $parameter)) !== false) {
             array_splice($parameter, ++$key, 0, array($this->telBootstrapLayout));
+        } elseif (($key = array_search('bootstrap_4_horizontal_layout.html.twig', $parameter)) !== false) {
+            array_splice($parameter, ++$key, 0, array($this->telBootstrapLayout));
+        } elseif (($key = array_search('bootstrap_4_layout.html.twig', $parameter)) !== false) {
+            array_splice($parameter, ++$key, 0, array($this->telBootstrapLayout));
         } elseif (($key = array_search('form_div_layout.html.twig', $parameter)) !== false) {
             array_splice($parameter, ++$key, 0, array($this->telLayout));
         } else {
