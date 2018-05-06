@@ -1,5 +1,5 @@
 {
-    "name": "misd/phone-number-bundle",
+    "name": "mathiasstocker/phone-number-bundle",
     "type": "symfony-bundle",
     "description": "Integrates libphonenumber into your Symfony2-Symfony4 application",
     "keywords": ["bundle", "phone-number", "phonenumber", "telephone number", "libphonenumber"],
