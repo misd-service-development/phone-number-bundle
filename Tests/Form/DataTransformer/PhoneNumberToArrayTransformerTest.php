@@ -46,9 +46,9 @@ class PhoneNumberToArrayTransformerTest extends TestCase
     /**
      * @dataProvider transformProvider
      */
-    public function testTransform(array $countryChoices, $actual, $expected)
+    public function testTransform(array $countryChoices, $format, $actual, $expected)
     {
-        $transformer = new PhoneNumberToArrayTransformer($countryChoices);
+        $transformer = new PhoneNumberToArrayTransformer($countryChoices, $format);
 
         if (is_array($actual)) {
             try {
@@ -71,8 +71,9 @@ class PhoneNumberToArrayTransformerTest extends TestCase
 
     /**
      * 0 => Country choices
-     * 1 => Actual value
-     * 2 => Expected result
+     * 1 => Format
+     * 2 => Actual value
+     * 3 => Expected result
      */
     public function transformProvider()
     {
@@ -80,30 +81,36 @@ class PhoneNumberToArrayTransformerTest extends TestCase
             array(
                 array('GB'),
                 null,
+                null,
                 array('country' => '', 'number' => ''),
             ),
             array(
                 array('GB'),
+                PhoneNumberFormat::NATIONAL,
                 array('country' => 'GB', 'number' => '01234567890'),
                 array('country' => 'GB', 'number' => '01234 567890'),
             ),
             array(// Wrong country code, but matching country exists.
                 array('GB', 'JE'),
+                PhoneNumberFormat::NATIONAL,
                 array('country' => 'JE', 'number' => '01234567890'),
                 array('country' => 'GB', 'number' => '01234 567890'),
             ),
             array(// Wrong country code, but matching country exists.
                 array('GB', 'JE'),
+                PhoneNumberFormat::NATIONAL,
                 array('country' => 'JE', 'number' => '+441234567890'),
                 array('country' => 'GB', 'number' => '01234 567890'),
             ),
             array(// Country code not in list.
                 array('US'),
+                null,
                 array('country' => 'GB', 'number' => '01234567890'),
                 self::TRANSFORMATION_FAILED,
             ),
             array(
                 array('US'),
+                null,
                 array('country' => 'GB', 'number' => 'foo'),
                 self::TRANSFORMATION_FAILED,
             ),

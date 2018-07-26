@@ -104,7 +104,7 @@ class PhoneNumberType extends AbstractType
             $builder
                 ->add('country', $choiceType, $countryOptions)
                 ->add('number', $textType, $numberOptions)
-                ->addViewTransformer(new PhoneNumberToArrayTransformer($transformerChoices));
+                ->addViewTransformer(new PhoneNumberToArrayTransformer($transformerChoices, $options['format']));
         } else {
             $builder->addViewTransformer(
                 new PhoneNumberToStringTransformer($options['default_region'], $options['format'])
@@ -144,7 +144,11 @@ class PhoneNumberType extends AbstractType
                     return PhoneNumberType::WIDGET_SINGLE_TEXT !== $options['widget'];
                 },
                 'default_region' => PhoneNumberUtil::UNKNOWN_REGION,
-                'format' => PhoneNumberFormat::INTERNATIONAL,
+                'format' => function (Options $options) {
+                    return PhoneNumberType::WIDGET_SINGLE_TEXT === $options['widget']
+                        ? PhoneNumberFormat::INTERNATIONAL
+                        : PhoneNumberFormat::NATIONAL;
+                },
                 'invalid_message' => 'This value is not a valid phone number.',
                 'by_reference' => false,
                 'error_bubbling' => false,
