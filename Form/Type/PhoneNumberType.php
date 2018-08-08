@@ -96,6 +96,9 @@ class PhoneNumberType extends AbstractType
             $countryOptions['required'] = true;
             $countryOptions['choices'] = $countryChoices;
             $countryOptions['preferred_choices'] = $options['preferred_country_choices'];
+            if(PhoneNumberUtil::UNKNOWN_REGION !== $options['default_region'] && null !== $options['default_region']) {
+                $countryOptions['data'] = $options['default_region'];
+            }
 
             if ($options['country_placeholder']) {
                 $countryOptions['placeholder'] = $options['country_placeholder'];
