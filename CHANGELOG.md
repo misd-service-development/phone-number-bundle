@@ -7,6 +7,7 @@ Changelog
 Upcoming release
 
 * Drop support for Symfony < 2.7
+* Add services only if relevant (optional) dependencies are available
 
 1.3.1
 -----
