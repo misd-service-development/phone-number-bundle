@@ -28,6 +28,8 @@ class PhoneNumberValidator extends ConstraintValidator
 {
     /**
      * {@inheritdoc}
+     *
+     * @var PhoneNumber $constraint
      */
     public function validate($value, Constraint $constraint)
     {
@@ -62,51 +64,53 @@ class PhoneNumberValidator extends ConstraintValidator
             return;
         }
 
-        switch ($constraint->getType()) {
-            case PhoneNumber::FIXED_LINE:
-                $validTypes = array(PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
-                break;
-            case PhoneNumber::MOBILE:
-                $validTypes = array(PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
-                break;
-            case PhoneNumber::PAGER:
-                $validTypes = array(PhoneNumberType::PAGER);
-                break;
-            case PhoneNumber::PERSONAL_NUMBER:
-                $validTypes = array(PhoneNumberType::PERSONAL_NUMBER);
-                break;
-            case PhoneNumber::PREMIUM_RATE:
-                $validTypes = array(PhoneNumberType::PREMIUM_RATE);
-                break;
-            case PhoneNumber::SHARED_COST:
-                $validTypes = array(PhoneNumberType::SHARED_COST);
-                break;
-            case PhoneNumber::TOLL_FREE:
-                $validTypes = array(PhoneNumberType::TOLL_FREE);
-                break;
-            case PhoneNumber::UAN:
-                $validTypes = array(PhoneNumberType::UAN);
-                break;
-            case PhoneNumber::VOIP:
-                $validTypes = array(PhoneNumberType::VOIP);
-                break;
-            case PhoneNumber::VOICEMAIL:
-                $validTypes = array(PhoneNumberType::VOICEMAIL);
-                break;
-            default:
-                $validTypes = array();
-                break;
+        $validTypes = array();
+
+        foreach ($constraint->getTypes() as $type) {
+            switch ($type) {
+                case PhoneNumber::FIXED_LINE:
+                    array_push($validTypes, PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                    break;
+                case PhoneNumber::MOBILE:
+                    array_push($validTypes, PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                    break;
+                case PhoneNumber::PAGER:
+                    array_push($validTypes, PhoneNumberType::PAGER);
+                    break;
+                case PhoneNumber::PERSONAL_NUMBER:
+                    array_push($validTypes, PhoneNumberType::PERSONAL_NUMBER);
+                    break;
+                case PhoneNumber::PREMIUM_RATE:
+                    array_push($validTypes, PhoneNumberType::PREMIUM_RATE);
+                    break;
+                case PhoneNumber::SHARED_COST:
+                    array_push($validTypes, PhoneNumberType::SHARED_COST);
+                    break;
+                case PhoneNumber::TOLL_FREE:
+                    array_push($validTypes, PhoneNumberType::TOLL_FREE);
+                    break;
+                case PhoneNumber::UAN:
+                    array_push($validTypes, PhoneNumberType::UAN);
+                    break;
+                case PhoneNumber::VOIP:
+                    array_push($validTypes, PhoneNumberType::VOIP);
+                    break;
+                case PhoneNumber::VOICEMAIL:
+                    array_push($validTypes, PhoneNumberType::VOICEMAIL);
+                    break;
+            }
         }
+
+        $validTypes = array_unique($validTypes);
 
         if (count($validTypes)) {
             $type = $phoneUtil->getNumberType($phoneNumber);
 
-            if (false === in_array($type, $validTypes)) {
+            if (false === in_array($type, $validTypes, true)) {
                 $this->addViolation($value, $constraint);
 
                 return;
             }
-
         }
     }
 

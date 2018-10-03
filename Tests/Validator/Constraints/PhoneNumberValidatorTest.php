@@ -91,7 +91,7 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
                 $this->context->expects($this->once())
                     ->method('addViolation')
                     ->with($constraint->getMessage(), array(
-                        '{{ type }}' => $constraint->type,
+                        '{{ type }}' => $constraint->getType(),
                         '{{ value }}' => $constraintValue
                     ));
             }
@@ -122,15 +122,20 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
             array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false),
             array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, 'fixed_line'),
             array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), true, 'mobile'),
+            array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, array('fixed_line', 'mobile')),
             array(PhoneNumberUtil::getInstance()->parse('+44123456789', PhoneNumberUtil::UNKNOWN_REGION), true),
             array('+441234567890', false),
             array('+441234567890', false, 'fixed_line'),
             array('+441234567890', true, 'mobile'),
+            array('+441234567890', false, array('mobile', 'fixed_line')),
+            array('+441234567890', true, array('mobile', 'voip')),
             array('+44123456789', true),
             array('+44123456789', true, 'mobile'),
             array('+12015555555', false),
             array('+12015555555', false, 'fixed_line'),
             array('+12015555555', false, 'mobile'),
+            array('+12015555555', false, array('mobile', 'fixed_line')),
+            array('+12015555555', true, array('pager', 'voip', 'uan')),
             array('+447640123456', false, 'pager'),
             array('+441234567890', true, 'pager'),
             array('+447012345678', false, 'personal_number'),

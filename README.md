@@ -249,6 +249,11 @@ By default any valid phone number will be accepted. You can restrict the type th
      * @AssertPhoneNumber(type="mobile")
      */
     private $mobilePhoneNumber;
+
+    /**
+     * @AssertPhoneNumber(type={"fixed", "voip"})
+     */
+    private $fixedOrVoipPhoneNumber;
 ```
 
 ### Translations

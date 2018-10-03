@@ -64,6 +64,8 @@ class PhoneNumberTest extends TestCase
             array(null, 'uan', 'This value is not a valid UAN.'),
             array(null, 'voip', 'This value is not a valid VoIP number.'),
             array(null, 'voicemail', 'This value is not a valid voicemail access number.'),
+            array(null, array('fixed_line', 'voip'), 'This value is not a valid fixed-line number.'),
+            array(null, array('uan', 'fixed_line'), 'This value is not a valid UAN.'),
             array('foo', null, 'foo'),
             array('foo', 'fixed_line', 'foo'),
             array('foo', 'mobile', 'foo'),
