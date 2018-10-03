@@ -165,7 +165,7 @@ Phone numbers can be deserialized from an international format by setting the ty
 
 ### Using `libphonenumber\PhoneNumber` objects in forms
 
-You can use the `PhoneNumberType` (`tel` for Symfony <= 2.7) form type to create phone number fields. There are two widgets available.
+You can use the `PhoneNumberType` (`phone_number` for Symfony 2.7) form type to create phone number fields. There are two widgets available.
 
 #### Single text field
 
