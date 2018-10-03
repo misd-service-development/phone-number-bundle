@@ -116,7 +116,7 @@ class PhoneNumberValidator extends ConstraintValidator
      * @param mixed      $value      The value that should be validated.
      * @param Constraint $constraint The constraint for the validation.
      */
-    private function addViolation($value, Constraint $constraint)
+    protected function addViolation($value, Constraint $constraint)
     {
         /** @var \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber $constraint */
         if ($this->context instanceof ExecutionContextInterface) {
