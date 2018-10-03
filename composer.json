@@ -11,7 +11,8 @@
     "require": {
         "php": ">=5.3.9",
         "giggsey/libphonenumber-for-php": "~5.7|~6.0|~7.0|~8.0",
-        "symfony/framework-bundle": "~2.7|~3.0|~4.0"
+        "symfony/framework-bundle": "~2.7|~3.0|~4.0",
+        "symfony/templating": "~2.7|~3.0|~4.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
@@ -19,7 +20,6 @@
         "phpunit/phpunit": "~4.0|^5.7",
         "symfony/form": "~2.7|~3.0|~4.0",
         "symfony/serializer": "~2.7|~3.1|~4.0",
-        "symfony/templating": "~2.7|~3.0|~4.0",
         "symfony/twig-bundle": "~2.7|~3.0|~4.0",
         "symfony/validator": "~2.7|~3.0|~4.0"
     },
