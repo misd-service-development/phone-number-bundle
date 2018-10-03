@@ -11,7 +11,7 @@
 
     <services>
         <service id="misd_phone_number.form.type" class="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType">
-            <tag name="form.type" alias="tel"/>
+            <tag name="form.type" alias="phone_number"/>
         </service>
         <service id="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType" alias="misd_phone_number.form.type"/>
     </services>
