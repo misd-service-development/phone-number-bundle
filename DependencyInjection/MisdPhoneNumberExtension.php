@@ -30,6 +30,21 @@ class MisdPhoneNumberExtension extends Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+        if (interface_exists('Symfony\Component\Templating\Helper\HelperInterface')) {
+            $loader->load('templating.xml');
+            if (class_exists('Symfony\Bundle\TwigBundle\TwigBundle')) {
+                $loader->load('twig.xml');
+            }
+        }
+        if (interface_exists('Symfony\Component\Form\FormTypeInterface')) {
+            $loader->load('form.xml');
+        }
+        if (interface_exists('Symfony\Component\Serializer\Normalizer\NormalizerInterface')) {
+            $loader->load('serializer.xml');
+        }
+        if (class_exists('JMS\SerializerBundle\JMSSerializerBundle')) {
+            $loader->load('jms_serializer.xml');
+        }
 
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_util'));
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_offline_geocoder'));

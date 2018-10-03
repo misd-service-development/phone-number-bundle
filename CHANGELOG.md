@@ -10,6 +10,7 @@ Upcoming release
 * Add support for Symfony 3.4+
 * Drop support for PHP 5.3
 * Rename `tel_widget` to `phone_number_widget`
+* Add services only if relevant (optional) dependencies are available
 
 1.3.1
 -----

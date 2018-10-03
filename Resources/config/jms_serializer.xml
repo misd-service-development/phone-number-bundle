@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- .class parameters are deprecated and will be removed in 2.0 -->
+        <parameter key="misd_phone_number.serializer.handler.class">Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler</parameter>
+    </parameters>
+
+    <services>
+        <service id="misd_phone_number.serializer.handler" class="Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler">
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
+                 format="json" method="serializePhoneNumber"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization"
+                 format="json" method="deserializePhoneNumberFromJson"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
+                 format="xml" method="serializePhoneNumber"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="deserialization"
+                 format="xml" method="deserializePhoneNumberFromXml"/>
+            <tag name="jms_serializer.handler" type="libphonenumber\PhoneNumber" direction="serialization"
+                 format="yml" method="serializePhoneNumber"/>
+            <argument type="service" id="libphonenumber.phone_number_util"/>
+        </service>
+        <service id="Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler" alias="misd_phone_number.serializer.handler"/>
+    </services>
+
+</container>

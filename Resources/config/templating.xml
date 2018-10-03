@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- .class parameters are deprecated and will be removed in 2.0 -->
+        <parameter key="misd_phone_number.templating.helper.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper</parameter>
+        <parameter key="misd_phone_number.templating.helper.format.class">%misd_phone_number.templating.helper.class%</parameter>
+    </parameters>
+
+    <services>
+        <service id="misd_phone_number.templating.helper"
+                 class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper">
+            <tag name="templating.helper" alias="phone_number_helper"/>
+            <!-- phone_number_format is deprecated and will be removed in 2.0 (use phone_number_helper instead) -->
+            <tag name="templating.helper" alias="phone_number_format"/>
+            <argument type="service" id="libphonenumber.phone_number_util"/>
+        </service>
+        <service id="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper" alias="misd_phone_number.templating.helper"/>
+    </services>
+
+</container>
