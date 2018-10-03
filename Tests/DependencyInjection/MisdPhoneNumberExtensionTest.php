@@ -86,7 +86,7 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $this->assertServiceHasTag(
           'misd_phone_number.form.type',
           'form.type',
-          array('alias' => 'tel')
+          array('alias' => 'phone_number')
         );
         $this->assertHasService(
           'misd_phone_number.serializer.handler',
