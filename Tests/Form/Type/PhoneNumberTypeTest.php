@@ -221,7 +221,12 @@ class PhoneNumberTypeTest extends TypeTestCase
         IntlTestHelper::requireFullIntl($this);
         Locale::setDefault('fr');
 
-        $form = $this->factory->create(new PhoneNumberType(), null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE));
+        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
+            $type = new PhoneNumberType();
+        } else {
+            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
+        }
+        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE));
 
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];

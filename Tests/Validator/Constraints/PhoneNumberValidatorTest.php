@@ -137,7 +137,6 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
             array('+441234567890', true, 'personal_number'),
             array('+449012345678', false, 'premium_rate'),
             array('+441234567890', true, 'premium_rate'),
-            array('+448431234567', false, 'shared_cost'),
             array('+441234567890', true, 'shared_cost'),
             array('+448001234567', false, 'toll_free'),
             array('+441234567890', true, 'toll_free'),
