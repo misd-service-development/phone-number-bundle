@@ -101,6 +101,10 @@ class PhoneNumberType extends AbstractType
                 $countryOptions['placeholder'] = $options['country_placeholder'];
             }
 
+            if ($options['number_options']) {
+                $numberOptions = $numberOptions + $options['number_options'];
+            }
+
             $builder
                 ->add('country', $choiceType, $countryOptions)
                 ->add('number', $textType, $numberOptions)
@@ -150,6 +154,7 @@ class PhoneNumberType extends AbstractType
                 'error_bubbling' => false,
                 'country_choices' => array(),
                 'country_placeholder' => false,
+                'number_options' => false,
                 'preferred_country_choices' => array(),
             )
         );
