@@ -101,6 +101,10 @@ class PhoneNumberType extends AbstractType
                 $countryOptions['placeholder'] = $options['country_placeholder'];
             }
 
+            if ($options['number_placeholder']) {
+                $numberOptions['attr'] = ['placeholder' => $options['number_placeholder']];
+            }
+
             $builder
                 ->add('country', $choiceType, $countryOptions)
                 ->add('number', $textType, $numberOptions)
@@ -150,6 +154,7 @@ class PhoneNumberType extends AbstractType
                 'error_bubbling' => false,
                 'country_choices' => array(),
                 'country_placeholder' => false,
+                'number_placeholder' => false,
                 'preferred_country_choices' => array(),
             )
         );
@@ -188,6 +193,6 @@ class PhoneNumberType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'phone_number';
+        return 'tel';
     }
 }
