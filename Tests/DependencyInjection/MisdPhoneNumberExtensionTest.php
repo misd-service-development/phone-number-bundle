@@ -87,60 +87,6 @@ class MisdPhoneNumberExtensionTest extends TestCase
             'form.type',
             ['alias' => 'phone_number']
         );
-        $this->assertHasService(
-            'misd_phone_number.serializer.handler',
-            'Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler'
-        );
-        $this->assertServiceHasTag(
-            'misd_phone_number.serializer.handler',
-            'jms_serializer.handler',
-            [
-            'type' => 'libphonenumber\PhoneNumber',
-            'direction' => 'serialization',
-            'format' => 'json',
-            'method' => 'serializePhoneNumber',
-          ]
-        );
-        $this->assertServiceHasTag(
-            'misd_phone_number.serializer.handler',
-            'jms_serializer.handler',
-            [
-            'type' => 'libphonenumber\PhoneNumber',
-            'direction' => 'deserialization',
-            'format' => 'json',
-            'method' => 'deserializePhoneNumberFromJson',
-          ]
-        );
-        $this->assertServiceHasTag(
-            'misd_phone_number.serializer.handler',
-            'jms_serializer.handler',
-            [
-            'type' => 'libphonenumber\PhoneNumber',
-            'direction' => 'serialization',
-            'format' => 'xml',
-            'method' => 'serializePhoneNumber',
-          ]
-        );
-        $this->assertServiceHasTag(
-            'misd_phone_number.serializer.handler',
-            'jms_serializer.handler',
-            [
-            'type' => 'libphonenumber\PhoneNumber',
-            'direction' => 'deserialization',
-            'format' => 'xml',
-            'method' => 'deserializePhoneNumberFromXml',
-          ]
-        );
-        $this->assertServiceHasTag(
-            'misd_phone_number.serializer.handler',
-            'jms_serializer.handler',
-            [
-            'type' => 'libphonenumber\PhoneNumber',
-            'direction' => 'serialization',
-            'format' => 'yml',
-            'method' => 'serializePhoneNumber',
-          ]
-        );
     }
 
     protected function assertHasService($id, $instanceOf)

@@ -41,9 +41,6 @@ class MisdPhoneNumberExtension extends Extension
         if (interface_exists('Symfony\Component\Serializer\Normalizer\NormalizerInterface')) {
             $loader->load('serializer.xml');
         }
-        if (class_exists('JMS\SerializerBundle\JMSSerializerBundle')) {
-            $loader->load('jms_serializer.xml');
-        }
 
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_util'));
         $this->setFactory($container->getDefinition('libphonenumber.phone_number_offline_geocoder'));
