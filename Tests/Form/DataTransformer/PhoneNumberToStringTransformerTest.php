@@ -16,7 +16,7 @@ use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToStringTransformer;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
@@ -31,7 +31,7 @@ class PhoneNumberToStringTransformerTest extends TestCase
      */
     protected $phoneNumberUtil;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
     }

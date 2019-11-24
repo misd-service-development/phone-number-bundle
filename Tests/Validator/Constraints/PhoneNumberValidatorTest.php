@@ -16,12 +16,14 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
  * Phone number validator test.
  */
-class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
+class PhoneNumberValidatorTest extends TestCase
 {
     /**
      * @var \Symfony\Component\Validator\Context\ExecutionContextInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -33,7 +35,7 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected $validator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (class_exists('Symfony\Component\Validator\Context\ExecutionContext')) {
             $executionContextClass = 'Symfony\Component\Validator\Context\ExecutionContext';
@@ -154,13 +156,11 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
     public function testValidateThrowsUnexpectedTypeExceptionOnBadValue()
     {
-        $constraint = new PhoneNumber();
-        $this->validator->validate($this, $constraint);
+        $this->expectException(UnexpectedTypeException::class);
+
+        $this->validator->validate($this, new PhoneNumber());
     }
 
     protected function createValidator()

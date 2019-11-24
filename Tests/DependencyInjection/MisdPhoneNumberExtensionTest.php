@@ -12,7 +12,7 @@
 namespace Misd\PhoneNumberBundle\Tests\DependencyInjection;
 
 use Misd\PhoneNumberBundle\DependencyInjection\MisdPhoneNumberExtension;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\TaggedContainerInterface;

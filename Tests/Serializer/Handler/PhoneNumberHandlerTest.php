@@ -11,9 +11,14 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Serializer\Handler;
 
+use JMS\Serializer\Context;
+use JMS\Serializer\JsonDeserializationVisitor;
+use JMS\Serializer\VisitorInterface;
+use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 
 /**
@@ -23,35 +28,29 @@ class PhoneNumberHandlerTest extends TestCase
 {
     public function testSerializePhoneNumber()
     {
-        $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
-            ->disableOriginalConstructor()->getMock();
+        $phoneNumber = new PhoneNumber();
 
-        $handler = new PhoneNumberHandler($phoneNumberUtil);
+        $phoneNumberUtil = $this->prophesize(PhoneNumberUtil::class);
+        $phoneNumberUtil->format($phoneNumber, PhoneNumberFormat::E164)->shouldBeCalledTimes(1)->willReturn('foo');
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\VisitorInterface')->getMock();
+        $context = $this->prophesize(Context::class);
 
-        $test = $this->getMock('libphoneNumber\PhoneNumber');
-        $type = array();
-        $context = $this->getMock('JMS\Serializer\Context');
+        $visitor = $this->prophesize(VisitorInterface::class);
+        $visitor->visitString('foo', [], $context->reveal())->shouldBeCalledTimes(1)->willReturn('bar');
 
-        $phoneNumberUtil->expects($this->once())->method('format')->with($test)->will($this->returnValue('foo'));
-        $visitor->expects($this->once())->method('visitString')->with('foo', $type, $context)
-            ->will($this->returnValue('bar'));
+        $handler = new PhoneNumberHandler($phoneNumberUtil->reveal());
 
-        $this->assertSame('bar', $handler->serializePhoneNumber($visitor, $test, $type, $context));
+        $this->assertSame('bar', $handler->serializePhoneNumber($visitor->reveal(), $phoneNumber, [], $context->reveal()));
     }
 
     public function testDeserializePhoneNumberFromJsonWhenNull()
     {
-        $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
-            ->disableOriginalConstructor()->getMock();
+        $phoneNumberUtil = $this->prophesize(PhoneNumberUtil::class);
+        $handler = new PhoneNumberHandler($phoneNumberUtil->reveal());
 
-        $handler = new PhoneNumberHandler($phoneNumberUtil);
+        $visitor = $this->prophesize(JsonDeserializationVisitor::class);
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\JsonDeserializationVisitor')
-            ->disableOriginalConstructor()->getMock();
-
-        $this->assertNull($handler->deserializePhoneNumberFromJson($visitor, null, array()));
+        $this->assertNull($handler->deserializePhoneNumberFromJson($visitor->reveal(), null, []));
     }
 
     public function testDeserializePhoneNumberFromJson()

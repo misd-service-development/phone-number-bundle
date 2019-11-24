@@ -12,7 +12,7 @@
 namespace Misd\PhoneNumberBundle\Tests\Validator\Constraints;
 
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Phone number constraint test.

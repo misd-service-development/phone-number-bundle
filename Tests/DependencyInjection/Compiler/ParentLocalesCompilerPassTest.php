@@ -12,7 +12,7 @@
 namespace Misd\PhoneNumberBundle\Tests\DependencyInjection\Compiler;
 
 use Misd\PhoneNumberBundle\DependencyInjection\Compiler\ParentLocalesCompilerPass;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

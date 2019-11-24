@@ -15,19 +15,28 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Locale;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
-use Symfony\Component\Form\Test\TypeTestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\ChoiceList\View\ChoiceView;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Intl\Util\IntlTestHelper;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 /**
  * Phone number form type test.
  */
-class PhoneNumberTypeTest extends TypeTestCase
+class PhoneNumberTypeTest extends TestCase
 {
-    protected function setUp()
+    /**
+     * @var FormFactoryInterface
+     */
+    protected $factory;
+
+    protected function setUp(): void
     {
         Locale::setDefault('en');
 
-        parent::setUp();
+        $this->factory = Forms::createFormFactoryBuilder()->getFormFactory();
     }
 
     /**
@@ -35,13 +44,7 @@ class PhoneNumberTypeTest extends TypeTestCase
      */
     public function testSingleField($input, $options, $output)
     {
-        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
-            $type = new PhoneNumberType();
-        } else {
-            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
-        }
-
-        $form = $this->factory->create($type, null, $options);
+        $form = $this->factory->create(PhoneNumberType::class, null, $options);
 
         $form->submit($input);
 
@@ -136,7 +139,7 @@ class PhoneNumberTypeTest extends TypeTestCase
 
         $this->assertCount($expectedChoicesCount, $choices);
         foreach ($expectedChoices as $expectedChoice) {
-            $this->assertContains($expectedChoice, $choices, '', false, false);
+            $this->assertContainsEquals($expectedChoice, $choices, '', false, false);
         }
     }
 
@@ -221,31 +224,20 @@ class PhoneNumberTypeTest extends TypeTestCase
         IntlTestHelper::requireFullIntl($this);
         Locale::setDefault('fr');
 
-        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
-            $type = new PhoneNumberType();
-        } else {
-            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
-        }
-        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE));
+        $form = $this->factory->create(PhoneNumberType::class, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE));
 
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];
 
-        $this->assertContains($this->createChoiceView('Royaume-Uni (+44)', 'GB'), $choices, '', false, false);
+        $this->assertContainsEquals($this->createChoiceView('Royaume-Uni (+44)', 'GB'), $choices, '', false, false);
         $this->assertFalse($view['country']->vars['choice_translation_domain']);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
-     */
     public function testInvalidWidget()
     {
-        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
-            $type = new PhoneNumberType();
-        } else {
-            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
-        }
-        $this->factory->create($type, null, array('widget' => 'foo'));
+        $this->expectException(InvalidOptionsException::class);
+
+        $this->factory->create(PhoneNumberType::class, null, array('widget' => 'foo'));
     }
 
     public function testGetNameAndBlockPrefixAreTel()
@@ -258,12 +250,6 @@ class PhoneNumberTypeTest extends TypeTestCase
 
     private function createChoiceView($label, $code)
     {
-        if (class_exists('Symfony\Component\Form\ChoiceList\View\ChoiceView')) {
-            $class = 'Symfony\Component\Form\ChoiceList\View\ChoiceView';
-        } else {
-            $class = 'Symfony\Component\Form\Extension\Core\View\ChoiceView';
-        }
-
-        return new $class($code, $code, $label);
+        return new ChoiceView($code, $code, $label);
     }
 }
