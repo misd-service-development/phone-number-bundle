@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * Parent locales compiler pass test.
@@ -24,11 +25,11 @@ class ParentLocalesCompilerPassTest extends TestCase
 {
     public function testNoTranslator()
     {
-        $compilerPass = new ParentLocalesCompilerPass();
-
         $container = new ContainerBuilder();
+        (new ParentLocalesCompilerPass())->process($container);
 
-        $compilerPass->process($container);
+        $this->expectException(ServiceNotFoundException::class);
+        $container->get('translator');
     }
 
     public function testDifferentTranslator()
