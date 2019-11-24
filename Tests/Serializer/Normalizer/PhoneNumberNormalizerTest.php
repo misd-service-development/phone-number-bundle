@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Misd\PhoneNumberBundle\Tests\Serializer\Handler;
+namespace Misd\PhoneNumberBundle\Tests\Serializer\Normalizer;
 
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumber;

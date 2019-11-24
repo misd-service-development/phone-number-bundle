@@ -74,7 +74,6 @@ class PhoneNumberType extends AbstractType
 
             $countryOptions = [
                 'error_bubbling' => true,
-                'required' => $options['required'],
                 'disabled' => $options['disabled'],
                 'translation_domain' => $options['translation_domain'],
                 'choice_translation_domain' => false,

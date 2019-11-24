@@ -39,7 +39,7 @@ class FormPhpTemplateCompilerPass implements CompilerPassInterface
             array_splice($parameter, ++$key, 0, ['MisdPhoneNumberBundle:Form']);
         } else {
             // Put it in first position.
-            array_unshift($resources, ['MisdPhoneNumberBundle:Form']);
+            array_unshift($parameter, ['MisdPhoneNumberBundle:Form']);
         }
 
         $container->setParameter('templating.helper.form.resources', $parameter);

@@ -139,7 +139,7 @@ class PhoneNumberTypeTest extends TestCase
 
         $this->assertCount($expectedChoicesCount, $choices);
         foreach ($expectedChoices as $expectedChoice) {
-            $this->assertContainsEquals($expectedChoice, $choices, '', false, false);
+            $this->assertContainsEquals($expectedChoice, $choices);
         }
     }
 
@@ -231,7 +231,7 @@ class PhoneNumberTypeTest extends TestCase
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];
 
-        $this->assertContainsEquals($this->createChoiceView('Royaume-Uni (+44)', 'GB'), $choices, '', false, false);
+        $this->assertContainsEquals($this->createChoiceView('Royaume-Uni (+44)', 'GB'), $choices);
         $this->assertFalse($view['country']->vars['choice_translation_domain']);
     }
 
