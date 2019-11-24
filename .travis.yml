@@ -18,10 +18,10 @@ matrix:
         - dist: precise
           php: 7.2
           env: dependencies=lowest
-        - php: 7.2
-          env: SYMFONY_VERSION=3.4.x
         - php: 7.3
-          env: SYMFONY_VERSION=4.0.x stability=beta
+          env: SYMFONY_VERSION=^4.3
+        - php: 7.3
+          env: SYMFONY_VERSION=^5.0
 
 before_install:
   - echo 'memory_limit=-1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini;
