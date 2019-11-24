@@ -15,7 +15,6 @@ use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
-use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 use PHPUnit\Framework\TestCase;
 
@@ -58,7 +57,7 @@ class PhoneNumberHelperTest extends TestCase
 
     /**
      * 0 => Format
-     * 1 => Expected format
+     * 1 => Expected format.
      */
     public function processProvider()
     {

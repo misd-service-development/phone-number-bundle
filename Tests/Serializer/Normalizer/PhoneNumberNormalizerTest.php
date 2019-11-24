@@ -93,7 +93,7 @@ class PhoneNumberNormalizerTest extends TestCase
 
         $phoneNumberUtil->expects($this->once())->method('parse')
             ->with('invalid phone number', PhoneNumberUtil::UNKNOWN_REGION)
-            ->willThrowException(new NumberParseException(NumberParseException::INVALID_COUNTRY_CODE, ""));
+            ->willThrowException(new NumberParseException(NumberParseException::INVALID_COUNTRY_CODE, ''));
 
         $normalizer = new PhoneNumberNormalizer($phoneNumberUtil);
         $normalizer->denormalize('invalid phone number', 'libphonenumber\PhoneNumber');

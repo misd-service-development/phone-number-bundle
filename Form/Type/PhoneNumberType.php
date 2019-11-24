@@ -21,11 +21,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Phone number form type.
@@ -43,7 +42,7 @@ class PhoneNumberType extends AbstractType
         if (self::WIDGET_COUNTRY_CHOICE === $options['widget']) {
             $util = PhoneNumberUtil::getInstance();
 
-            $countries = array();
+            $countries = [];
 
             if (is_array($options['country_choices'])) {
                 foreach ($options['country_choices'] as $country) {
@@ -61,7 +60,7 @@ class PhoneNumberType extends AbstractType
                 }
             }
 
-            $countryChoices = array();
+            $countryChoices = [];
 
             foreach ($this->getCountryNames() as $region => $name) {
                 if (false === isset($countries[$region])) {
@@ -166,5 +165,4 @@ class PhoneNumberType extends AbstractType
 
         return Countries::getNames();
     }
-
 }

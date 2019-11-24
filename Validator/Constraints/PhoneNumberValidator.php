@@ -16,9 +16,9 @@ use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
@@ -64,37 +64,37 @@ class PhoneNumberValidator extends ConstraintValidator
 
         switch ($constraint->getType()) {
             case PhoneNumber::FIXED_LINE:
-                $validTypes = array(PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                $validTypes = [PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE];
                 break;
             case PhoneNumber::MOBILE:
-                $validTypes = array(PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                $validTypes = [PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE];
                 break;
             case PhoneNumber::PAGER:
-                $validTypes = array(PhoneNumberType::PAGER);
+                $validTypes = [PhoneNumberType::PAGER];
                 break;
             case PhoneNumber::PERSONAL_NUMBER:
-                $validTypes = array(PhoneNumberType::PERSONAL_NUMBER);
+                $validTypes = [PhoneNumberType::PERSONAL_NUMBER];
                 break;
             case PhoneNumber::PREMIUM_RATE:
-                $validTypes = array(PhoneNumberType::PREMIUM_RATE);
+                $validTypes = [PhoneNumberType::PREMIUM_RATE];
                 break;
             case PhoneNumber::SHARED_COST:
-                $validTypes = array(PhoneNumberType::SHARED_COST);
+                $validTypes = [PhoneNumberType::SHARED_COST];
                 break;
             case PhoneNumber::TOLL_FREE:
-                $validTypes = array(PhoneNumberType::TOLL_FREE);
+                $validTypes = [PhoneNumberType::TOLL_FREE];
                 break;
             case PhoneNumber::UAN:
-                $validTypes = array(PhoneNumberType::UAN);
+                $validTypes = [PhoneNumberType::UAN];
                 break;
             case PhoneNumber::VOIP:
-                $validTypes = array(PhoneNumberType::VOIP);
+                $validTypes = [PhoneNumberType::VOIP];
                 break;
             case PhoneNumber::VOICEMAIL:
-                $validTypes = array(PhoneNumberType::VOICEMAIL);
+                $validTypes = [PhoneNumberType::VOICEMAIL];
                 break;
             default:
-                $validTypes = array();
+                $validTypes = [];
                 break;
         }
 
@@ -106,19 +106,18 @@ class PhoneNumberValidator extends ConstraintValidator
 
                 return;
             }
-
         }
     }
 
     /**
      * Add a violation.
      *
-     * @param mixed      $value      The value that should be validated.
-     * @param Constraint $constraint The constraint for the validation.
+     * @param mixed      $value      the value that should be validated
+     * @param Constraint $constraint the constraint for the validation
      */
     private function addViolation($value, Constraint $constraint)
     {
-        /** @var \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber $constraint */
+        /* @var \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber $constraint */
         if ($this->context instanceof ExecutionContextInterface) {
             $this->context->buildViolation($constraint->getMessage())
                 ->setParameter('{{ type }}', $constraint->getType())
@@ -126,10 +125,10 @@ class PhoneNumberValidator extends ConstraintValidator
                 ->setCode(PhoneNumber::INVALID_PHONE_NUMBER_ERROR)
                 ->addViolation();
         } else {
-            $this->context->addViolation($constraint->getMessage(), array(
+            $this->context->addViolation($constraint->getMessage(), [
                 '{{ type }}' => $constraint->getType(),
-                '{{ value }}' => $value
-            ));
+                '{{ value }}' => $value,
+            ]);
         }
     }
 }

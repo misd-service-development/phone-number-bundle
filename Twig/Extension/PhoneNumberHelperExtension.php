@@ -32,7 +32,7 @@ class PhoneNumberHelperExtension extends AbstractExtension
     /**
      * Constructor.
      *
-     * @param PhoneNumberHelper $helper Phone number helper.
+     * @param PhoneNumberHelper $helper phone number helper
      */
     public function __construct(PhoneNumberHelper $helper)
     {
@@ -44,10 +44,10 @@ class PhoneNumberHelperExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('phone_number_format', array($this->helper, 'format'), array('deprecated' => '1.2')),
-            new TwigFunction('phone_number_is_type', array($this->helper, 'isType'), array('deprecated' => '1.2')),
-        );
+        return [
+            new TwigFunction('phone_number_format', [$this->helper, 'format'], ['deprecated' => '1.2']),
+            new TwigFunction('phone_number_is_type', [$this->helper, 'isType'], ['deprecated' => '1.2']),
+        ];
     }
 
     /**
@@ -55,9 +55,9 @@ class PhoneNumberHelperExtension extends AbstractExtension
      */
     public function getFilters()
     {
-        return array(
-            new TwigFilter('phone_number_format', array($this->helper, 'format')),
-        );
+        return [
+            new TwigFilter('phone_number_format', [$this->helper, 'format']),
+        ];
     }
 
     /**
@@ -65,9 +65,9 @@ class PhoneNumberHelperExtension extends AbstractExtension
      */
     public function getTests()
     {
-        return array(
-            new TwigTest('phone_number_of_type', array($this->helper, 'isType')),
-        );
+        return [
+            new TwigTest('phone_number_of_type', [$this->helper, 'isType']),
+        ];
     }
 
     /**

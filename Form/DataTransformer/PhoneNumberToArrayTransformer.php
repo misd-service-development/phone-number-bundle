@@ -30,8 +30,6 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
 
     /**
      * Constructor.
-     *
-     * @param array $countryChoices
      */
     public function __construct(array $countryChoices)
     {
@@ -44,7 +42,7 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
     public function transform($phoneNumber)
     {
         if (null === $phoneNumber) {
-            return array('country' => '', 'number' => '');
+            return ['country' => '', 'number' => ''];
         } elseif (false === $phoneNumber instanceof PhoneNumber) {
             throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
         }
@@ -55,10 +53,10 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Invalid country.');
         }
 
-        return array(
+        return [
             'country' => $util->getRegionCodeForNumber($phoneNumber),
             'number' => $util->format($phoneNumber, PhoneNumberFormat::NATIONAL),
-        );
+        ];
     }
 
     /**

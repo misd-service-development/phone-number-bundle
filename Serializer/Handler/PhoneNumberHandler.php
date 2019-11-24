@@ -34,7 +34,7 @@ class PhoneNumberHandler
     /**
      * Constructor.
      *
-     * @param PhoneNumberUtil $phoneNumberUtil Phone number utility.
+     * @param PhoneNumberUtil $phoneNumberUtil phone number utility
      */
     public function __construct(PhoneNumberUtil $phoneNumberUtil)
     {
@@ -44,12 +44,12 @@ class PhoneNumberHandler
     /**
      * Serialize a phone number.
      *
-     * @param VisitorInterface $visitor     Serialization visitor.
-     * @param PhoneNumber      $phoneNumber Phone number.
-     * @param array            $type        Type.
-     * @param mixed            $context     Context.
+     * @param VisitorInterface $visitor     serialization visitor
+     * @param PhoneNumber      $phoneNumber phone number
+     * @param array            $type        type
+     * @param mixed            $context     context
      *
-     * @return mixed Serialized phone number.
+     * @return mixed serialized phone number
      */
     public function serializePhoneNumber(VisitorInterface $visitor, PhoneNumber $phoneNumber, array $type, $context)
     {
@@ -61,11 +61,11 @@ class PhoneNumberHandler
     /**
      * Deserialize a phone number from JSON.
      *
-     * @param JsonDeserializationVisitor $visitor Deserialization visitor.
-     * @param string|null                $data    Data.
-     * @param array                      $type    Type.
+     * @param JsonDeserializationVisitor $visitor deserialization visitor
+     * @param string|null                $data    data
+     * @param array                      $type    type
      *
-     * @return PhoneNumber|null Phone number.
+     * @return PhoneNumber|null phone number
      */
     public function deserializePhoneNumberFromJson(JsonDeserializationVisitor $visitor, $data, array $type)
     {
@@ -79,18 +79,18 @@ class PhoneNumberHandler
     /**
      * Deserialize a phone number from XML.
      *
-     * @param XmlDeserializationVisitor $visitor Deserialization visitor.
-     * @param SimpleXMLElement          $data    Data.
-     * @param array                     $type    Type.
+     * @param XmlDeserializationVisitor $visitor deserialization visitor
+     * @param SimpleXMLElement          $data    data
+     * @param array                     $type    type
      *
-     * @return PhoneNumber|null Phone number.
+     * @return PhoneNumber|null phone number
      */
     public function deserializePhoneNumberFromXml(XmlDeserializationVisitor $visitor, $data, array $type)
     {
         $attributes = $data->attributes();
         if (
-            (isset($attributes['nil'][0]) && (string) $attributes['nil'][0] === 'true') ||
-            (isset($attributes['xsi:nil'][0]) && (string) $attributes['xsi:nil'][0] === 'true')
+            (isset($attributes['nil'][0]) && 'true' === (string) $attributes['nil'][0]) ||
+            (isset($attributes['xsi:nil'][0]) && 'true' === (string) $attributes['xsi:nil'][0])
         ) {
             return null;
         }

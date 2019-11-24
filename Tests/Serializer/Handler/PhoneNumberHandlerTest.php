@@ -68,7 +68,7 @@ class PhoneNumberHandlerTest extends TestCase
         $phoneNumberUtil->expects($this->once())->method('parse')->with($test, PhoneNumberUtil::UNKNOWN_REGION)
             ->will($this->returnValue('foo'));
 
-        $this->assertSame('foo', $handler->deserializePhoneNumberFromJson($visitor, $test, array()));
+        $this->assertSame('foo', $handler->deserializePhoneNumberFromJson($visitor, $test, []));
     }
 
     public function testDeserializePhoneNumberFromXmlWhenNil()
@@ -83,7 +83,7 @@ class PhoneNumberHandlerTest extends TestCase
 
         $xml = new SimpleXMLElement('<phone_number nil="true"/>');
 
-        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, array()));
+        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, []));
     }
 
     public function testDeserializePhoneNumberFromXmlWhenXsiNil()
@@ -99,7 +99,7 @@ class PhoneNumberHandlerTest extends TestCase
         $xml = new SimpleXMLElement('<phone_number/>');
         $xml->addAttribute('xsi:nil', 'true', 'http://www.w3.org/2001/XMLSchema-instance');
 
-        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, array()));
+        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, []));
     }
 
     public function testDeserializePhoneNumberFromXml()
@@ -119,6 +119,6 @@ class PhoneNumberHandlerTest extends TestCase
         $phoneNumberUtil->expects($this->once())->method('parse')->with($test, PhoneNumberUtil::UNKNOWN_REGION)
             ->will($this->returnValue('foo'));
 
-        $this->assertSame('foo', $handler->deserializePhoneNumberFromXml($visitor, $xml, array()));
+        $this->assertSame('foo', $handler->deserializePhoneNumberFromXml($visitor, $xml, []));
     }
 }

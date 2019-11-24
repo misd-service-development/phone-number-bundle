@@ -40,8 +40,8 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
     /**
      * Constructor.
      *
-     * @param string $defaultRegion Default region code.
-     * @param int    $format        Display format.
+     * @param string $defaultRegion default region code
+     * @param int    $format        display format
      */
     public function __construct(
         $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION,
@@ -76,7 +76,7 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
      */
     public function reverseTransform($string)
     {
-        if (!$string && $string !== '0') {
+        if (!$string && '0' !== $string) {
             return null;
         }
 

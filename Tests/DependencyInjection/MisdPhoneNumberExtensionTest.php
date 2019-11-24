@@ -13,7 +13,6 @@ namespace Misd\PhoneNumberBundle\Tests\DependencyInjection;
 
 use Misd\PhoneNumberBundle\DependencyInjection\MisdPhoneNumberExtension;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 
@@ -32,115 +31,115 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $extension = new MisdPhoneNumberExtension();
         $this->container = new ContainerBuilder();
 
-        $extension->load(array(), $this->container);
+        $extension->load([], $this->container);
 
         $this->assertHasService(
-          'libphonenumber.phone_number_util',
-          'libphonenumber\PhoneNumberUtil'
+            'libphonenumber.phone_number_util',
+            'libphonenumber\PhoneNumberUtil'
         );
         if (class_exists('libphonenumber\geocoding\PhoneNumberOfflineGeocoder') && extension_loaded('intl')) {
             $this->assertHasService(
-              'libphonenumber.phone_number_offline_geocoder',
-              'libphonenumber\geocoding\PhoneNumberOfflineGeocoder'
+                'libphonenumber.phone_number_offline_geocoder',
+                'libphonenumber\geocoding\PhoneNumberOfflineGeocoder'
             );
         }
         if (class_exists('libphonenumber\ShortNumberInfo')) {
             $this->assertHasService(
-              'libphonenumber.short_number_info',
-              'libphonenumber\ShortNumberInfo'
+                'libphonenumber.short_number_info',
+                'libphonenumber\ShortNumberInfo'
             );
         }
         if (class_exists('libphonenumber\PhoneNumberToCarrierMapper') && extension_loaded('intl')) {
             $this->assertHasService(
-              'libphonenumber.phone_number_to_carrier_mapper',
-              'libphonenumber\PhoneNumberToCarrierMapper'
+                'libphonenumber.phone_number_to_carrier_mapper',
+                'libphonenumber\PhoneNumberToCarrierMapper'
             );
         }
         if (class_exists('libphonenumber\PhoneNumberToTimeZonesMapper')) {
             $this->assertHasService(
-              'libphonenumber.phone_number_to_time_zones_mapper',
-              'libphonenumber\PhoneNumberToTimeZonesMapper'
+                'libphonenumber.phone_number_to_time_zones_mapper',
+                'libphonenumber\PhoneNumberToTimeZonesMapper'
             );
         }
         $this->assertHasService(
-          'misd_phone_number.templating.helper',
-          'Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper'
+            'misd_phone_number.templating.helper',
+            'Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper'
         );
         $this->assertServiceHasTag(
-          'misd_phone_number.templating.helper',
-          'templating.helper',
-          array('alias' => 'phone_number_helper')
+            'misd_phone_number.templating.helper',
+            'templating.helper',
+            ['alias' => 'phone_number_helper']
         );
 
         // Assert deprecated 'phone_number_format' alias
         $this->assertServiceHasTag(
             'misd_phone_number.templating.helper',
             'templating.helper',
-            array('alias' => 'phone_number_format')
+            ['alias' => 'phone_number_format']
         );
 
         $this->assertHasService(
-          'misd_phone_number.form.type',
-          'Misd\PhoneNumberBundle\Form\Type\PhoneNumberType'
+            'misd_phone_number.form.type',
+            'Misd\PhoneNumberBundle\Form\Type\PhoneNumberType'
         );
         $this->assertServiceHasTag(
-          'misd_phone_number.form.type',
-          'form.type',
-          array('alias' => 'phone_number')
+            'misd_phone_number.form.type',
+            'form.type',
+            ['alias' => 'phone_number']
         );
         $this->assertHasService(
-          'misd_phone_number.serializer.handler',
-          'Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler'
+            'misd_phone_number.serializer.handler',
+            'Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler'
         );
         $this->assertServiceHasTag(
-          'misd_phone_number.serializer.handler',
-          'jms_serializer.handler',
-          array(
+            'misd_phone_number.serializer.handler',
+            'jms_serializer.handler',
+            [
             'type' => 'libphonenumber\PhoneNumber',
             'direction' => 'serialization',
             'format' => 'json',
             'method' => 'serializePhoneNumber',
-          )
+          ]
         );
         $this->assertServiceHasTag(
-          'misd_phone_number.serializer.handler',
-          'jms_serializer.handler',
-          array(
+            'misd_phone_number.serializer.handler',
+            'jms_serializer.handler',
+            [
             'type' => 'libphonenumber\PhoneNumber',
             'direction' => 'deserialization',
             'format' => 'json',
             'method' => 'deserializePhoneNumberFromJson',
-          )
+          ]
         );
         $this->assertServiceHasTag(
-          'misd_phone_number.serializer.handler',
-          'jms_serializer.handler',
-          array(
+            'misd_phone_number.serializer.handler',
+            'jms_serializer.handler',
+            [
             'type' => 'libphonenumber\PhoneNumber',
             'direction' => 'serialization',
             'format' => 'xml',
             'method' => 'serializePhoneNumber',
-          )
+          ]
         );
         $this->assertServiceHasTag(
-          'misd_phone_number.serializer.handler',
-          'jms_serializer.handler',
-          array(
+            'misd_phone_number.serializer.handler',
+            'jms_serializer.handler',
+            [
             'type' => 'libphonenumber\PhoneNumber',
             'direction' => 'deserialization',
             'format' => 'xml',
             'method' => 'deserializePhoneNumberFromXml',
-          )
+          ]
         );
         $this->assertServiceHasTag(
-          'misd_phone_number.serializer.handler',
-          'jms_serializer.handler',
-          array(
+            'misd_phone_number.serializer.handler',
+            'jms_serializer.handler',
+            [
             'type' => 'libphonenumber\PhoneNumber',
             'direction' => 'serialization',
             'format' => 'yml',
             'method' => 'serializePhoneNumber',
-          )
+          ]
         );
     }
 
@@ -150,7 +149,7 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $this->assertInstanceOf($instanceOf, $this->container->get($id));
     }
 
-    protected function assertServiceHasTag($id, $tag, $attributes = array())
+    protected function assertServiceHasTag($id, $tag, $attributes = [])
     {
         $services = $this->container->findTaggedServiceIds($tag);
 

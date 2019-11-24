@@ -47,7 +47,7 @@ class PhoneNumberTypeTest extends TestCase
     protected function setUp(): void
     {
         $this->platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')
-            ->setMethods(array('getVarcharTypeDeclarationSQL'))
+            ->setMethods(['getVarcharTypeDeclarationSQL'])
             ->getMockForAbstractClass();
 
         $this->platform->expects($this->any())
@@ -70,7 +70,7 @@ class PhoneNumberTypeTest extends TestCase
 
     public function testGetSQLDeclaration()
     {
-        $this->assertSame('DUMMYVARCHAR()', $this->type->getSQLDeclaration(array(), $this->platform));
+        $this->assertSame('DUMMYVARCHAR()', $this->type->getSQLDeclaration([], $this->platform));
     }
 
     public function testConvertToDatabaseValueWithNull()

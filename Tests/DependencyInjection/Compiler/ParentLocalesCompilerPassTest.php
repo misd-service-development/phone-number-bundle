@@ -38,7 +38,7 @@ class ParentLocalesCompilerPassTest extends TestCase
         $container = new ContainerBuilder();
 
         $translatorDefinition = new Definition(
-          'Symfony\Component\Translation\IdentityTranslator'
+            'Symfony\Component\Translation\IdentityTranslator'
         );
 
         $container->setDefinition('translator', $translatorDefinition);
@@ -55,7 +55,7 @@ class ParentLocalesCompilerPassTest extends TestCase
         $container = new ContainerBuilder();
 
         $translatorDefinition = new Definition(
-          'Symfony\Component\Translation\Translator'
+            'Symfony\Component\Translation\Translator'
         );
 
         $container->setDefinition('translator', $translatorDefinition);
@@ -63,8 +63,8 @@ class ParentLocalesCompilerPassTest extends TestCase
         $compilerPass->process($container);
 
         $this->assertCount(
-          count($this->getLocalParents($compilerPass)),
-          $translatorDefinition->getMethodCalls()
+            count($this->getLocalParents($compilerPass)),
+            $translatorDefinition->getMethodCalls()
         );
     }
 

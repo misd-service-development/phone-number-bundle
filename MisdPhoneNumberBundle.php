@@ -31,8 +31,8 @@ class MisdPhoneNumberBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(
-          new ParentLocalesCompilerPass(),
-          PassConfig::TYPE_BEFORE_REMOVING
+            new ParentLocalesCompilerPass(),
+            PassConfig::TYPE_BEFORE_REMOVING
         );
         $container->addCompilerPass(new FormPhpTemplateCompilerPass());
         $container->addCompilerPass(new FormTwigTemplateCompilerPass());

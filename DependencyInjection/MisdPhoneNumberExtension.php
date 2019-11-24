@@ -27,7 +27,7 @@ class MisdPhoneNumberExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
         if (interface_exists('Symfony\Component\Templating\Helper\HelperInterface')) {
             $loader->load('templating.xml');
@@ -64,7 +64,7 @@ class MisdPhoneNumberExtension extends Extension
     {
         if (method_exists($def, 'setFactory')) {
             // to be inlined in services.xml when dependency on Symfony DependencyInjection is bumped to 2.6
-            $def->setFactory(array($def->getClass(), 'getInstance'));
+            $def->setFactory([$def->getClass(), 'getInstance']);
         } else {
             // to be removed when dependency on Symfony DependencyInjection is bumped to 2.6
             $def->setFactoryClass($def->getClass());
