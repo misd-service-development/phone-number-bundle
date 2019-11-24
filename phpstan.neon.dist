@@ -16,6 +16,3 @@ parameters:
         -
             message: '#Call to an undefined static method Symfony\\Component\\Intl\\Intl::getRegionBundle().#'
             path: %currentWorkingDirectory%/Form/Type/PhoneNumberType.php
-        -
-            message: '#Undefined variable: \$(widget|view|form)#'
-            path: %currentWorkingDirectory%/Resources/views/Form/phone_number_widget.html.php
