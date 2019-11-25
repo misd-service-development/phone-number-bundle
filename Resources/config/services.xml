@@ -4,31 +4,27 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <!-- .class parameters are deprecated and will be removed in 2.0 -->
-        <parameter key="libphonenumber.phone_number_util.class">libphonenumber\PhoneNumberUtil</parameter>
-        <parameter key="libphonenumber.phone_number_offline_geocoder.class">libphonenumber\geocoding\PhoneNumberOfflineGeocoder</parameter>
-        <parameter key="libphonenumber.short_number_info.class">libphonenumber\ShortNumberInfo</parameter>
-        <parameter key="libphonenumber.phone_number_to_carrier_mapper.class">libphonenumber\PhoneNumberToCarrierMapper</parameter>
-        <parameter key="libphonenumber.phone_number_to_time_zones_mapper.class">libphonenumber\PhoneNumberToTimeZonesMapper</parameter>
-    </parameters>
-
     <services>
 
-        <service id="libphonenumber.phone_number_util" class="libphonenumber\PhoneNumberUtil"/>
-        <service id="libphonenumber\PhoneNumberUtil" alias="libphonenumber.phone_number_util"/>
+        <service id="libphonenumber\PhoneNumberUtil">
+            <factory class="libphonenumber\PhoneNumberUtil" method="getInstance"/>
+        </service>
 
-        <service id="libphonenumber.phone_number_offline_geocoder" class="libphonenumber\geocoding\PhoneNumberOfflineGeocoder"/>
-        <service id="libphonenumber\geocoding\PhoneNumberOfflineGeocoder" alias="libphonenumber.phone_number_offline_geocoder"/>
+        <service id="libphonenumber\geocoding\PhoneNumberOfflineGeocoder">
+            <factory class="libphonenumber\geocoding\PhoneNumberOfflineGeocoder" method="getInstance"/>
+        </service>
 
-        <service id="libphonenumber.short_number_info" class="libphonenumber\ShortNumberInfo"/>
-        <service id="libphonenumber\ShortNumberInfo" alias="libphonenumber.short_number_info"/>
+        <service id="libphonenumber\ShortNumberInfo">
+            <factory class="libphonenumber\ShortNumberInfo" method="getInstance"/>
+        </service>
 
-        <service id="libphonenumber.phone_number_to_carrier_mapper" class="libphonenumber\PhoneNumberToCarrierMapper"/>
-        <service id="libphonenumber\PhoneNumberToCarrierMapper" alias="libphonenumber.phone_number_to_carrier_mapper"/>
+        <service id="libphonenumber\PhoneNumberToCarrierMapper">
+            <factory class="libphonenumber\PhoneNumberToCarrierMapper" method="getInstance"/>
+        </service>
 
-        <service id="libphonenumber.phone_number_to_time_zones_mapper" class="libphonenumber\PhoneNumberToTimeZonesMapper"/>
-        <service id="libphonenumber\PhoneNumberToTimeZonesMapper" alias="libphonenumber.phone_number_to_time_zones_mapper"/>
+        <service id="libphonenumber\PhoneNumberToTimeZonesMapper">
+            <factory class="libphonenumber\PhoneNumberToTimeZonesMapper" method="getInstance"/>
+        </service>
 
     </services>
 

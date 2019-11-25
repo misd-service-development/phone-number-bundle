@@ -33,61 +33,24 @@ class MisdPhoneNumberExtensionTest extends TestCase
 
         $extension->load([], $this->container);
 
-        $this->assertHasService(
-            'libphonenumber.phone_number_util',
-            'libphonenumber\PhoneNumberUtil'
-        );
+        $this->assertTrue($this->container->has('libphonenumber\PhoneNumberUtil'));
         if (class_exists('libphonenumber\geocoding\PhoneNumberOfflineGeocoder') && extension_loaded('intl')) {
-            $this->assertHasService(
-                'libphonenumber.phone_number_offline_geocoder',
-                'libphonenumber\geocoding\PhoneNumberOfflineGeocoder'
-            );
+            $this->assertTrue($this->container->has('libphonenumber\geocoding\PhoneNumberOfflineGeocoder'));
         }
         if (class_exists('libphonenumber\ShortNumberInfo')) {
-            $this->assertHasService(
-                'libphonenumber.short_number_info',
-                'libphonenumber\ShortNumberInfo'
-            );
+            $this->assertTrue($this->container->has('libphonenumber\ShortNumberInfo'));
         }
         if (class_exists('libphonenumber\PhoneNumberToCarrierMapper') && extension_loaded('intl')) {
-            $this->assertHasService(
-                'libphonenumber.phone_number_to_carrier_mapper',
-                'libphonenumber\PhoneNumberToCarrierMapper'
-            );
+            $this->assertTrue($this->container->has('libphonenumber\PhoneNumberToCarrierMapper'));
         }
         if (class_exists('libphonenumber\PhoneNumberToTimeZonesMapper')) {
-            $this->assertHasService(
-                'libphonenumber.phone_number_to_time_zones_mapper',
-                'libphonenumber\PhoneNumberToTimeZonesMapper'
-            );
+            $this->assertTrue($this->container->has('libphonenumber\PhoneNumberToTimeZonesMapper'));
         }
-        $this->assertHasService(
-            'misd_phone_number.templating.helper',
-            'Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper'
-        );
+        $this->assertTrue($this->container->has('Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper'));
+        $this->assertTrue($this->container->has('Misd\PhoneNumberBundle\Form\Type\PhoneNumberType'));
 
-        $this->assertHasService(
-            'misd_phone_number.form.type',
-            'Misd\PhoneNumberBundle\Form\Type\PhoneNumberType'
-        );
-        $this->assertServiceHasTag(
-            'misd_phone_number.form.type',
-            'form.type',
-            ['alias' => 'phone_number']
-        );
-    }
-
-    protected function assertHasService($id, $instanceOf)
-    {
-        $this->assertTrue($this->container->has($id));
-        $this->assertInstanceOf($instanceOf, $this->container->get($id));
-    }
-
-    protected function assertServiceHasTag($id, $tag, $attributes = [])
-    {
-        $services = $this->container->findTaggedServiceIds($tag);
-
-        $this->assertArrayHasKey($id, $services);
-        $this->assertContains($attributes, $services[$id]);
+        $services = $this->container->findTaggedServiceIds('form.type');
+        $this->assertArrayHasKey('Misd\PhoneNumberBundle\Form\Type\PhoneNumberType', $services);
+        $this->assertContains(['alias' => 'phone_number'], $services['Misd\PhoneNumberBundle\Form\Type\PhoneNumberType']);
     }
 }
