@@ -8,7 +8,7 @@
 
 This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
 
-# Installation
+## Installation
 
  1. Use Composer to download the PhoneNumberBundle:
 
@@ -32,8 +32,16 @@ if you're using Symfony Flex, that's all you have to do! Otherwise:
         }
 ```
 
-Usage
------
+### Update from `misd/phone-number-bundle`
+
+The update from `misd/phone-number-bundle` to `odolbeau/phone-number-bundle` should be really easy. Just update your composer.json:
+
+```diff
+-        "misd/phone-number-bundle": "^1.3",
++        "odolbeau/phone-number-bundle": "^2.0",
+```
+
+## Usage
 
 ### Services
 

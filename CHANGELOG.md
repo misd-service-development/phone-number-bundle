@@ -1,14 +1,15 @@
 Changelog
 =========
 
-2.0.x-dev
+2.0.0
 -----
 
 Upcoming release
 
-* Drop support for Symfony < 2.7
-* Add support for Symfony 3.4+
-* Drop support for PHP 5.3
+* Drop support for Symfony < 3.4
+* Drop support for PHP < 7.2
+* Drop support for JMS Serializer
+* Drop support for PHP templates
 * Rename `tel_widget` to `phone_number_widget`
 * Add services only if relevant (optional) dependencies are available
 
