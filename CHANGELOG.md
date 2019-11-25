@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.0.1
+-----
+
+25 November 2019
+
+* Fix PhoneNumberBundle class
+
 2.0.0
 -----
 
