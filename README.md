@@ -41,6 +41,10 @@ The update from `misd/phone-number-bundle` to `odolbeau/phone-number-bundle` sho
 +        "odolbeau/phone-number-bundle": "^2.0",
 ```
 
+Then run `composer update misd/phone-number-bundle odolbeau/phone-number-bundle`.
+
+If you're using Symfony Flex, your configuration `config/packages/misd_phone_number.yaml` have been removed. **DO NOT REMOVE IT!**
+
 ## Usage
 
 ### Services
