@@ -6,11 +6,19 @@
 
     <parameters>
         <!-- .class parameters are deprecated and will be removed in 2.0 -->
+        <parameter key="misd_phone_number.templating.helper.class">Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper</parameter>
+        <parameter key="misd_phone_number.templating.helper.format.class">%misd_phone_number.templating.helper.class%</parameter>
         <parameter key="misd_phone_number.twig.extension.class">Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension</parameter>
         <parameter key="misd_phone_number.twig.extension.format.class">%misd_phone_number.twig.extension.class%</parameter>
     </parameters>
 
     <services>
+        <service id="misd_phone_number.templating.helper"
+                 class="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper">
+            <argument type="service" id="libphonenumber.phone_number_util"/>
+        </service>
+        <service id="Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper" alias="misd_phone_number.templating.helper"/>
+
         <service id="misd_phone_number.twig.extension.format" class="Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension"
                  public="false">
             <tag name="twig.extension"/>
