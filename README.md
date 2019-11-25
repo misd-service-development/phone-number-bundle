@@ -1,22 +1,22 @@
-PhoneNumberBundle
-=================
+# PhoneNumberBundle
 
-[![Build Status](https://img.shields.io/travis/misd-service-development/phone-number-bundle.svg?style=flat-square)](https://travis-ci.org/misd-service-development/phone-number-bundle)
-[![Total Downloads](https://img.shields.io/packagist/dt/misd/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/misd/phone-number-bundle)
-[![Downloads per month](https://img.shields.io/packagist/dm/misd/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/misd/phone-number-bundle)
-[![Latest stable version](https://img.shields.io/packagist/v/misd/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/misd/phone-number-bundle)
-[![License](http://img.shields.io/packagist/l/misd/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/misd/phone-number-bundle)
+[![Build Status](https://img.shields.io/travis/odolbeau/phone-number-bundle.svg?style=flat-square)](https://travis-ci.org/odolbeau/phone-number-bundle)
+[![Latest stable version](https://img.shields.io/packagist/v/odolbeau/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/odolbeau/phone-number-bundle)
+[![License](http://img.shields.io/packagist/l/odolbeau/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/odolbeau/phone-number-bundle)
 
-This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony2-Symfony4 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
+**This bundle is a fork of [misd-service-development/phone-number-bundle](https://github.com/misd-service-development/phone-number-bundle). As this project doesn't look maintained anymore, we decided to create & maintain a fork.**
 
-Installation
-------------
+This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
+
+# Installation
 
  1. Use Composer to download the PhoneNumberBundle:
 
 ```bash
-        $ composer require misd/phone-number-bundle
+        $ composer require odolbeau/phone-number-bundle
 ```
+
+if you're using Symfony Flex, that's all you have to do! Otherwise:
 
  2. Register the bundle in your application:
 
@@ -25,10 +25,10 @@ Installation
 
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 // ...
                 new Misd\PhoneNumberBundle\MisdPhoneNumberBundle()
-            );
+            ];
         }
 ```
 
@@ -81,11 +81,10 @@ This creates a `varchar(35)` column with a Doctrine mapping comment.
 
 Note that if you're putting the `phone_number` type on an already-existing schema the current values must be converted to the `libphonenumber\PhoneNumberFormat::E164` format.
 
-### Templating
+### Twig Templating
 
-#### Twig
+#### phone_number_format
 
-##### phone_number_format
 The `phone_number_format` filter can be used to format a phone number object. A `libphonenumber\PhoneNumberFormat` constant can be passed as argument to specify in which format the number should be printed.
 
 For example, to format an object called `myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format:
@@ -96,7 +95,7 @@ For example, to format an object called `myPhoneNumber` in the `libphonenumber\P
 
 By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
 
-###### phone_number_of_type
+##### phone_number_of_type
 
 The `phone_number_of_type` test can be used to check a phone number against a type: A `libphonenumber\PhoneNumberType` constant name must be passed to specify to which type a number has to match.
 
@@ -104,63 +103,6 @@ For example, to check if an object called `myPhoneNumber` is a `libphonenumber\P
 
 ```php
     {% if myPhoneNumber is phone_number_of_type('MOBILE') }} %} ... {% endif %}
-```
-
-#### PHP template
-
-##### format()
-
-The `format()` method in the `phone_number_helper` takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberFormat` constant name or value.
-
-For example, to format `$myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format, either use:
-
-```php
-    <?php echo $view['phone_number_helper']->format($myPhoneNumber, 'NATIONAL') ?>
-```
-
-or:
-
-```php
-    <?php echo $view['phone_number_helper']->format($myPhoneNumber, \libphonenumber\PhoneNumberFormat::NATIONAL) ?>
-```
-
-By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
-
-###### isType()
-
-The `isType()` method in the `phone_number_helper` takes two arguments: a `libphonenumber\PhoneNumber` object and an optional `libphonenumber\PhoneNumberType` constant name or value.
-
-For example, to check if $myPhoneNumber` is a `libphonenumber\PhoneNumberType::MOBILE` type:
-
-```php
-    <?php if $view['phone_number_helper']->isType($myPhoneNumber, 'MOBILE'): ?>
-    ...
-    <?php endif; ?>
-```
-
-or:
-
-```php
-    <?php if $view['phone_number_helper']->isType($myPhoneNumber, \libphonenumber\PhoneNumberType::MOBILE): ?>
-    ...
-    <?php endif; ?>
-```
-
-### Serializing `libphonenumber\PhoneNumber` objects
-
-*Requires `jms/serializer-bundle`.*
-
-Instances of `libphonenumber\PhoneNumber` are automatically serialized in the E.164 format.
-
-Phone numbers can be deserialized from an international format by setting the type to `libphonenumber\PhoneNumber`. For example:
-
-```php
-    use JMS\Serializer\Annotation\Type;
-
-    /**
-     * @Type("libphonenumber\PhoneNumber")
-     */
-    private $phoneNumber;
 ```
 
 ### Using `libphonenumber\PhoneNumber` objects in forms
