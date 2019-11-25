@@ -1,6 +1,15 @@
 Changelog
 =========
 
+2.0.2
+-----
+
+25 November 2019
+
+* Add Czech translations
+* Add Turkish translations
+* Add Ukrainian translations
+
 2.0.1
 -----
 
