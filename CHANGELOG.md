@@ -4,7 +4,7 @@ Changelog
 2.0.0
 -----
 
-Upcoming release
+25 November 2019
 
 * Drop support for Symfony < 3.4
 * Drop support for PHP < 7.2
