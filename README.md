@@ -34,16 +34,19 @@ if you're using Symfony Flex, that's all you have to do! Otherwise:
 
 ### Update from `misd/phone-number-bundle`
 
-The update from `misd/phone-number-bundle` to `odolbeau/phone-number-bundle` should be really easy. Just update your composer.json:
+The update from `misd/phone-number-bundle` to `odolbeau/phone-number-bundle` should be really easy.
+
+Update your composer.json:
 
 ```diff
 -        "misd/phone-number-bundle": "^1.3",
-+        "odolbeau/phone-number-bundle": "^2.0",
++        "odolbeau/phone-number-bundle": "^3.0",
 ```
 
 Then run `composer update misd/phone-number-bundle odolbeau/phone-number-bundle`.
 
 If you're using Symfony Flex, your configuration `config/packages/misd_phone_number.yaml` have been removed. **DO NOT REMOVE IT!**
+If you're using a container paremeter or alias defined by `misd/phone-number-bundle` you can use `"odolbeau/phone-number-bundle": "^2.0"` until your project is cleaned.
 
 ## Usage
 
