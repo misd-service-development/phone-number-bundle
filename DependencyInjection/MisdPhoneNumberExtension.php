@@ -13,7 +13,6 @@ namespace Misd\PhoneNumberBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -37,32 +36,6 @@ class MisdPhoneNumberExtension extends Extension
         }
         if (interface_exists('Symfony\Component\Serializer\Normalizer\NormalizerInterface')) {
             $loader->load('serializer.xml');
-        }
-
-        $this->setFactory($container->getDefinition('libphonenumber.phone_number_util'));
-        $this->setFactory($container->getDefinition('libphonenumber.phone_number_offline_geocoder'));
-        $this->setFactory($container->getDefinition('libphonenumber.short_number_info'));
-        $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_carrier_mapper'));
-        $this->setFactory($container->getDefinition('libphonenumber.phone_number_to_time_zones_mapper'));
-    }
-
-    /**
-     * Set Factory of FactoryClass & FactoryMethod based on Symfony version.
-     *
-     * to be removed when dependency on Symfony DependencyInjection is bumped to 2.6 and
-     * services inlined in services.xml
-     *
-     * @param $def
-     */
-    private function setFactory(Definition $def)
-    {
-        if (method_exists($def, 'setFactory')) {
-            // to be inlined in services.xml when dependency on Symfony DependencyInjection is bumped to 2.6
-            $def->setFactory([$def->getClass(), 'getInstance']);
-        } else {
-            // to be removed when dependency on Symfony DependencyInjection is bumped to 2.6
-            $def->setFactoryClass($def->getClass());
-            $def->setFactoryMethod('getInstance');
         }
     }
 }
