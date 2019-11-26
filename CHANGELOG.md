@@ -1,6 +1,14 @@
 Changelog
 =========
 
+3.0.0
+-----
+
+26 November 2019
+
+* Remove symfony/templating
+* Remove deprecated DIC paremeters & aliases
+
 2.0.2
 -----
 
