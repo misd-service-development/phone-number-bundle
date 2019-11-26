@@ -32,18 +32,6 @@ class PhoneNumberHelperTest extends TestCase
         $this->helper = new PhoneNumberHelper($this->phoneNumberUtil->reveal());
     }
 
-    public function testCharset()
-    {
-        $this->helper->setCharset('test');
-
-        $this->assertSame('test', $this->helper->getCharset());
-    }
-
-    public function testName()
-    {
-        $this->assertTrue(is_string($this->helper->getName()));
-    }
-
     /**
      * @dataProvider processProvider
      */

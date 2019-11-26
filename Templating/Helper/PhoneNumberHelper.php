@@ -16,12 +16,11 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
-use Symfony\Component\Templating\Helper\HelperInterface;
 
 /**
  * Phone number templating helper.
  */
-class PhoneNumberHelper implements HelperInterface
+class PhoneNumberHelper
 {
     /**
      * Phone number utility.
@@ -31,13 +30,6 @@ class PhoneNumberHelper implements HelperInterface
     protected $phoneNumberUtil;
 
     /**
-     * Charset.
-     *
-     * @var string
-     */
-    protected $charset = 'UTF-8';
-
-    /**
      * Constructor.
      *
      * @param PhoneNumberUtil $phoneNumberUtil phone number utility
@@ -45,30 +37,6 @@ class PhoneNumberHelper implements HelperInterface
     public function __construct(PhoneNumberUtil $phoneNumberUtil)
     {
         $this->phoneNumberUtil = $phoneNumberUtil;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setCharset($charset)
-    {
-        $this->charset = $charset;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharset()
-    {
-        return $this->charset;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'phone_number_helper';
     }
 
     /**
