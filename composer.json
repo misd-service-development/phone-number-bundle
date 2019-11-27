@@ -8,6 +8,9 @@
     "support": {
         "issues": "https://github.com/odolbeau/phone-number-bundle/issues"
     },
+    "config": {
+        "sort-packages": true
+    },
     "require": {
         "php": "^7.2",
         "giggsey/libphonenumber-for-php": "^8.0",
@@ -27,6 +30,9 @@
         "symfony/form": "Add a data transformer",
         "symfony/twig-bundle": "Format phone numbers in Twig templates",
         "symfony/validator": "Add a validation constraint"
+    },
+    "conflict": {
+        "misd/phone-number-bundle": "*"
     },
     "autoload": {
         "psr-4": {
