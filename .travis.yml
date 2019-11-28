@@ -1,12 +1,11 @@
-dist: trusty
+language: php
 
 sudo: false
-
-language: php
 
 php:
   - 7.2
   - 7.3
+  - 7.4snapshot
 
 cache:
     directories:
@@ -15,20 +14,20 @@ cache:
 matrix:
     fast_failure: true
     include:
-        - dist: precise
-          php: 7.2
-          env: dependencies=lowest
+        - php: 7.2
+          env: COMPOSER_FLAGS="--prefer-lowest"
         - php: 7.3
           env: SYMFONY_VERSION=^4.3
         - php: 7.3
           env: SYMFONY_VERSION=^5.0
+    allow_failures:
+        - php: 7.4snapshot
 
 before_install:
-  - echo 'memory_limit=-1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini;
+  - phpenv config-rm xdebug.ini || true
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require --dev --no-update symfony/symfony:$SYMFONY_VERSION; fi
-  - if [ "$stability" != "" ]; then composer config minimum-stability $stability; fi
 
 install:
-  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction; else composer update --prefer-dist --no-interaction; fi;
+  - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script: ./vendor/bin/phpunit --coverage-text
