@@ -1,6 +1,62 @@
 Changelog
 =========
 
+3.0.0
+-----
+
+26 November 2019
+
+* Remove symfony/templating
+* Remove deprecated DIC paremeters & aliases
+
+2.0.2
+-----
+
+25 November 2019
+
+* Add Czech translations
+* Add Turkish translations
+* Add Ukrainian translations
+
+2.0.1
+-----
+
+25 November 2019
+
+* Fix PhoneNumberBundle class
+
+2.0.0
+-----
+
+25 November 2019
+
+* Drop support for Symfony < 3.4
+* Drop support for PHP < 7.2
+* Drop support for JMS Serializer
+* Drop support for PHP templates
+* Rename `tel_widget` to `phone_number_widget`
+* Add services only if relevant (optional) dependencies are available
+
+1.3.1
+-----
+
+17 January 2018
+
+* Undo minor breaking change by reinstating and deprecating `se` code for Swedish translations.
+* Validator uses `buildViolation` instead of `addViolation` for Symfony >= 2.5.
+
+1.3.0
+-----
+
+15 January 2018
+
+* Symfony 4 support.
+* Add `phone_number_of_type` Twig test and `isType` test to `PhoneNumberHelper`.
+* Deprecate `PhoneNumberFormatHelper` in favour of `PhoneNumberHelper` and `PhoneNumberFormatExtension` in favour of `PhoneNumberHelperExtension`.
+* Swedish translation improvements. Rename country code `se`->`sv`.
+* Add `country_placeholder` option.
+* Regard `"0"` as an invalid phone number.
+
 1.2.0
 -----
 
