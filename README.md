@@ -13,7 +13,7 @@ This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/l
  1. Use Composer to download the PhoneNumberBundle:
 
 ```bash
-        $ composer require odolbeau/phone-number-bundle
+$ composer require odolbeau/phone-number-bundle
 ```
 
 if you're using Symfony Flex, that's all you have to do! Otherwise:
@@ -21,15 +21,15 @@ if you're using Symfony Flex, that's all you have to do! Otherwise:
  2. Register the bundle in your application:
 
 ```php
-        // app/AppKernel.php
+// app/AppKernel.php
 
-        public function registerBundles()
-        {
-            $bundles = [
-                // ...
-                new Misd\PhoneNumberBundle\MisdPhoneNumberBundle()
-            ];
-        }
+public function registerBundles()
+{
+    $bundles = [
+        // ...
+        new Misd\PhoneNumberBundle\MisdPhoneNumberBundle()
+    ];
+}
 ```
 
 ### Update from `misd/phone-number-bundle`
@@ -75,21 +75,21 @@ So to parse a string into a `libphonenumber\PhoneNumber` object:
 To persist `libphonenumber\PhoneNumber` objects, add the `Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType` mapping to your application's config:
 
 ```yml
-    // app/config.yml
+// app/config.yml
 
-    doctrine:
-        dbal:
-            types:
-                phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
+doctrine:
+    dbal:
+        types:
+            phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
 ```
 
 You can then use the `phone_number` mapping:
 
 ```php
-    /**
-     * @ORM\Column(type="phone_number")
-     */
-    private $phoneNumber;
+/**
+ * @ORM\Column(type="phone_number")
+ */
+private $phoneNumber;
 ```
 
 This creates a `varchar(35)` column with a Doctrine mapping comment.
@@ -105,7 +105,7 @@ The `phone_number_format` filter can be used to format a phone number object. A 
 For example, to format an object called `myPhoneNumber` in the `libphonenumber\PhoneNumberFormat::NATIONAL` format:
 
 ```php
-    {{ myPhoneNumber|phone_number_format('NATIONAL') }}
+{{ myPhoneNumber|phone_number_format('NATIONAL') }}
 ```
 
 By default phone numbers are formatted in the `libphonenumber\PhoneNumberFormat::INTERNATIONAL` format.
@@ -117,7 +117,7 @@ The `phone_number_of_type` test can be used to check a phone number against a ty
 For example, to check if an object called `myPhoneNumber` is a `libphonenumber\PhoneNumberType::MOBILE` type:
 
 ```php
-    {% if myPhoneNumber is phone_number_of_type('MOBILE') }} %} ... {% endif %}
+{% if myPhoneNumber is phone_number_of_type('MOBILE') }} %} ... {% endif %}
 ```
 
 ### Using `libphonenumber\PhoneNumber` objects in forms
@@ -129,14 +129,14 @@ You can use the `PhoneNumberType` (`phone_number` for Symfony 2.7) form type to 
 A single text field allows the user to type in the complete phone number. When an international prefix is not entered, the number is assumed to be part of the set `default_region`. For example:
 
 ```php
-    use libphonenumber\PhoneNumberFormat;
-    use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
-    use Symfony\Component\Form\FormBuilderInterface;
+use libphonenumber\PhoneNumberFormat;
+use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
+use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('phone_number', PhoneNumberType::class, array('default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL));
-    }
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    $builder->add('phone_number', PhoneNumberType::class, array('default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL));
+}
 ```
 
 By default the `default_region` and `format` options are `PhoneNumberUtil::UNKNOWN_REGION` and `PhoneNumberFormat::INTERNATIONAL` respectively.
@@ -146,14 +146,14 @@ By default the `default_region` and `format` options are `PhoneNumberUtil::UNKNO
 The phone number can be split into a country choice and phone number text fields. This allows the user to choose the relevant country (from a customisable list) and type in the phone number without international dialling.
 
 ```php
-    use libphonenumber\PhoneNumberFormat;
-    use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
-    use Symfony\Component\Form\FormBuilderInterface;
+use libphonenumber\PhoneNumberFormat;
+use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
+use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('phone_number', PhoneNumberType::class, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => array('GB', 'JE', 'FR', 'US'), 'preferred_country_choices' => array('GB', 'JE')));
-    }
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    $builder->add('phone_number', PhoneNumberType::class, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => array('GB', 'JE', 'FR', 'US'), 'preferred_country_choices' => array('GB', 'JE')));
+}
 ```
 
 This produces the preferred choices of 'Jersey' and 'United Kingdom', and regular choices of 'France' and 'United States'.
@@ -166,23 +166,23 @@ The option `country_placeholder` can be specified to create a placeholder option
 You can use the `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber` constraint to make sure that either a `libphonenumber\PhoneNumber` object or a plain string is a valid phone number. For example:
 
 ```php
-    use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
-    /**
-     * @AssertPhoneNumber
-     */
-    private $phoneNumber;
+/**
+ * @AssertPhoneNumber
+ */
+private $phoneNumber;
 ```
 
 You can set the default region through the `defaultRegion` property:
 
 ```php
-    use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
-    /**
-     * @AssertPhoneNumber(defaultRegion="GB")
-     */
-    private $phoneNumber;
+/**
+ * @AssertPhoneNumber(defaultRegion="GB")
+ */
+private $phoneNumber;
 ```
 
 By default any valid phone number will be accepted. You can restrict the type through the `type` property, recognised values:
@@ -202,10 +202,10 @@ By default any valid phone number will be accepted. You can restrict the type th
 (Note that libphonenumber cannot always distinguish between mobile and fixed-line numbers (eg in the USA), in which case it will be accepted.)
 
 ```php
-    /**
-     * @AssertPhoneNumber(type="mobile")
-     */
-    private $mobilePhoneNumber;
+/**
+ * @AssertPhoneNumber(type="mobile")
+ */
+private $mobilePhoneNumber;
 ```
 
 ### Translations
