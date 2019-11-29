@@ -1,18 +1,10 @@
 parameters:
     level: 1
     paths:
-      - DependencyInjection
-      - Doctrine
-      - Exception
-      - Form
-      - Resources
-      - Serializer
-      - Templating
-      - Tests
-      - Twig
-      - Validator
-
+      - src
+      - tests
+    inferPrivatePropertyTypeFromConstructor: true
     ignoreErrors:
         -
             message: '#Call to an undefined static method Symfony\\Component\\Intl\\Intl::getRegionBundle().#'
-            path: %currentWorkingDirectory%/Form/Type/PhoneNumberType.php
+            path: %currentWorkingDirectory%/src/Form/Type/PhoneNumberType.php

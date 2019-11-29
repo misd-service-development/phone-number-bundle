@@ -36,11 +36,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Misd\\PhoneNumberBundle\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+            "Misd\\PhoneNumberBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Misd\\PhoneNumberBundle\\Tests\\": "tests/"
+        }
     },
     "extra": {
         "branch-alias": {
