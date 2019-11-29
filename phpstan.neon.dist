@@ -1,0 +1,18 @@
+parameters:
+    level: 1
+    paths:
+      - DependencyInjection
+      - Doctrine
+      - Exception
+      - Form
+      - Resources
+      - Serializer
+      - Templating
+      - Tests
+      - Twig
+      - Validator
+
+    ignoreErrors:
+        -
+            message: '#Call to an undefined static method Symfony\\Component\\Intl\\Intl::getRegionBundle().#'
+            path: %currentWorkingDirectory%/Form/Type/PhoneNumberType.php

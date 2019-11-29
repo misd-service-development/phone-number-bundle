@@ -4,16 +4,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <!-- .class parameters are deprecated and will be removed in 2.0 -->
-        <parameter key="misd_phone_number.form.type.class">Misd\PhoneNumberBundle\Form\Type\PhoneNumberType</parameter>
-    </parameters>
-
     <services>
-        <service id="misd_phone_number.form.type" class="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType">
+        <service id="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType">
             <tag name="form.type" alias="phone_number"/>
         </service>
-        <service id="Misd\PhoneNumberBundle\Form\Type\PhoneNumberType" alias="misd_phone_number.form.type"/>
     </services>
 
 </container>

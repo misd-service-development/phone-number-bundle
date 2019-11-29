@@ -5,11 +5,10 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="misd_phone_number.serializer.normalizer" class="Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer">
+        <service id="Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer">
             <tag name="serializer.normalizer" />
-            <argument type="service" id="libphonenumber.phone_number_util" />
+            <argument type="service" id="libphonenumber\PhoneNumberUtil" />
         </service>
-        <service id="Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer" alias="misd_phone_number.serializer.normalizer"/>
     </services>
 
 </container>

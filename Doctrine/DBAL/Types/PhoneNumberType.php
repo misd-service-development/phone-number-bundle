@@ -42,7 +42,7 @@ class PhoneNumberType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        return $platform->getVarcharTypeDeclarationSQL(array('length' => 35));
+        return $platform->getVarcharTypeDeclarationSQL(['length' => 35]);
     }
 
     /**
@@ -55,7 +55,7 @@ class PhoneNumberType extends Type
         }
 
         if (!$value instanceof PhoneNumber) {
-            throw new ConversionException('Expected \libphonenumber\PhoneNumber, got ' . gettype($value));
+            throw new ConversionException('Expected \libphonenumber\PhoneNumber, got '.gettype($value));
         }
 
         $util = PhoneNumberUtil::getInstance();

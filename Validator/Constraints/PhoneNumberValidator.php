@@ -16,9 +16,10 @@ use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Misd\PhoneNumberBundle\Exception\MissingDependencyException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
@@ -45,7 +46,7 @@ class PhoneNumberValidator extends ConstraintValidator
             $value = (string) $value;
 
             try {
-                $phoneNumber = $phoneUtil->parse($value, $constraint->defaultRegion);
+                $phoneNumber = $phoneUtil->parse($value, $this->getRegion($constraint));
             } catch (NumberParseException $e) {
                 $this->addViolation($value, $constraint);
 
@@ -64,37 +65,37 @@ class PhoneNumberValidator extends ConstraintValidator
 
         switch ($constraint->getType()) {
             case PhoneNumber::FIXED_LINE:
-                $validTypes = array(PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                $validTypes = [PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE];
                 break;
             case PhoneNumber::MOBILE:
-                $validTypes = array(PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE);
+                $validTypes = [PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE];
                 break;
             case PhoneNumber::PAGER:
-                $validTypes = array(PhoneNumberType::PAGER);
+                $validTypes = [PhoneNumberType::PAGER];
                 break;
             case PhoneNumber::PERSONAL_NUMBER:
-                $validTypes = array(PhoneNumberType::PERSONAL_NUMBER);
+                $validTypes = [PhoneNumberType::PERSONAL_NUMBER];
                 break;
             case PhoneNumber::PREMIUM_RATE:
-                $validTypes = array(PhoneNumberType::PREMIUM_RATE);
+                $validTypes = [PhoneNumberType::PREMIUM_RATE];
                 break;
             case PhoneNumber::SHARED_COST:
-                $validTypes = array(PhoneNumberType::SHARED_COST);
+                $validTypes = [PhoneNumberType::SHARED_COST];
                 break;
             case PhoneNumber::TOLL_FREE:
-                $validTypes = array(PhoneNumberType::TOLL_FREE);
+                $validTypes = [PhoneNumberType::TOLL_FREE];
                 break;
             case PhoneNumber::UAN:
-                $validTypes = array(PhoneNumberType::UAN);
+                $validTypes = [PhoneNumberType::UAN];
                 break;
             case PhoneNumber::VOIP:
-                $validTypes = array(PhoneNumberType::VOIP);
+                $validTypes = [PhoneNumberType::VOIP];
                 break;
             case PhoneNumber::VOICEMAIL:
-                $validTypes = array(PhoneNumberType::VOICEMAIL);
+                $validTypes = [PhoneNumberType::VOICEMAIL];
                 break;
             default:
-                $validTypes = array();
+                $validTypes = [];
                 break;
         }
 
@@ -106,30 +107,52 @@ class PhoneNumberValidator extends ConstraintValidator
 
                 return;
             }
-
         }
     }
 
     /**
      * Add a violation.
      *
-     * @param mixed      $value      The value that should be validated.
-     * @param Constraint $constraint The constraint for the validation.
+     * @param mixed      $value      the value that should be validated
+     * @param Constraint $constraint the constraint for the validation
      */
     private function addViolation($value, Constraint $constraint)
     {
-        /** @var \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber $constraint */
-        if ($this->context instanceof ExecutionContextInterface) {
-            $this->context->buildViolation($constraint->getMessage())
-                ->setParameter('{{ type }}', $constraint->getType())
-                ->setParameter('{{ value }}', $this->formatValue($value))
-                ->setCode(PhoneNumber::INVALID_PHONE_NUMBER_ERROR)
-                ->addViolation();
-        } else {
-            $this->context->addViolation($constraint->getMessage(), array(
-                '{{ type }}' => $constraint->getType(),
-                '{{ value }}' => $value
-            ));
+        $this->context->buildViolation($constraint->getMessage())
+            ->setParameter('{{ type }}', $constraint->getType())
+            ->setParameter('{{ value }}', $this->formatValue($value))
+            ->setCode(PhoneNumber::INVALID_PHONE_NUMBER_ERROR)
+            ->addViolation();
+    }
+
+    /**
+     * Select the region.
+     *
+     * @param Constraint $constraint The constraint for the validation.
+     *
+     * @return string Region code (2 digits)
+     *
+     * @throws ConstraintDefinitionException
+     * @throws MissingDependencyException
+     */
+    private function getRegion(Constraint $constraint)
+    {
+        $object = $this->context->getObject();
+        $path = $constraint->regionProperty;
+
+        if (null !== $path) {
+            if (!class_exists('\Symfony\Component\PropertyAccess\PropertyAccess')) {
+                throw new MissingDependencyException('You should install "symfony/property-access" in order to use the "path" attribute.');
+            }
+            $accessor = \Symfony\Component\PropertyAccess\PropertyAccess::createPropertyAccessor();
+            if (!$accessor->isReadable($object, $path)) {
+                $message = 'Method or property "%s" used as region code path does not exist in class %s';
+                throw new ConstraintDefinitionException(sprintf($message, $path, get_class($object)));
+            }
+
+            return $accessor->getValue($object, $path);
         }
+
+        return $constraint->defaultRegion;
     }
 }

@@ -9,9 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Misd\PhoneNumberBundle\Twig\Extension;
+namespace Misd\PhoneNumberBundle\Exception;
+
+use RuntimeException;
 
 /**
- * @deprecated PhoneNumberFormatExtension is deprecated and will be removed in 2.0. Use PhoneNumberHelperExtension instead
+ * Exception thrown if a dependency is required.
  */
-class PhoneNumberFormatExtension extends PhoneNumberHelperExtension {}
+class MissingDependencyException extends RuntimeException
+{
+}

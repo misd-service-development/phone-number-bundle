@@ -35,13 +35,14 @@ class PhoneNumber extends Constraint
 
     const INVALID_PHONE_NUMBER_ERROR = 'ca23f4ca-38f4-4325-9bcc-eb570a4abe7f';
 
-    protected static $errorNames = array(
+    protected static $errorNames = [
         self::INVALID_PHONE_NUMBER_ERROR => 'INVALID_PHONE_NUMBER_ERROR',
-    );
+    ];
 
-    public $message = null;
-    public $type = self::ANY;
-    public $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION;
+    public $message        = null;
+    public $type           = self::ANY;
+    public $defaultRegion  = PhoneNumberUtil::UNKNOWN_REGION;
+    public $regionProperty = null;
 
     public function getType()
     {

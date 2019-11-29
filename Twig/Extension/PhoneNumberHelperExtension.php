@@ -12,11 +12,15 @@
 namespace Misd\PhoneNumberBundle\Twig\Extension;
 
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+use Twig\TwigTest;
 
 /**
  * Phone number helper Twig extension.
  */
-class PhoneNumberHelperExtension extends \Twig_Extension
+class PhoneNumberHelperExtension extends AbstractExtension
 {
     /**
      * Phone number helper.
@@ -28,7 +32,7 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     /**
      * Constructor.
      *
-     * @param PhoneNumberHelper $helper Phone number helper.
+     * @param PhoneNumberHelper $helper phone number helper
      */
     public function __construct(PhoneNumberHelper $helper)
     {
@@ -40,10 +44,10 @@ class PhoneNumberHelperExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('phone_number_format', array($this->helper, 'format'), array('deprecated' => '1.2')),
-            new \Twig_SimpleFunction('phone_number_is_type', array($this->helper, 'isType'), array('deprecated' => '1.2')),
-        );
+        return [
+            new TwigFunction('phone_number_format', [$this->helper, 'format'], ['deprecated' => '1.2']),
+            new TwigFunction('phone_number_is_type', [$this->helper, 'isType'], ['deprecated' => '1.2']),
+        ];
     }
 
     /**
@@ -51,9 +55,9 @@ class PhoneNumberHelperExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('phone_number_format', array($this->helper, 'format')),
-        );
+        return [
+            new TwigFilter('phone_number_format', [$this->helper, 'format']),
+        ];
     }
 
     /**
@@ -61,9 +65,9 @@ class PhoneNumberHelperExtension extends \Twig_Extension
      */
     public function getTests()
     {
-        return array(
-            new \Twig_SimpleTest('phone_number_of_type', array($this->helper, 'isType')),
-        );
+        return [
+            new TwigTest('phone_number_of_type', [$this->helper, 'isType']),
+        ];
     }
 
     /**

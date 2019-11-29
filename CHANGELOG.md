@@ -1,14 +1,39 @@
 Changelog
 =========
 
-2.0.x-dev
+3.0.0
 -----
 
-Upcoming release
+26 November 2019
 
-* Drop support for Symfony < 2.7
-* Add support for Symfony 3.4+
-* Drop support for PHP 5.3
+* Remove symfony/templating
+* Remove deprecated DIC paremeters & aliases
+
+2.0.2
+-----
+
+25 November 2019
+
+* Add Czech translations
+* Add Turkish translations
+* Add Ukrainian translations
+
+2.0.1
+-----
+
+25 November 2019
+
+* Fix PhoneNumberBundle class
+
+2.0.0
+-----
+
+25 November 2019
+
+* Drop support for Symfony < 3.4
+* Drop support for PHP < 7.2
+* Drop support for JMS Serializer
+* Drop support for PHP templates
 * Rename `tel_widget` to `phone_number_widget`
 * Add services only if relevant (optional) dependencies are available
 

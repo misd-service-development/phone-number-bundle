@@ -16,7 +16,7 @@ use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToArrayTransformer;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
@@ -31,14 +31,14 @@ class PhoneNumberToArrayTransformerTest extends TestCase
      */
     protected $phoneNumberUtil;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
     }
 
     public function testConstructor()
     {
-        $transformer = new PhoneNumberToArrayTransformer(array());
+        $transformer = new PhoneNumberToArrayTransformer([]);
 
         $this->assertInstanceOf('Symfony\Component\Form\DataTransformerInterface', $transformer);
     }
@@ -50,14 +50,13 @@ class PhoneNumberToArrayTransformerTest extends TestCase
     {
         $transformer = new PhoneNumberToArrayTransformer($countryChoices);
 
+        $phoneNumber = null;
         if (is_array($actual)) {
             try {
                 $phoneNumber = $this->phoneNumberUtil->parse($actual['number'], $actual['country']);
             } catch (NumberParseException $e) {
                 $phoneNumber = $actual['number'];
             }
-        } else {
-            $phoneNumber = $actual['number'];
         }
 
         try {
@@ -72,42 +71,42 @@ class PhoneNumberToArrayTransformerTest extends TestCase
     /**
      * 0 => Country choices
      * 1 => Actual value
-     * 2 => Expected result
+     * 2 => Expected result.
      */
     public function transformProvider()
     {
-        return array(
-            array(
-                array('GB'),
+        return [
+            [
+                ['GB'],
                 null,
-                array('country' => '', 'number' => ''),
-            ),
-            array(
-                array('GB'),
-                array('country' => 'GB', 'number' => '01234567890'),
-                array('country' => 'GB', 'number' => '01234 567890'),
-            ),
-            array(// Wrong country code, but matching country exists.
-                array('GB', 'JE'),
-                array('country' => 'JE', 'number' => '01234567890'),
-                array('country' => 'GB', 'number' => '01234 567890'),
-            ),
-            array(// Wrong country code, but matching country exists.
-                array('GB', 'JE'),
-                array('country' => 'JE', 'number' => '+441234567890'),
-                array('country' => 'GB', 'number' => '01234 567890'),
-            ),
-            array(// Country code not in list.
-                array('US'),
-                array('country' => 'GB', 'number' => '01234567890'),
+                ['country' => '', 'number' => ''],
+            ],
+            [
+                ['GB'],
+                ['country' => 'GB', 'number' => '01234567890'],
+                ['country' => 'GB', 'number' => '01234 567890'],
+            ],
+            [// Wrong country code, but matching country exists.
+                ['GB', 'JE'],
+                ['country' => 'JE', 'number' => '01234567890'],
+                ['country' => 'GB', 'number' => '01234 567890'],
+            ],
+            [// Wrong country code, but matching country exists.
+                ['GB', 'JE'],
+                ['country' => 'JE', 'number' => '+441234567890'],
+                ['country' => 'GB', 'number' => '01234 567890'],
+            ],
+            [// Country code not in list.
+                ['US'],
+                ['country' => 'GB', 'number' => '01234567890'],
                 self::TRANSFORMATION_FAILED,
-            ),
-            array(
-                array('US'),
-                array('country' => 'GB', 'number' => 'foo'),
+            ],
+            [
+                ['US'],
+                ['country' => 'GB', 'number' => 'foo'],
                 self::TRANSFORMATION_FAILED,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -133,51 +132,51 @@ class PhoneNumberToArrayTransformerTest extends TestCase
     /**
      * 0 => Country choices
      * 1 => Actual value
-     * 2 => Expected result
+     * 2 => Expected result.
      */
     public function reverseTransformProvider()
     {
-        return array(
-            array(
-                array('GB'),
+        return [
+            [
+                ['GB'],
                 null,
                 null,
-            ),
-            array(
-                array('GB'),
+            ],
+            [
+                ['GB'],
                 'foo',
                 self::TRANSFORMATION_FAILED,
-            ),
-            array(
-                array('GB'),
-                array('country' => '', 'number' => ''),
+            ],
+            [
+                ['GB'],
+                ['country' => '', 'number' => ''],
                 null,
-            ),
-            array(
-                array('GB'),
-                array('country' => 'GB', 'number' => ''),
+            ],
+            [
+                ['GB'],
+                ['country' => 'GB', 'number' => ''],
                 null,
-            ),
-            array(
-                array('GB'),
-                array('country' => '', 'number' => 'foo'),
+            ],
+            [
+                ['GB'],
+                ['country' => '', 'number' => 'foo'],
                 self::TRANSFORMATION_FAILED,
-            ),
-            array(
-                array('GB'),
-                array('country' => 'GB', 'number' => '01234 567890'),
+            ],
+            [
+                ['GB'],
+                ['country' => 'GB', 'number' => '01234 567890'],
                 '+441234567890',
-            ),
-            array(
-                array('GB'),
-                array('country' => 'GB', 'number' => '+44 1234 567890'),
+            ],
+            [
+                ['GB'],
+                ['country' => 'GB', 'number' => '+44 1234 567890'],
                 '+441234567890',
-            ),
-            array(// Country code not in list.
-                array('US'),
-                array('country' => 'GB', 'number' => '+44 1234 567890'),
+            ],
+            [// Country code not in list.
+                ['US'],
+                ['country' => 'GB', 'number' => '+44 1234 567890'],
                 self::TRANSFORMATION_FAILED,
-            ),
-        );
+            ],
+        ];
     }
 }

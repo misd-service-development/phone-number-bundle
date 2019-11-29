@@ -49,9 +49,9 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
     /**
      * Constructor.
      *
-     * @param PhoneNumberUtil $phoneNumberUtil Phone number utility.
-     * @param string $region Region code.
-     * @param int $format Display format.
+     * @param PhoneNumberUtil $phoneNumberUtil phone number utility
+     * @param string          $region          region code
+     * @param int             $format          display format
      */
     public function __construct(PhoneNumberUtil $phoneNumberUtil, $region = PhoneNumberUtil::UNKNOWN_REGION, $format = PhoneNumberFormat::E164)
     {
@@ -65,7 +65,7 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
      *
      * @throws InvalidArgumentException
      */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = [])
     {
         return $this->phoneNumberUtil->format($object, $this->format);
     }
@@ -83,7 +83,7 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
      *
      * @throws UnexpectedValueException
      */
-    public function denormalize($data, $class, $format = null, array $context = array())
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         try {
             return $this->phoneNumberUtil->parse($data, $this->region);
@@ -97,6 +97,6 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'libphonenumber\PhoneNumber';
+        return 'libphonenumber\PhoneNumber' === $type;
     }
 }
