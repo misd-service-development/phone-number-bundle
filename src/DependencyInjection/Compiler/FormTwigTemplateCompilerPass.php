@@ -33,7 +33,7 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
 
         $parameter = $container->getParameter('twig.form.resources');
 
-        if (in_array($this->phoneNumberLayout, $parameter)) {
+        if (\in_array($this->phoneNumberLayout, $parameter)) {
             return;
         }
 

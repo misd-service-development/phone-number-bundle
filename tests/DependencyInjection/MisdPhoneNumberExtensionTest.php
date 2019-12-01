@@ -34,13 +34,13 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $extension->load([], $this->container);
 
         $this->assertTrue($this->container->has('libphonenumber\PhoneNumberUtil'));
-        if (class_exists('libphonenumber\geocoding\PhoneNumberOfflineGeocoder') && extension_loaded('intl')) {
+        if (class_exists('libphonenumber\geocoding\PhoneNumberOfflineGeocoder') && \extension_loaded('intl')) {
             $this->assertTrue($this->container->has('libphonenumber\geocoding\PhoneNumberOfflineGeocoder'));
         }
         if (class_exists('libphonenumber\ShortNumberInfo')) {
             $this->assertTrue($this->container->has('libphonenumber\ShortNumberInfo'));
         }
-        if (class_exists('libphonenumber\PhoneNumberToCarrierMapper') && extension_loaded('intl')) {
+        if (class_exists('libphonenumber\PhoneNumberToCarrierMapper') && \extension_loaded('intl')) {
             $this->assertTrue($this->container->has('libphonenumber\PhoneNumberToCarrierMapper'));
         }
         if (class_exists('libphonenumber\PhoneNumberToTimeZonesMapper')) {

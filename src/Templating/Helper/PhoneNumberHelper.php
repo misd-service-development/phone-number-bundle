@@ -51,14 +51,14 @@ class PhoneNumberHelper
      */
     public function format(PhoneNumber $phoneNumber, $format = PhoneNumberFormat::INTERNATIONAL)
     {
-        if (true === is_string($format)) {
+        if (true === \is_string($format)) {
             $constant = '\libphonenumber\PhoneNumberFormat::'.$format;
 
-            if (false === defined($constant)) {
+            if (false === \defined($constant)) {
                 throw new InvalidArgumentException('The format must be either a constant value or name in libphonenumber\PhoneNumberFormat');
             }
 
-            $format = constant('\libphonenumber\PhoneNumberFormat::'.$format);
+            $format = \constant('\libphonenumber\PhoneNumberFormat::'.$format);
         }
 
         return $this->phoneNumberUtil->format($phoneNumber, $format);
@@ -74,14 +74,14 @@ class PhoneNumberHelper
      */
     public function isType(PhoneNumber $phoneNumber, $type = PhoneNumberType::UNKNOWN)
     {
-        if (true === is_string($type)) {
+        if (true === \is_string($type)) {
             $constant = '\libphonenumber\PhoneNumberType::'.$type;
 
-            if (false === defined($constant)) {
+            if (false === \defined($constant)) {
                 throw new InvalidArgumentException('The format must be either a constant value or name in libphonenumber\PhoneNumberType');
             }
 
-            $type = constant('\libphonenumber\PhoneNumberType::'.$type);
+            $type = \constant('\libphonenumber\PhoneNumberType::'.$type);
         }
 
         return $this->phoneNumberUtil->getNumberType($phoneNumber) === $type ? true : false;

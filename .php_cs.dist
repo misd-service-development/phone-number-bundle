@@ -4,6 +4,7 @@ $config = PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
+        '@Symfony:risky' => true,
         'array_syntax' => ['syntax' => 'short'],
     ])
     ->setFinder(
