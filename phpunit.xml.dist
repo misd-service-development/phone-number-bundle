@@ -3,20 +3,12 @@
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="MisdPhoneNumberBundle Test Suite">
-            <directory suffix="Test.php">./Tests/</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <php>
-        <server name="KERNEL_DIR" value="./Tests/Functional/app"/>
-    </php>
     <filter>
         <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
+            <directory>src</directory>
         </whitelist>
     </filter>
 </phpunit>
