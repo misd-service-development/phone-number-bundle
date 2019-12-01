@@ -21,17 +21,17 @@ use Symfony\Component\Validator\Constraint;
  */
 class PhoneNumber extends Constraint
 {
-    const ANY             = 'any';
-    const FIXED_LINE      = 'fixed_line';
-    const MOBILE          = 'mobile';
-    const PAGER           = 'pager';
+    const ANY = 'any';
+    const FIXED_LINE = 'fixed_line';
+    const MOBILE = 'mobile';
+    const PAGER = 'pager';
     const PERSONAL_NUMBER = 'personal_number';
-    const PREMIUM_RATE    = 'premium_rate';
-    const SHARED_COST     = 'shared_cost';
-    const TOLL_FREE       = 'toll_free';
-    const UAN             = 'uan';
-    const VOIP            = 'voip';
-    const VOICEMAIL       = 'voicemail';
+    const PREMIUM_RATE = 'premium_rate';
+    const SHARED_COST = 'shared_cost';
+    const TOLL_FREE = 'toll_free';
+    const UAN = 'uan';
+    const VOIP = 'voip';
+    const VOICEMAIL = 'voicemail';
 
     const INVALID_PHONE_NUMBER_ERROR = 'ca23f4ca-38f4-4325-9bcc-eb570a4abe7f';
 
@@ -43,17 +43,12 @@ class PhoneNumber extends Constraint
     public $type = self::ANY;
     public $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION;
 
-
     /**
      * Returns whether the given type is valid.
-     *
-     * @param string $type
-     *
-     * @return bool
      */
-    public function isValidType($type)
+    public function isValidType(string $type): bool
     {
-        return in_array($type, array(
+        return in_array($type, [
             self::ANY,
             self::FIXED_LINE,
             self::MOBILE,
@@ -65,15 +60,13 @@ class PhoneNumber extends Constraint
             self::UAN,
             self::VOIP,
             self::VOICEMAIL,
-        ), true);
+        ], true);
     }
 
     /**
      * Returns the first configured type.
-     *
-     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         if (is_string($this->type)) {
             $type = $this->type;
@@ -88,30 +81,26 @@ class PhoneNumber extends Constraint
 
     /**
      * Returns the configured types.
-     *
-     * @return array
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         if (is_string($this->type)) {
-            $types = array($this->type);
+            $types = [$this->type];
         } elseif (is_array($this->type)) {
             $types = $this->type;
         } else {
-            $types =  array();
+            $types = [];
         }
 
-        $types = array_filter($types, array($this, 'isValidType'));
+        $types = array_filter($types, [$this, 'isValidType']);
 
-        return empty($types) ? array(self::ANY) : $types;
+        return empty($types) ? [self::ANY] : $types;
     }
 
     /**
      * Returns the violation message for the first configured type.
-     *
-     * @return null|string
      */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         // TODO Deal with multiple types
 
