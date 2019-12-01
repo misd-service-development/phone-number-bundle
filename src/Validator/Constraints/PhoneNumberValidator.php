@@ -123,7 +123,7 @@ class PhoneNumberValidator extends ConstraintValidator
     private function addViolation($value, Constraint $constraint)
     {
         $this->context->buildViolation($constraint->getMessage())
-            ->setParameter('{{ type }}', $constraint->getType())
+            ->setParameter('{{ types }}', implode(', ', $constraint->getTypeNames()))
             ->setParameter('{{ value }}', $this->formatValue($value))
             ->setCode(PhoneNumber::INVALID_PHONE_NUMBER_ERROR)
             ->addViolation();

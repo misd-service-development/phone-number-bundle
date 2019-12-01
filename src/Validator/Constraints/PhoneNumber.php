@@ -43,94 +43,82 @@ class PhoneNumber extends Constraint
     public $type = self::ANY;
     public $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION;
 
-    /**
-     * Returns whether the given type is valid.
-     */
-    public function isValidType(string $type): bool
+    public function getType(): ?string
     {
-        return in_array($type, [
-            self::ANY,
-            self::FIXED_LINE,
-            self::MOBILE,
-            self::PAGER,
-            self::PERSONAL_NUMBER,
-            self::PREMIUM_RATE,
-            self::SHARED_COST,
-            self::TOLL_FREE,
-            self::UAN,
-            self::VOIP,
-            self::VOICEMAIL,
-        ], true);
-    }
+        @trigger_error(__METHOD__.' is deprecated and will be removed in 4.0. Use `getTypes` instead.', E_USER_DEPRECATED);
 
-    /**
-     * Returns the first configured type.
-     */
-    public function getType(): string
-    {
-        if (is_string($this->type)) {
-            $type = $this->type;
-        } elseif (is_array($this->type)) {
-            $type = reset($this->type);
-        } else {
-            $type = null;
+        $types = $this->getTypes();
+        if (0 === count($types)) {
+            return null;
         }
 
-        return $this->isValidType($type) ? $type : self::ANY;
+        return reset($types);
     }
 
-    /**
-     * Returns the configured types.
-     */
     public function getTypes(): array
     {
-        if (is_string($this->type)) {
-            $types = [$this->type];
-        } elseif (is_array($this->type)) {
-            $types = $this->type;
-        } else {
-            $types = [];
+        if (is_array($this->type)) {
+            return $this->type;
         }
 
-        $types = array_filter($types, [$this, 'isValidType']);
-
-        return empty($types) ? [self::ANY] : $types;
+        return [$this->type];
     }
 
-    /**
-     * Returns the violation message for the first configured type.
-     */
     public function getMessage(): ?string
     {
-        // TODO Deal with multiple types
-
         if (null !== $this->message) {
             return $this->message;
         }
 
-        switch ($this->getType()) {
-            case self::FIXED_LINE:
-                return 'This value is not a valid fixed-line number.';
-            case self::MOBILE:
-                return 'This value is not a valid mobile number.';
-            case self::PAGER:
-                return 'This value is not a valid pager number.';
-            case self::PERSONAL_NUMBER:
-                return 'This value is not a valid personal number.';
-            case self::PREMIUM_RATE:
-                return 'This value is not a valid premium-rate number.';
-            case self::SHARED_COST:
-                return 'This value is not a valid shared-cost number.';
-            case self::TOLL_FREE:
-                return 'This value is not a valid toll-free number.';
-            case self::UAN:
-                return 'This value is not a valid UAN.';
-            case self::VOIP:
-                return 'This value is not a valid VoIP number.';
-            case self::VOICEMAIL:
-                return 'This value is not a valid voicemail access number.';
+        $types = $this->getTypes();
+        if (1 === count($types)) {
+            $typeName = $this->getTypeName($types[0]);
+
+            return "This value is not a valid $typeName.";
         }
 
-        return 'This value is not a valid phone number.';
+        return sprintf('This value is not a valid number.');
+    }
+
+    public function getTypeNames(): array
+    {
+        $types = is_array($this->type) ? $this->type : [$this->type];
+
+        $typeNames = [];
+        foreach ($types as $type) {
+            $typeNames[] = $this->getTypeName($type);
+        }
+
+        return $typeNames;
+    }
+
+    private function getTypeName(string $type): string
+    {
+        switch ($type) {
+            case self::FIXED_LINE:
+                return 'fixed-line number';
+            case self::MOBILE:
+                return 'mobile number';
+            case self::PAGER:
+                return 'pager number';
+            case self::PERSONAL_NUMBER:
+                return 'personal number';
+            case self::PREMIUM_RATE:
+                return 'premium-rate number';
+            case self::SHARED_COST:
+                return 'shared-cost number';
+            case self::TOLL_FREE:
+                return 'toll-free number';
+            case self::UAN:
+                return 'UAN';
+            case self::VOIP:
+                return 'VoIP number';
+            case self::VOICEMAIL:
+                return 'voicemail access number';
+            case self::ANY:
+                return 'phone number';
+        }
+
+        throw new \InvalidArgumentException("Unknown phone number type \"$type\".");
     }
 }
