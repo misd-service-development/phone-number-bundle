@@ -12,6 +12,7 @@
 namespace Misd\PhoneNumberBundle\Validator\Constraints;
 
 use libphonenumber\PhoneNumberUtil;
+use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -45,10 +46,10 @@ class PhoneNumber extends Constraint
 
     public function getType(): ?string
     {
-        @trigger_error(__METHOD__.' is deprecated and will be removed in 4.0. Use `getTypes` instead.', E_USER_DEPRECATED);
+        @trigger_error(__METHOD__.' is deprecated and will be removed in 4.0. Use "getTypes" instead.', E_USER_DEPRECATED);
 
         $types = $this->getTypes();
-        if (0 === count($types)) {
+        if (0 === \count($types)) {
             return null;
         }
 
@@ -57,32 +58,32 @@ class PhoneNumber extends Constraint
 
     public function getTypes(): array
     {
-        if (is_array($this->type)) {
+        if (\is_array($this->type)) {
             return $this->type;
         }
 
         return [$this->type];
     }
 
-    public function getMessage(): ?string
+    public function getMessage(): string
     {
         if (null !== $this->message) {
             return $this->message;
         }
 
         $types = $this->getTypes();
-        if (1 === count($types)) {
+        if (1 === \count($types)) {
             $typeName = $this->getTypeName($types[0]);
 
             return "This value is not a valid $typeName.";
         }
 
-        return sprintf('This value is not a valid number.');
+        return 'This value is not a valid number.';
     }
 
     public function getTypeNames(): array
     {
-        $types = is_array($this->type) ? $this->type : [$this->type];
+        $types = \is_array($this->type) ? $this->type : [$this->type];
 
         $typeNames = [];
         foreach ($types as $type) {
@@ -119,6 +120,6 @@ class PhoneNumber extends Constraint
                 return 'phone number';
         }
 
-        throw new \InvalidArgumentException("Unknown phone number type \"$type\".");
+        throw new InvalidArgumentException("Unknown phone number type \"$type\".");
     }
 }

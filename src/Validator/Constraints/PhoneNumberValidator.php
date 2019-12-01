@@ -27,8 +27,6 @@ class PhoneNumberValidator extends ConstraintValidator
 {
     /**
      * {@inheritdoc}
-     *
-     * @var PhoneNumber
      */
     public function validate($value, Constraint $constraint)
     {
