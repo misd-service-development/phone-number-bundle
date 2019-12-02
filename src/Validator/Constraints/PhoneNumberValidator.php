@@ -34,7 +34,7 @@ class PhoneNumberValidator extends ConstraintValidator
             return;
         }
 
-        if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
+        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
@@ -97,10 +97,10 @@ class PhoneNumberValidator extends ConstraintValidator
                 break;
         }
 
-        if (count($validTypes)) {
+        if (\count($validTypes)) {
             $type = $phoneUtil->getNumberType($phoneNumber);
 
-            if (false === in_array($type, $validTypes)) {
+            if (false === \in_array($type, $validTypes)) {
                 $this->addViolation($value, $constraint);
 
                 return;

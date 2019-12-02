@@ -153,7 +153,7 @@ class PhoneNumberTypeTest extends TestCase
         return [
             [
                 [],
-                count(PhoneNumberUtil::getInstance()->getSupportedRegions()),
+                \count(PhoneNumberUtil::getInstance()->getSupportedRegions()),
                 [
                     $this->createChoiceView('United Kingdom (+44)', 'GB'),
                 ],

@@ -51,7 +51,7 @@ class PhoneNumberToArrayTransformerTest extends TestCase
         $transformer = new PhoneNumberToArrayTransformer($countryChoices);
 
         $phoneNumber = null;
-        if (is_array($actual)) {
+        if (\is_array($actual)) {
             try {
                 $phoneNumber = $this->phoneNumberUtil->parse($actual['number'], $actual['country']);
             } catch (NumberParseException $e) {

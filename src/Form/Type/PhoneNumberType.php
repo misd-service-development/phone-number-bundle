@@ -44,7 +44,7 @@ class PhoneNumberType extends AbstractType
 
             $countries = [];
 
-            if (is_array($options['country_choices'])) {
+            if (\is_array($options['country_choices'])) {
                 foreach ($options['country_choices'] as $country) {
                     $code = $util->getCountryCodeForRegion($country);
 
@@ -119,7 +119,7 @@ class PhoneNumberType extends AbstractType
         $resolver->setDefaults([
             'widget' => self::WIDGET_SINGLE_TEXT,
             'compound' => function (Options $options): bool {
-                return PhoneNumberType::WIDGET_SINGLE_TEXT !== $options['widget'];
+                return self::WIDGET_SINGLE_TEXT !== $options['widget'];
             },
             'default_region' => PhoneNumberUtil::UNKNOWN_REGION,
             'format' => PhoneNumberFormat::INTERNATIONAL,

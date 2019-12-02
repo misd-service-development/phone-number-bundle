@@ -55,7 +55,7 @@ class PhoneNumberType extends Type
         }
 
         if (!$value instanceof PhoneNumber) {
-            throw new ConversionException('Expected \libphonenumber\PhoneNumber, got '.gettype($value));
+            throw new ConversionException('Expected \libphonenumber\PhoneNumber, got '.\gettype($value));
         }
 
         $util = PhoneNumberUtil::getInstance();
