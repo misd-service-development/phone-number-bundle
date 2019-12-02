@@ -54,7 +54,7 @@ If you're using a container paremeter or alias defined by `misd/phone-number-bun
 
 The following services are available:
 
-| Service                                               | ID                                                 | libphonenumber version |
+| Service                                               | ID (Removed in 3.0)                                | libphonenumber version |
 | ----------------------------------------------------- | -------------------------------------------------- | ---------------------- |
 | `libphonenumber\PhoneNumberUtil`                      | `libphonenumber.phone_number_util`                 |                        |
 | `libphonenumber\geocoding\PhoneNumberOfflineGeocoder` | `libphonenumber.phone_number_offline_geocoder`     | >=5.8.8                |
