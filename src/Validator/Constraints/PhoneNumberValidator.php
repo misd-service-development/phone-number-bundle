@@ -61,46 +61,50 @@ class PhoneNumberValidator extends ConstraintValidator
             return;
         }
 
-        switch ($constraint->getType()) {
-            case PhoneNumber::FIXED_LINE:
-                $validTypes = [PhoneNumberType::FIXED_LINE, PhoneNumberType::FIXED_LINE_OR_MOBILE];
-                break;
-            case PhoneNumber::MOBILE:
-                $validTypes = [PhoneNumberType::MOBILE, PhoneNumberType::FIXED_LINE_OR_MOBILE];
-                break;
-            case PhoneNumber::PAGER:
-                $validTypes = [PhoneNumberType::PAGER];
-                break;
-            case PhoneNumber::PERSONAL_NUMBER:
-                $validTypes = [PhoneNumberType::PERSONAL_NUMBER];
-                break;
-            case PhoneNumber::PREMIUM_RATE:
-                $validTypes = [PhoneNumberType::PREMIUM_RATE];
-                break;
-            case PhoneNumber::SHARED_COST:
-                $validTypes = [PhoneNumberType::SHARED_COST];
-                break;
-            case PhoneNumber::TOLL_FREE:
-                $validTypes = [PhoneNumberType::TOLL_FREE];
-                break;
-            case PhoneNumber::UAN:
-                $validTypes = [PhoneNumberType::UAN];
-                break;
-            case PhoneNumber::VOIP:
-                $validTypes = [PhoneNumberType::VOIP];
-                break;
-            case PhoneNumber::VOICEMAIL:
-                $validTypes = [PhoneNumberType::VOICEMAIL];
-                break;
-            default:
-                $validTypes = [];
-                break;
+        $validTypes = [];
+        foreach ($constraint->getTypes() as $type) {
+            switch ($type) {
+                case PhoneNumber::FIXED_LINE:
+                    $validTypes[] = PhoneNumberType::FIXED_LINE;
+                    $validTypes[] = PhoneNumberType::FIXED_LINE_OR_MOBILE;
+                    break;
+                case PhoneNumber::MOBILE:
+                    $validTypes[] = PhoneNumberType::MOBILE;
+                    $validTypes[] = PhoneNumberType::FIXED_LINE_OR_MOBILE;
+                    break;
+                case PhoneNumber::PAGER:
+                    $validTypes[] = PhoneNumberType::PAGER;
+                    break;
+                case PhoneNumber::PERSONAL_NUMBER:
+                    $validTypes[] = PhoneNumberType::PERSONAL_NUMBER;
+                    break;
+                case PhoneNumber::PREMIUM_RATE:
+                    $validTypes[] = PhoneNumberType::PREMIUM_RATE;
+                    break;
+                case PhoneNumber::SHARED_COST:
+                    $validTypes[] = PhoneNumberType::SHARED_COST;
+                    break;
+                case PhoneNumber::TOLL_FREE:
+                    $validTypes[] = PhoneNumberType::TOLL_FREE;
+                    break;
+                case PhoneNumber::UAN:
+                    $validTypes[] = PhoneNumberType::UAN;
+                    break;
+                case PhoneNumber::VOIP:
+                    $validTypes[] = PhoneNumberType::VOIP;
+                    break;
+                case PhoneNumber::VOICEMAIL:
+                    $validTypes[] = PhoneNumberType::VOICEMAIL;
+                    break;
+            }
         }
 
-        if (\count($validTypes)) {
+        $validTypes = array_unique($validTypes);
+
+        if (0 < \count($validTypes)) {
             $type = $phoneUtil->getNumberType($phoneNumber);
 
-            if (false === \in_array($type, $validTypes)) {
+            if (!\in_array($type, $validTypes, true)) {
                 $this->addViolation($value, $constraint);
 
                 return;
@@ -117,7 +121,7 @@ class PhoneNumberValidator extends ConstraintValidator
     private function addViolation($value, Constraint $constraint)
     {
         $this->context->buildViolation($constraint->getMessage())
-            ->setParameter('{{ type }}', $constraint->getType())
+            ->setParameter('{{ types }}', implode(', ', $constraint->getTypeNames()))
             ->setParameter('{{ value }}', $this->formatValue($value))
             ->setCode(PhoneNumber::INVALID_PHONE_NUMBER_ERROR)
             ->addViolation();

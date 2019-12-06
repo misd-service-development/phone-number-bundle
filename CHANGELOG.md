@@ -5,6 +5,7 @@ Unreleased
 ----------
 
 * Add support of null values in phone number deserializer
+* Refactor `PhoneNumber` constraints & validator to accept more than 1 type.
 
 3.0.0
 -----
