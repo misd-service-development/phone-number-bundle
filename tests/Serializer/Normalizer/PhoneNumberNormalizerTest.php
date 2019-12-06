@@ -17,6 +17,7 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\Serializer;
 
@@ -72,6 +73,16 @@ class PhoneNumberNormalizerTest extends TestCase
         $normalizer = new PhoneNumberNormalizer($phoneNumberUtil->reveal());
 
         $this->assertSame($phoneNumber, $normalizer->denormalize('+33193166989', 'libphonenumber\PhoneNumber'));
+    }
+
+    public function testItDenormalizeNullToNull()
+    {
+        $phoneNumberUtil = $this->prophesize(PhoneNumberUtil::class);
+        $phoneNumberUtil->parse(Argument::cetera())->shouldNotBeCalled();
+
+        $normalizer = new PhoneNumberNormalizer($phoneNumberUtil->reveal());
+
+        $this->assertNull($normalizer->denormalize(null, 'libphonenumber\PhoneNumber'));
     }
 
     public function testInvalidDateThrowException()
