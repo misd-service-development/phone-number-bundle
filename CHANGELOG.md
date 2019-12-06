@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+* Add support of null values in phone number deserializer
+
 3.0.0
 -----
 
