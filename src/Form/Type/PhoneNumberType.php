@@ -72,7 +72,7 @@ class PhoneNumberType extends AbstractType
 
             $transformerChoices = array_values($countryChoices);
 
-            $countryOptions = [
+            $countryOptions = array_replace([
                 'error_bubbling' => true,
                 'disabled' => $options['disabled'],
                 'translation_domain' => $options['translation_domain'],
@@ -80,20 +80,22 @@ class PhoneNumberType extends AbstractType
                 'required' => true,
                 'choices' => $countryChoices,
                 'preferred_choices' => $options['preferred_country_choices'],
-            ];
+            ], $options['country_options']);
 
             if ($options['country_placeholder']) {
                 $countryOptions['placeholder'] = $options['country_placeholder'];
             }
 
+            $numberOptions = array_replace([
+                'error_bubbling' => true,
+                'required' => $options['required'],
+                'disabled' => $options['disabled'],
+                'translation_domain' => $options['translation_domain'],
+            ], $options['number_options']);
+
             $builder
                 ->add('country', ChoiceType::class, $countryOptions)
-                ->add('number', TextType::class, [
-                    'error_bubbling' => true,
-                    'required' => $options['required'],
-                    'disabled' => $options['disabled'],
-                    'translation_domain' => $options['translation_domain'],
-                ])
+                ->add('number', TextType::class, $numberOptions)
                 ->addViewTransformer(new PhoneNumberToArrayTransformer($transformerChoices));
         } else {
             $builder->addViewTransformer(
@@ -129,12 +131,17 @@ class PhoneNumberType extends AbstractType
             'country_choices' => [],
             'country_placeholder' => false,
             'preferred_country_choices' => [],
+            'country_options' => [],
+            'number_options' => [],
         ]);
 
         $resolver->setAllowedValues('widget', [
             self::WIDGET_SINGLE_TEXT,
             self::WIDGET_COUNTRY_CHOICE,
         ]);
+
+        $resolver->setAllowedTypes('country_options', 'array');
+        $resolver->setAllowedTypes('number_options', 'array');
     }
 
     /**
