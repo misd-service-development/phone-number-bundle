@@ -250,6 +250,36 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertSame($type->getBlockPrefix(), $type->getName());
     }
 
+    public function testCountryChoiceCountryOptions()
+    {
+        $form = $this->factory->create(PhoneNumberType::class, null, [
+            'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+            'country_options' => [
+                'attr' => [
+                    'class' => 'custom-select-class',
+                ],
+            ],
+        ]);
+        $view = $form->createView();
+
+        $this->assertEquals(['class' => 'custom-select-class'], $view['country']->vars['attr']);
+    }
+
+    public function testCountryChoiceNumberOptions()
+    {
+        $form = $this->factory->create(PhoneNumberType::class, null, [
+            'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+            'number_options' => [
+                'attr' => [
+                    'placeholder' => '000 000',
+                ],
+            ],
+        ]);
+        $view = $form->createView();
+
+        $this->assertEquals(['placeholder' => '000 000'], $view['number']->vars['attr']);
+    }
+
     private function createChoiceView($label, $code)
     {
         return new ChoiceView($code, $code, $label);
