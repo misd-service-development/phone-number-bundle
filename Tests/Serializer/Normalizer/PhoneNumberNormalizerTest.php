@@ -16,7 +16,8 @@ use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 /**
  * Phone number serialization test.
@@ -83,17 +84,15 @@ class PhoneNumberNormalizerTest extends TestCase
         $this->assertSame($phoneNumber, $normalizer->denormalize('+33193166989', 'libphonenumber\PhoneNumber'));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Serializer\Exception\UnexpectedValueException
-     */
     public function testInvalidDateThrowException()
     {
+        $this->expectException(UnexpectedValueException::class);
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
 
         $phoneNumberUtil->expects($this->once())->method('parse')
             ->with('invalid phone number', PhoneNumberUtil::UNKNOWN_REGION)
-            ->willThrowException(new NumberParseException(NumberParseException::INVALID_COUNTRY_CODE, ""));
+            ->willThrowException(new NumberParseException(NumberParseException::INVALID_COUNTRY_CODE, ''));
 
         $normalizer = new PhoneNumberNormalizer($phoneNumberUtil);
         $normalizer->denormalize('invalid phone number', 'libphonenumber\PhoneNumber');

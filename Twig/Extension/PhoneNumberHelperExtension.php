@@ -16,7 +16,7 @@ use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 /**
  * Phone number helper Twig extension.
  */
-class PhoneNumberHelperExtension extends \Twig_Extension
+class PhoneNumberHelperExtension extends PolyfillExtension
 {
     /**
      * Phone number helper.
@@ -28,7 +28,7 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     /**
      * Constructor.
      *
-     * @param PhoneNumberHelper $helper Phone number helper.
+     * @param PhoneNumberHelper $helper phone number helper
      */
     public function __construct(PhoneNumberHelper $helper)
     {
@@ -38,39 +38,16 @@ class PhoneNumberHelperExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
-    {
-        return array(
-            new \Twig_SimpleFunction('phone_number_format', array($this->helper, 'format'), array('deprecated' => '1.2')),
-            new \Twig_SimpleFunction('phone_number_is_type', array($this->helper, 'isType'), array('deprecated' => '1.2')),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFilters()
-    {
-        return array(
-            new \Twig_SimpleFilter('phone_number_format', array($this->helper, 'format')),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTests()
-    {
-        return array(
-            new \Twig_SimpleTest('phone_number_of_type', array($this->helper, 'isType')),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'phone_number_helper';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getHelper()
+    {
+        return $this->helper;
     }
 }

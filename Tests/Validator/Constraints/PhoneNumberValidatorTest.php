@@ -16,15 +16,18 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
  * Phone number validator test.
  */
-class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
+class PhoneNumberValidatorTest extends TestCase
 {
     /**
-     * @var \Symfony\Component\Validator\Context\ExecutionContextInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject|\Symfony\Component\Validator\Context\ExecutionContextInterface
      */
     protected $context;
 
@@ -51,6 +54,9 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider validateProvider
+     *
+     * @param string|null $type
+     * @param string|null $defaultRegion
      */
     public function testValidate($value, $violates, $type = null, $defaultRegion = null)
     {
@@ -90,10 +96,10 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
             } else {
                 $this->context->expects($this->once())
                     ->method('addViolation')
-                    ->with($constraint->getMessage(), array(
+                    ->with($constraint->getMessage(), [
                         '{{ type }}' => $constraint->type,
-                        '{{ value }}' => $constraintValue
-                    ));
+                        '{{ value }}' => $constraintValue,
+                    ]);
             }
         } else {
             if ($this->context instanceof ExecutionContextInterface) {
@@ -112,54 +118,52 @@ class PhoneNumberValidatorTest extends \PHPUnit_Framework_TestCase
      * 0 => Value
      * 1 => Violates?
      * 2 => Type (optional)
-     * 3 => Default region (optional)
+     * 3 => Default region (optional).
      */
     public function validateProvider()
     {
-        return array(
-            array(null, false),
-            array('', false),
-            array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false),
-            array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, 'fixed_line'),
-            array(PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), true, 'mobile'),
-            array(PhoneNumberUtil::getInstance()->parse('+44123456789', PhoneNumberUtil::UNKNOWN_REGION), true),
-            array('+441234567890', false),
-            array('+441234567890', false, 'fixed_line'),
-            array('+441234567890', true, 'mobile'),
-            array('+44123456789', true),
-            array('+44123456789', true, 'mobile'),
-            array('+12015555555', false),
-            array('+12015555555', false, 'fixed_line'),
-            array('+12015555555', false, 'mobile'),
-            array('+447640123456', false, 'pager'),
-            array('+441234567890', true, 'pager'),
-            array('+447012345678', false, 'personal_number'),
-            array('+441234567890', true, 'personal_number'),
-            array('+449012345678', false, 'premium_rate'),
-            array('+441234567890', true, 'premium_rate'),
-            array('+448431234567', false, 'shared_cost'),
-            array('+441234567890', true, 'shared_cost'),
-            array('+448001234567', false, 'toll_free'),
-            array('+441234567890', true, 'toll_free'),
-            array('+445512345678', false, 'uan'),
-            array('+441234567890', true, 'uan'),
-            array('+445612345678', false, 'voip'),
-            array('+441234567890', true, 'voip'),
-            array('+41860123456789', false, 'voicemail'),
-            array('+441234567890', true, 'voicemail'),
-            array('2015555555', false, null, 'US'),
-            array('2015555555', false, 'fixed_line', 'US'),
-            array('2015555555', false, 'mobile', 'US'),
-            array('01234 567890', false, null, 'GB'),
-            array('foo', true),
-        );
+        return [
+            [null, false],
+            ['', false],
+            [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false],
+            [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, 'fixed_line'],
+            [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), true, 'mobile'],
+            [PhoneNumberUtil::getInstance()->parse('+44123456789', PhoneNumberUtil::UNKNOWN_REGION), true],
+            ['+441234567890', false],
+            ['+441234567890', false, 'fixed_line'],
+            ['+441234567890', true, 'mobile'],
+            ['+44123456789', true],
+            ['+44123456789', true, 'mobile'],
+            ['+12015555555', false],
+            ['+12015555555', false, 'fixed_line'],
+            ['+12015555555', false, 'mobile'],
+            ['+447640123456', false, 'pager'],
+            ['+441234567890', true, 'pager'],
+            ['+447012345678', false, 'personal_number'],
+            ['+441234567890', true, 'personal_number'],
+            ['+449012345678', false, 'premium_rate'],
+            ['+441234567890', true, 'premium_rate'],
+            ['+448431234567', false, 'shared_cost'],
+            ['+441234567890', true, 'shared_cost'],
+            ['+448001234567', false, 'toll_free'],
+            ['+441234567890', true, 'toll_free'],
+            ['+445512345678', false, 'uan'],
+            ['+441234567890', true, 'uan'],
+            ['+445612345678', false, 'voip'],
+            ['+441234567890', true, 'voip'],
+            ['+41860123456789', false, 'voicemail'],
+            ['+441234567890', true, 'voicemail'],
+            ['2015555555', false, null, 'US'],
+            ['2015555555', false, 'fixed_line', 'US'],
+            ['2015555555', false, 'mobile', 'US'],
+            ['01234 567890', false, null, 'GB'],
+            ['foo', true],
+        ];
     }
 
-    /**
-     * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
     public function testValidateThrowsUnexpectedTypeExceptionOnBadValue()
     {
+        $this->expectException(UnexpectedTypeException::class);
         $constraint = new PhoneNumber();
         $this->validator->validate($this, $constraint);
     }

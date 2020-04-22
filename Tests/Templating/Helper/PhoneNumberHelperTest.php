@@ -12,9 +12,10 @@
 namespace Misd\PhoneNumberBundle\Tests\Templating\Helper;
 
 use libphonenumber\PhoneNumberFormat;
+use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberFormatHelper;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Phone number templating helper test.
@@ -58,7 +59,7 @@ class PhoneNumberHelperTest extends TestCase
      */
     public function testProcess($format, $expectedFormat)
     {
-        $phoneNumber = $this->getMock('libphonenumber\PhoneNumber');
+        $phoneNumber = $this->createMock('libphonenumber\PhoneNumber');
 
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
@@ -71,22 +72,20 @@ class PhoneNumberHelperTest extends TestCase
 
     /**
      * 0 => Format
-     * 1 => Expected format
+     * 1 => Expected format.
      */
     public function processProvider()
     {
-        return array(
-            array(PhoneNumberFormat::NATIONAL, PhoneNumberFormat::NATIONAL),
-            array('NATIONAL', PhoneNumberFormat::NATIONAL),
-        );
+        return [
+            [PhoneNumberFormat::NATIONAL, PhoneNumberFormat::NATIONAL],
+            ['NATIONAL', PhoneNumberFormat::NATIONAL],
+        ];
     }
 
-    /**
-     * @expectedException \Misd\PhoneNumberBundle\Exception\InvalidArgumentException
-     */
     public function testProcessInvalidArgumentException()
     {
-        $phoneNumber = $this->getMock('libphonenumber\PhoneNumber');
+        $this->expectException(InvalidArgumentException::class);
+        $phoneNumber = $this->createMock('libphonenumber\PhoneNumber');
 
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
@@ -96,7 +95,8 @@ class PhoneNumberHelperTest extends TestCase
         $helper->format($phoneNumber, 'foo');
     }
 
-    public function testDeprecatedClassName() {
+    public function testDeprecatedClassName()
+    {
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
 

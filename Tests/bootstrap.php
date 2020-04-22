@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-$loader = @include __DIR__ . '/../vendor/autoload.php';
+$loader = @include __DIR__.'/../vendor/autoload.php';
 if (!$loader) {
     die(<<<'EOT'
 You must set up the project dependencies by running the following commands:

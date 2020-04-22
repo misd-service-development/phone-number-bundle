@@ -12,11 +12,12 @@
 namespace Misd\PhoneNumberBundle\Tests\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Phone number type test.
@@ -46,7 +47,7 @@ class PhoneNumberTypeTest extends TestCase
     protected function setUp()
     {
         $this->platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')
-            ->setMethods(array('getVarcharTypeDeclarationSQL'))
+            ->setMethods(['getVarcharTypeDeclarationSQL'])
             ->getMockForAbstractClass();
 
         $this->platform->expects($this->any())
@@ -69,7 +70,7 @@ class PhoneNumberTypeTest extends TestCase
 
     public function testGetSQLDeclaration()
     {
-        $this->assertSame('DUMMYVARCHAR()', $this->type->getSQLDeclaration(array(), $this->platform));
+        $this->assertSame('DUMMYVARCHAR()', $this->type->getSQLDeclaration([], $this->platform));
     }
 
     public function testConvertToDatabaseValueWithNull()
@@ -84,11 +85,9 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertSame('+441234567890', $this->type->convertToDatabaseValue($phoneNumber, $this->platform));
     }
 
-    /**
-     * @expectedException \Doctrine\DBAL\Types\ConversionException
-     */
     public function testConvertToDatabaseValueFailure()
     {
+        $this->expectException(ConversionException::class);
         $this->type->convertToDatabaseValue('foo', $this->platform);
     }
 
@@ -114,11 +113,9 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertEquals($expectedPhoneNumber, $phoneNumber);
     }
 
-    /**
-     * @expectedException \Doctrine\DBAL\Types\ConversionException
-     */
     public function testConvertToPHPValueFailure()
     {
+        $this->expectException(ConversionException::class);
         $this->type->convertToPHPValue('foo', $this->platform);
     }
 

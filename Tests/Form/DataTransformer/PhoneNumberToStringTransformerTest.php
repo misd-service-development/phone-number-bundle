@@ -16,7 +16,7 @@ use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Form\DataTransformer\PhoneNumberToStringTransformer;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
@@ -24,7 +24,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  */
 class PhoneNumberToStringTransformerTest extends TestCase
 {
-    const TRANSFORMATION_FAILED = 'transformation_failed';
+    public const TRANSFORMATION_FAILED = 'transformation_failed';
 
     /**
      * @var PhoneNumberUtil
@@ -70,22 +70,22 @@ class PhoneNumberToStringTransformerTest extends TestCase
      * 0 => Default region
      * 1 => Format
      * 2 => Actual value
-     * 3 => Expected result
+     * 3 => Expected result.
      */
     public function transformProvider()
     {
-        return array(
-            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, null, ''),
-            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, 'foo', self::TRANSFORMATION_FAILED),
-            array(PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, '0', self::TRANSFORMATION_FAILED),
-            array(
+        return [
+            [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, null, ''],
+            [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, 'foo', self::TRANSFORMATION_FAILED],
+            [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, '0', self::TRANSFORMATION_FAILED],
+            [
                 PhoneNumberUtil::UNKNOWN_REGION,
                 PhoneNumberFormat::INTERNATIONAL,
                 '+441234567890',
                 '+44 1234 567890',
-            ),
-            array('GB', PhoneNumberFormat::NATIONAL, '01234567890', '01234 567890'),
-        );
+            ],
+            ['GB', PhoneNumberFormat::NATIONAL, '01234567890', '01234 567890'],
+        ];
     }
 
     /**
@@ -111,16 +111,16 @@ class PhoneNumberToStringTransformerTest extends TestCase
     /**
      * 0 => Default region
      * 1 => Actual value
-     * 2 => Expected result
+     * 2 => Expected result.
      */
     public function reverseTransformProvider()
     {
-        return array(
-            array(PhoneNumberUtil::UNKNOWN_REGION, null, null),
-            array(PhoneNumberUtil::UNKNOWN_REGION, 'foo', self::TRANSFORMATION_FAILED),
-            array(PhoneNumberUtil::UNKNOWN_REGION, '0', self::TRANSFORMATION_FAILED),
-            array(PhoneNumberUtil::UNKNOWN_REGION, '+44 1234 567890', '+441234567890'),
-            array('GB', '01234 567890', '+441234567890'),
-        );
+        return [
+            [PhoneNumberUtil::UNKNOWN_REGION, null, null],
+            [PhoneNumberUtil::UNKNOWN_REGION, 'foo', self::TRANSFORMATION_FAILED],
+            [PhoneNumberUtil::UNKNOWN_REGION, '0', self::TRANSFORMATION_FAILED],
+            [PhoneNumberUtil::UNKNOWN_REGION, '+44 1234 567890', '+441234567890'],
+            ['GB', '01234 567890', '+441234567890'],
+        ];
     }
 }

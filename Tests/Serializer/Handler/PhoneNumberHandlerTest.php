@@ -11,9 +11,11 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Serializer\Handler;
 
+use JMS\Serializer\Visitor\DeserializationVisitorInterface;
+use JMS\Serializer\VisitorInterface;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Serializer\Handler\PhoneNumberHandler;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 
 /**
@@ -28,11 +30,11 @@ class PhoneNumberHandlerTest extends TestCase
 
         $handler = new PhoneNumberHandler($phoneNumberUtil);
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\VisitorInterface')->getMock();
+        $visitor = $this->getMockBuilder(interface_exists(DeserializationVisitorInterface::class) ? DeserializationVisitorInterface::class : VisitorInterface::class)->getMock();
 
-        $test = $this->getMock('libphoneNumber\PhoneNumber');
-        $type = array();
-        $context = $this->getMock('JMS\Serializer\Context');
+        $test = $this->createMock('libphoneNumber\PhoneNumber');
+        $type = [];
+        $context = $this->createMock('JMS\Serializer\Context');
 
         $phoneNumberUtil->expects($this->once())->method('format')->with($test)->will($this->returnValue('foo'));
         $visitor->expects($this->once())->method('visitString')->with('foo', $type, $context)
@@ -48,10 +50,10 @@ class PhoneNumberHandlerTest extends TestCase
 
         $handler = new PhoneNumberHandler($phoneNumberUtil);
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\JsonDeserializationVisitor')
+        $visitor = $this->getMockBuilder('JMS\Serializer\VisitorInterface')
             ->disableOriginalConstructor()->getMock();
 
-        $this->assertNull($handler->deserializePhoneNumberFromJson($visitor, null, array()));
+        $this->assertNull($handler->deserializePhoneNumberFromJson($visitor, null, []));
     }
 
     public function testDeserializePhoneNumberFromJson()
@@ -61,7 +63,7 @@ class PhoneNumberHandlerTest extends TestCase
 
         $handler = new PhoneNumberHandler($phoneNumberUtil);
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\JsonDeserializationVisitor')
+        $visitor = $this->getMockBuilder('JMS\Serializer\VisitorInterface')
             ->disableOriginalConstructor()->getMock();
 
         $test = '+441234567890';
@@ -69,7 +71,7 @@ class PhoneNumberHandlerTest extends TestCase
         $phoneNumberUtil->expects($this->once())->method('parse')->with($test, PhoneNumberUtil::UNKNOWN_REGION)
             ->will($this->returnValue('foo'));
 
-        $this->assertSame('foo', $handler->deserializePhoneNumberFromJson($visitor, $test, array()));
+        $this->assertSame('foo', $handler->deserializePhoneNumberFromJson($visitor, $test, []));
     }
 
     public function testDeserializePhoneNumberFromXmlWhenNil()
@@ -79,12 +81,12 @@ class PhoneNumberHandlerTest extends TestCase
 
         $handler = new PhoneNumberHandler($phoneNumberUtil);
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\XmlDeserializationVisitor')
+        $visitor = $this->getMockBuilder('JMS\Serializer\VisitorInterface')
             ->disableOriginalConstructor()->getMock();
 
         $xml = new SimpleXMLElement('<phone_number nil="true"/>');
 
-        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, array()));
+        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, []));
     }
 
     public function testDeserializePhoneNumberFromXmlWhenXsiNil()
@@ -94,13 +96,13 @@ class PhoneNumberHandlerTest extends TestCase
 
         $handler = new PhoneNumberHandler($phoneNumberUtil);
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\XmlDeserializationVisitor')
+        $visitor = $this->getMockBuilder('JMS\Serializer\VisitorInterface')
             ->disableOriginalConstructor()->getMock();
 
         $xml = new SimpleXMLElement('<phone_number/>');
         $xml->addAttribute('xsi:nil', 'true', 'http://www.w3.org/2001/XMLSchema-instance');
 
-        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, array()));
+        $this->assertNull($handler->deserializePhoneNumberFromXml($visitor, $xml, []));
     }
 
     public function testDeserializePhoneNumberFromXml()
@@ -110,7 +112,7 @@ class PhoneNumberHandlerTest extends TestCase
 
         $handler = new PhoneNumberHandler($phoneNumberUtil);
 
-        $visitor = $this->getMockBuilder('JMS\Serializer\XmlDeserializationVisitor')
+        $visitor = $this->getMockBuilder('JMS\Serializer\VisitorInterface')
             ->disableOriginalConstructor()->getMock();
 
         $test = '+441234567890';
@@ -120,6 +122,6 @@ class PhoneNumberHandlerTest extends TestCase
         $phoneNumberUtil->expects($this->once())->method('parse')->with($test, PhoneNumberUtil::UNKNOWN_REGION)
             ->will($this->returnValue('foo'));
 
-        $this->assertSame('foo', $handler->deserializePhoneNumberFromXml($visitor, $xml, array()));
+        $this->assertSame('foo', $handler->deserializePhoneNumberFromXml($visitor, $xml, []));
     }
 }

@@ -30,28 +30,28 @@ class ParentLocalesCompilerPass implements CompilerPassInterface
      *
      * @var array
      */
-    private $localParents = array(
-      'es_AR' => 'es_419',
-      'es_BO' => 'es_419',
-      'es_CL' => 'es_419',
-      'es_CO' => 'es_419',
-      'es_CR' => 'es_419',
-      'es_CU' => 'es_419',
-      'es_DO' => 'es_419',
-      'es_EC' => 'es_419',
-      'es_GT' => 'es_419',
-      'es_HN' => 'es_419',
-      'es_MX' => 'es_419',
-      'es_NI' => 'es_419',
-      'es_PA' => 'es_419',
-      'es_PE' => 'es_419',
-      'es_PR' => 'es_419',
-      'es_PY' => 'es_419',
-      'es_SV' => 'es_419',
-      'es_US' => 'es_419',
-      'es_UY' => 'es_419',
-      'es_VE' => 'es_419',
-    );
+    private $localParents = [
+        'es_AR' => 'es_419',
+        'es_BO' => 'es_419',
+        'es_CL' => 'es_419',
+        'es_CO' => 'es_419',
+        'es_CR' => 'es_419',
+        'es_CU' => 'es_419',
+        'es_DO' => 'es_419',
+        'es_EC' => 'es_419',
+        'es_GT' => 'es_419',
+        'es_HN' => 'es_419',
+        'es_MX' => 'es_419',
+        'es_NI' => 'es_419',
+        'es_PA' => 'es_419',
+        'es_PE' => 'es_419',
+        'es_PR' => 'es_419',
+        'es_PY' => 'es_419',
+        'es_SV' => 'es_419',
+        'es_US' => 'es_419',
+        'es_UY' => 'es_419',
+        'es_VE' => 'es_419',
+    ];
 
     /**
      * {@inheritdoc}
@@ -76,10 +76,10 @@ class ParentLocalesCompilerPass implements CompilerPassInterface
 
         foreach ($this->localParents as $locale => $parent) {
             $path = realpath(
-              sprintf(
-                '%s/../../Resources/translations/validators.%s.xlf',
-                __DIR__,
-                $parent
+                sprintf(
+                  '%s/../../Resources/translations/validators.%s.xlf',
+                  __DIR__,
+                  $parent
               )
             );
 
@@ -104,24 +104,24 @@ class ParentLocalesCompilerPass implements CompilerPassInterface
                 }
             }
 
-            $extraMethodCall = array(
-              'addResource',
-              array(
-                'xlf',
-                $path,
-                $locale,
-                'validators',
-              ),
-            );
+            $extraMethodCall = [
+                'addResource',
+                [
+                    'xlf',
+                    $path,
+                    $locale,
+                    'validators',
+                ],
+            ];
 
             if (null === $parentKey) {
                 $methodCalls[] = $extraMethodCall;
             } else {
                 array_splice(
-                  $methodCalls,
-                  $parentKey + 1,
-                  0,
-                  array($extraMethodCall)
+                    $methodCalls,
+                    $parentKey + 1,
+                    0,
+                    [$extraMethodCall]
                 );
             }
         }

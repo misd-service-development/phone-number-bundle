@@ -19,6 +19,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,8 +30,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class PhoneNumberType extends AbstractType
 {
-    const WIDGET_SINGLE_TEXT = 'single_text';
-    const WIDGET_COUNTRY_CHOICE = 'country_choice';
+    public const WIDGET_SINGLE_TEXT = 'single_text';
+    public const WIDGET_COUNTRY_CHOICE = 'country_choice';
 
     /**
      * {@inheritdoc}
@@ -40,7 +41,7 @@ class PhoneNumberType extends AbstractType
         if (self::WIDGET_COUNTRY_CHOICE === $options['widget']) {
             $util = PhoneNumberUtil::getInstance();
 
-            $countries = array();
+            $countries = [];
 
             if (is_array($options['country_choices'])) {
                 foreach ($options['country_choices'] as $country) {
@@ -58,9 +59,16 @@ class PhoneNumberType extends AbstractType
                 }
             }
 
-            $countryChoices = array();
+            $countryChoices = [];
 
-            foreach (Intl::getRegionBundle()->getCountryNames() as $region => $name) {
+            $countryNames = [];
+            if (method_exists(Intl::class, 'getRegionBundle')) {
+                $countryNames = Intl::getRegionBundle()->getCountryNames();
+            } else {
+                $countryNames = Countries::getNames();
+            }
+
+            foreach ($countryNames as $region => $name) {
                 if (false === isset($countries[$region])) {
                     continue;
                 }
@@ -70,12 +78,12 @@ class PhoneNumberType extends AbstractType
 
             $transformerChoices = array_values($countryChoices);
 
-            $countryOptions = $numberOptions = array(
+            $countryOptions = $numberOptions = [
                 'error_bubbling' => true,
                 'required' => $options['required'],
                 'disabled' => $options['disabled'],
                 'translation_domain' => $options['translation_domain'],
-            );
+            ];
 
             if (method_exists('Symfony\\Component\\Form\\AbstractType', 'getBlockPrefix')) {
                 $choiceType = 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType';
@@ -138,7 +146,7 @@ class PhoneNumberType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'widget' => self::WIDGET_SINGLE_TEXT,
                 'compound' => function (Options $options) {
                     return PhoneNumberType::WIDGET_SINGLE_TEXT !== $options['widget'];
@@ -148,29 +156,29 @@ class PhoneNumberType extends AbstractType
                 'invalid_message' => 'This value is not a valid phone number.',
                 'by_reference' => false,
                 'error_bubbling' => false,
-                'country_choices' => array(),
+                'country_choices' => [],
                 'country_placeholder' => false,
-                'preferred_country_choices' => array(),
-            )
+                'preferred_country_choices' => [],
+            ]
         );
 
         if (method_exists($resolver, 'setDefault')) {
             $resolver->setAllowedValues(
                 'widget',
-                array(
+                [
                     self::WIDGET_SINGLE_TEXT,
                     self::WIDGET_COUNTRY_CHOICE,
-                )
+                ]
             );
         } else {
             // To be removed when dependency on Symfony OptionsResolver is bumped to 2.6.
             $resolver->setAllowedValues(
-                array(
-                    'widget' => array(
+                [
+                    'widget' => [
                         self::WIDGET_SINGLE_TEXT,
                         self::WIDGET_COUNTRY_CHOICE,
-                    ),
-                )
+                    ],
+                ]
             );
         }
     }

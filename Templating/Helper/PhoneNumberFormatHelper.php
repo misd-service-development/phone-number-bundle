@@ -14,4 +14,6 @@ namespace Misd\PhoneNumberBundle\Templating\Helper;
 /**
  * @deprecated PhoneNumberFormatHelper is deprecated and will be removed in 2.0. Use PhoneNumberHelper instead
  */
-class PhoneNumberFormatHelper extends PhoneNumberHelper {}
+class PhoneNumberFormatHelper extends PhoneNumberHelper
+{
+}

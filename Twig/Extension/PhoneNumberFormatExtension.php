@@ -14,4 +14,6 @@ namespace Misd\PhoneNumberBundle\Twig\Extension;
 /**
  * @deprecated PhoneNumberFormatExtension is deprecated and will be removed in 2.0. Use PhoneNumberHelperExtension instead
  */
-class PhoneNumberFormatExtension extends PhoneNumberHelperExtension {}
+class PhoneNumberFormatExtension extends PhoneNumberHelperExtension
+{
+}

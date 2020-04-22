@@ -35,11 +35,11 @@ class FormPhpTemplateCompilerPass implements CompilerPassInterface
         }
 
         // Insert right after FrameworkBundle:Form if exists.
-        if (($key = array_search('FrameworkBundle:Form', $parameter)) !== false) {
-            array_splice($parameter, ++$key, 0, array('MisdPhoneNumberBundle:Form'));
+        if (false !== ($key = array_search('FrameworkBundle:Form', $parameter))) {
+            array_splice($parameter, ++$key, 0, ['MisdPhoneNumberBundle:Form']);
         } else {
             // Put it in first position.
-            array_unshift($resources, array('MisdPhoneNumberBundle:Form'));
+            array_unshift($resources, ['MisdPhoneNumberBundle:Form']);
         }
 
         $container->setParameter('templating.helper.form.resources', $parameter);
