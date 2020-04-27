@@ -4,8 +4,15 @@ Changelog
 Unreleased
 ----------
 
+3.1.0
+-----
+
 * Add support of null values in phone number deserializer
 * Refactor `PhoneNumber` constraints & validator to accept more than 1 type.
+* Clarify LICENSE & add copyright back
+* Update README
+* Revamped folder
+* Add the ability to pass options down to country and number fields
 
 3.0.0
 -----
