@@ -31,8 +31,8 @@
         "symfony/twig-bundle": "Format phone numbers in Twig templates",
         "symfony/validator": "Add a validation constraint"
     },
-    "conflict": {
-        "misd/phone-number-bundle": "*"
+    "replace": {
+        "misd/phone-number-bundle": "self.version"
     },
     "autoload": {
         "psr-4": {
