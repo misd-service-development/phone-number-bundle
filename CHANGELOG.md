@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+3.1.1
+-----
+
+* Use replace keyword instead of conflict in composer.json
+
 3.1.0
 -----
 
