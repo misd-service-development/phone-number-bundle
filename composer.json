@@ -1,7 +1,7 @@
 {
     "name": "misd/phone-number-bundle",
     "type": "symfony-bundle",
-    "description": "Integrates libphonenumber into your Symfony2-Symfony4 application",
+    "description": "Integrates libphonenumber into your Symfony2-Symfony5 application",
     "keywords": ["bundle", "phone-number", "phonenumber", "telephone number", "libphonenumber"],
     "homepage": "https://github.com/misd-service-development/phone-number-bundle",
     "license": "MIT",
@@ -11,17 +11,17 @@
     "require": {
         "php": ">=5.3.9",
         "giggsey/libphonenumber-for-php": "~5.7|~6.0|~7.0|~8.0",
-        "symfony/framework-bundle": "~2.7|~3.0|~4.0"
+        "symfony/framework-bundle": "~2.7|~3.0|~4.0|~5.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
         "jms/serializer-bundle": "~0.11|~1.0|~2.0",
         "phpunit/phpunit": "~4.0|^5.7",
-        "symfony/form": "~2.7|~3.0|~4.0",
-        "symfony/serializer": "~2.7|~3.1|~4.0",
-        "symfony/templating": "~2.7|~3.0|~4.0",
-        "symfony/twig-bundle": "~2.7|~3.0|~4.0",
-        "symfony/validator": "~2.7|~3.0|~4.0"
+        "symfony/form": "~2.7|~3.0|~4.0|~5.0",
+        "symfony/serializer": "~2.7|~3.1|~4.0|~5.0",
+        "symfony/templating": "~2.7|~3.0|~4.0|~5.0",
+        "symfony/twig-bundle": "~2.7|~3.0|~4.0|~5.0",
+        "symfony/validator": "~2.7|~3.0|~4.0|~5.0"
     },
     "conflict": {
         "twig/twig": "<1.12.0"
