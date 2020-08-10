@@ -15,7 +15,7 @@ Installation
  1. Use Composer to download the PhoneNumberBundle:
 
 ```bash
-        $ composer require antonowano/phone-number-bundle
+        $ composer require misd/phone-number-bundle
 ```
 
  2. Register the bundle in your application:
