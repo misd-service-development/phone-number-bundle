@@ -26,6 +26,16 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class PhoneNumberValidator extends ConstraintValidator
 {
     /**
+     * @var PhoneNumberUtil
+     */
+    private $phoneUtil;
+
+    public function __construct(PhoneNumberUtil $phoneUtil)
+    {
+        $this->phoneUtil = $phoneUtil;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint)
@@ -38,13 +48,11 @@ class PhoneNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $phoneUtil = PhoneNumberUtil::getInstance();
-
         if (false === $value instanceof PhoneNumberObject) {
             $value = (string) $value;
 
             try {
-                $phoneNumber = $phoneUtil->parse($value, $constraint->defaultRegion);
+                $phoneNumber = $this->phoneUtil->parse($value, $constraint->defaultRegion);
             } catch (NumberParseException $e) {
                 $this->addViolation($value, $constraint);
 
@@ -52,10 +60,10 @@ class PhoneNumberValidator extends ConstraintValidator
             }
         } else {
             $phoneNumber = $value;
-            $value = $phoneUtil->format($phoneNumber, PhoneNumberFormat::INTERNATIONAL);
+            $value = $this->phoneUtil->format($phoneNumber, PhoneNumberFormat::INTERNATIONAL);
         }
 
-        if (false === $phoneUtil->isValidNumber($phoneNumber)) {
+        if (false === $this->phoneUtil->isValidNumber($phoneNumber)) {
             $this->addViolation($value, $constraint);
 
             return;
@@ -102,7 +110,7 @@ class PhoneNumberValidator extends ConstraintValidator
         $validTypes = array_unique($validTypes);
 
         if (0 < \count($validTypes)) {
-            $type = $phoneUtil->getNumberType($phoneNumber);
+            $type = $this->phoneUtil->getNumberType($phoneNumber);
 
             if (!\in_array($type, $validTypes, true)) {
                 $this->addViolation($value, $constraint);

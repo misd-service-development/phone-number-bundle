@@ -52,5 +52,29 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $services = $this->container->findTaggedServiceIds('form.type');
         $this->assertArrayHasKey('Misd\PhoneNumberBundle\Form\Type\PhoneNumberType', $services);
         $this->assertContains(['alias' => 'phone_number'], $services['Misd\PhoneNumberBundle\Form\Type\PhoneNumberType']);
+
+        $services = $this->container->findTaggedServiceIds('validator.constraint_validator');
+        $this->assertArrayHasKey('Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator', $services);
+    }
+
+    public function testDisabledServices()
+    {
+        $extension = new MisdPhoneNumberExtension();
+        $this->container = new ContainerBuilder();
+        $extension->load([
+            'misd_phone_number' => [
+                'twig' => false,
+                'form' => false,
+                'serializer' => false,
+                'validator' => false,
+            ],
+        ], $this->container);
+
+        $this->assertTrue($this->container->has('libphonenumber\PhoneNumberUtil'));
+
+        $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension'));
+        $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Form\Type\PhoneNumberType'));
+        $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer'));
+        $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator'));
     }
 }
