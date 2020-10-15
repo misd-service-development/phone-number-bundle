@@ -185,6 +185,13 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumbe
 private $phoneNumber;
 ```
 
+Yoo can also set default region in the bundle config:
+```yaml
+misd_phone_number:
+    validator:
+        default_region: GB
+```
+
 By default any valid phone number will be accepted. You can restrict the type through the `type` property, recognised values:
 
 - `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber::ANY` (default)
@@ -220,6 +227,18 @@ The bundle contains translations for the form field and validation constraints.
 In cases where a language uses multiple terms for mobile phones, the generic language locale will use the term 'mobile', while country-specific locales will use the relevant term. So in English, for example, `en` uses 'mobile', `en_US` uses 'cell' and `en_SG` uses 'handphone'.
 
 If your language doesn't yet have translations, feel free to open a pull request to add them in!
+
+### Configuration
+
+To disable integrations with components
+
+```yaml
+misd_phone_number:
+    twig: false
+    form: false
+    serializer: false
+    validator: false
+```
 
 ## License
 

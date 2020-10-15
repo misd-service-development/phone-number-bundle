@@ -11,7 +11,6 @@
 
 namespace Misd\PhoneNumberBundle\Validator\Constraints;
 
-use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
 
@@ -42,7 +41,7 @@ class PhoneNumber extends Constraint
 
     public $message = null;
     public $type = self::ANY;
-    public $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION;
+    public $defaultRegion = null;
 
     public function getType(): ?string
     {

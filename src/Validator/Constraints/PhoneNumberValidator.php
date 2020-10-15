@@ -30,9 +30,15 @@ class PhoneNumberValidator extends ConstraintValidator
      */
     private $phoneUtil;
 
-    public function __construct(PhoneNumberUtil $phoneUtil)
+    /**
+     * @var string
+     */
+    private $defaultRegion;
+
+    public function __construct(PhoneNumberUtil $phoneUtil, string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION)
     {
         $this->phoneUtil = $phoneUtil;
+        $this->defaultRegion = $defaultRegion;
     }
 
     /**
@@ -52,7 +58,7 @@ class PhoneNumberValidator extends ConstraintValidator
             $value = (string) $value;
 
             try {
-                $phoneNumber = $this->phoneUtil->parse($value, $constraint->defaultRegion);
+                $phoneNumber = $this->phoneUtil->parse($value, $constraint->defaultRegion ?? $this->defaultRegion);
             } catch (NumberParseException $e) {
                 $this->addViolation($value, $constraint);
 

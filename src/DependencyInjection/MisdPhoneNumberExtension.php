@@ -31,17 +31,19 @@ class MisdPhoneNumberExtension extends Extension
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
-        if ($config['twig']) {
+        if ($config['twig']['enabled']) {
             $loader->load('twig.xml');
         }
-        if ($config['form']) {
+        if ($config['form']['enabled']) {
             $loader->load('form.xml');
         }
-        if ($config['serializer']) {
+        if ($config['serializer']['enabled']) {
             $loader->load('serializer.xml');
         }
-        if ($config['validator']) {
+        if ($config['validator']['enabled']) {
             $loader->load('validator.xml');
+
+            $container->setParameter('misd_phone_number.validator.default_region', $config['validator']['default_region']);
         }
     }
 }
