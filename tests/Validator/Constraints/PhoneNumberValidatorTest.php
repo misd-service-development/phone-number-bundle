@@ -41,7 +41,7 @@ class PhoneNumberValidatorTest extends TestCase
     {
         $this->context = $this->prophesize(ExecutionContextInterface::class);
 
-        $this->validator = new PhoneNumberValidator();
+        $this->validator = new PhoneNumberValidator(PhoneNumberUtil::getInstance());
         $this->validator->initialize($this->context->reveal());
     }
 
@@ -140,6 +140,6 @@ class PhoneNumberValidatorTest extends TestCase
 
     protected function createValidator()
     {
-        return new PhoneNumberValidator();
+        return new PhoneNumberValidator(PhoneNumberUtil::getInstance());
     }
 }

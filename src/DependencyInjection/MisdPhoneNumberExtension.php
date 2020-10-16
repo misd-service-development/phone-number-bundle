@@ -26,16 +26,22 @@ class MisdPhoneNumberExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
-        if (class_exists('Symfony\Bundle\TwigBundle\TwigBundle')) {
+        if ($config['twig']) {
             $loader->load('twig.xml');
         }
-        if (interface_exists('Symfony\Component\Form\FormTypeInterface')) {
+        if ($config['form']) {
             $loader->load('form.xml');
         }
-        if (interface_exists('Symfony\Component\Serializer\Normalizer\NormalizerInterface')) {
+        if ($config['serializer']) {
             $loader->load('serializer.xml');
+        }
+        if ($config['validator']) {
+            $loader->load('validator.xml');
         }
     }
 }
