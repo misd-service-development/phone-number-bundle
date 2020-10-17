@@ -208,7 +208,7 @@ By default any valid phone number will be accepted. You can restrict the type th
 private $mobilePhoneNumber;
 
 /**
- * @AssertPhoneNumber(type={"fixed", "voip"})
+ * @AssertPhoneNumber(type={"fixed_line", "voip"})
  */
 private $fixedOrVoipPhoneNumber;
 ```
