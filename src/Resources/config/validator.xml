@@ -8,6 +8,7 @@
         <service id="Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator">
             <tag name="validator.constraint_validator" />
             <argument type="service" id="libphonenumber\PhoneNumberUtil" />
+            <argument>%misd_phone_number.validator.default_region%</argument>
         </service>
     </services>
 

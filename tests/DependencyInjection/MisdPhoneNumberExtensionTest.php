@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\DependencyInjection;
 
+use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\DependencyInjection\MisdPhoneNumberExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -55,6 +56,8 @@ class MisdPhoneNumberExtensionTest extends TestCase
 
         $services = $this->container->findTaggedServiceIds('validator.constraint_validator');
         $this->assertArrayHasKey('Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator', $services);
+
+        $this->assertSame(PhoneNumberUtil::UNKNOWN_REGION, $this->container->getParameter('misd_phone_number.validator.default_region'));
     }
 
     public function testDisabledServices()
@@ -76,5 +79,35 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Form\Type\PhoneNumberType'));
         $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer'));
         $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator'));
+    }
+
+    public function testValidatorDefaultRegion()
+    {
+        $extension = new MisdPhoneNumberExtension();
+        $this->container = new ContainerBuilder();
+        $extension->load([
+            'misd_phone_number' => [
+                'validator' => [
+                    'default_region' => 'GB',
+                ],
+            ],
+        ], $this->container);
+
+        $this->assertSame('GB', $this->container->getParameter('misd_phone_number.validator.default_region'));
+    }
+
+    public function testValidatorDefaultRegionUppercase()
+    {
+        $extension = new MisdPhoneNumberExtension();
+        $this->container = new ContainerBuilder();
+        $extension->load([
+            'misd_phone_number' => [
+                'validator' => [
+                    'default_region' => 'gb',
+                ],
+            ],
+        ], $this->container);
+
+        $this->assertSame('GB', $this->container->getParameter('misd_phone_number.validator.default_region'));
     }
 }

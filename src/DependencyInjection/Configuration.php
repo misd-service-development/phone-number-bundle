@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\DependencyInjection;
 
+use libphonenumber\PhoneNumberUtil;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -29,12 +30,58 @@ class Configuration implements ConfigurationInterface
             // BC layer for symfony/config 4.1 and older
             $rootNode = $treeBuilder->root('misd_phone_number');
         }
+        $normalizer = function ($value) {
+            if (\is_bool($value)) {
+                return [
+                    'enabled' => $value,
+                ];
+            }
+
+            return $value;
+        };
+
         $rootNode
             ->children()
-                ->scalarNode('twig')->defaultValue(class_exists(TwigBundle::class))->end()
-                ->scalarNode('form')->defaultValue(interface_exists(FormTypeInterface::class))->end()
-                ->scalarNode('serializer')->defaultValue(interface_exists(NormalizerInterface::class))->end()
-                ->scalarNode('validator')->defaultValue(interface_exists(ValidatorInterface::class))->end()
+                ->arrayNode('twig')
+                    ->addDefaultsIfNotSet()
+                    ->beforeNormalization()->always($normalizer)->end()
+                    ->children()
+                        ->scalarNode('enabled')
+                            ->defaultValue(class_exists(TwigBundle::class))
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('form')
+                    ->addDefaultsIfNotSet()
+                    ->beforeNormalization()->always($normalizer)->end()
+                    ->children()
+                        ->scalarNode('enabled')
+                            ->defaultValue(interface_exists(FormTypeInterface::class))
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('serializer')
+                    ->addDefaultsIfNotSet()
+                    ->beforeNormalization()->always($normalizer)->end()
+                    ->children()
+                        ->scalarNode('enabled')
+                            ->defaultValue(interface_exists(NormalizerInterface::class))
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('validator')
+                    ->addDefaultsIfNotSet()
+                    ->beforeNormalization()->always($normalizer)->end()
+                    ->children()
+                        ->scalarNode('enabled')->defaultValue(interface_exists(ValidatorInterface::class))->end()
+                        ->scalarNode('default_region')
+                            ->defaultValue(PhoneNumberUtil::UNKNOWN_REGION)
+                            ->beforeNormalization()->always(function ($value) {
+                                return strtoupper($value);
+                            })
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
