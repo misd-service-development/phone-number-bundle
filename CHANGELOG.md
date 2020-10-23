@@ -4,6 +4,12 @@ Changelog
 Unreleased
 ----------
 
+3.2.0
+-----
+
+* Improve bundle configuration
+* Can now define default region from config
+
 3.1.1
 -----
 
