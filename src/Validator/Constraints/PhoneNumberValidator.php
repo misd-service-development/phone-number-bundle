@@ -35,9 +35,9 @@ class PhoneNumberValidator extends ConstraintValidator
      */
     private $defaultRegion;
 
-    public function __construct(PhoneNumberUtil $phoneUtil, string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION)
+    public function __construct(PhoneNumberUtil $phoneUtil = null, string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION)
     {
-        $this->phoneUtil = $phoneUtil;
+        $this->phoneUtil = $phoneUtil ?? PhoneNumberUtil::getInstance();
         $this->defaultRegion = $defaultRegion;
     }
 
