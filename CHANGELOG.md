@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+3.2.1
+-----
+
+* Fix PhoneNumberValidator
+
 3.2.0
 -----
 
