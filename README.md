@@ -45,7 +45,6 @@ Update your composer.json:
 
 Then run `composer update misd/phone-number-bundle odolbeau/phone-number-bundle`.
 
-If you're using Symfony Flex, your configuration `config/packages/misd_phone_number.yaml` have been removed. **DO NOT REMOVE IT!**
 If you're using a container paremeter or alias defined by `misd/phone-number-bundle` you can use `"odolbeau/phone-number-bundle": "^2.0"` until your project is cleaned.
 
 ## Usage
