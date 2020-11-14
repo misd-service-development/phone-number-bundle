@@ -9,6 +9,9 @@
             <tag name="validator.constraint_validator" />
             <argument type="service" id="libphonenumber\PhoneNumberUtil" />
             <argument>%misd_phone_number.validator.default_region%</argument>
+            <call method="setPropertyAccessor">
+                <argument type="service" id="property_accessor" on-invalid="ignore"/>
+            </call>
         </service>
     </services>
 

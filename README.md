@@ -185,11 +185,30 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumbe
 private $phoneNumber;
 ```
 
-Yoo can also set default region in the bundle config:
+You can also set default region in the bundle config:
+
 ```yaml
 misd_phone_number:
     validator:
         default_region: GB
+```
+
+You can also define a region dynamically according to the context of the validated object thanks to the "regionPath" property (here according to the user's region):
+
+```php
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+
+/**
+ * @AssertPhoneNumber(regionPath="countryCode")
+ */
+private $phoneNumber;
+
+private $countryCode;
+
+public function getCountryCode()
+{
+    return $this->countryCode;
+}
 ```
 
 By default any valid phone number will be accepted. You can restrict the type through the `type` property, recognised values:

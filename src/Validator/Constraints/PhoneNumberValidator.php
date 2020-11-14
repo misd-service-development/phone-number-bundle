@@ -16,8 +16,13 @@ use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
+use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Symfony\Component\Validator\Exception\LogicException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
@@ -34,6 +39,11 @@ class PhoneNumberValidator extends ConstraintValidator
      * @var string
      */
     private $defaultRegion;
+
+    /**
+     * @var PropertyAccessorInterface
+     */
+    private $propertyAccessor;
 
     public function __construct(PhoneNumberUtil $phoneUtil = null, string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION)
     {
@@ -58,7 +68,7 @@ class PhoneNumberValidator extends ConstraintValidator
             $value = (string) $value;
 
             try {
-                $phoneNumber = $this->phoneUtil->parse($value, $constraint->defaultRegion ?? $this->defaultRegion);
+                $phoneNumber = $this->phoneUtil->parse($value, $this->getRegion($constraint));
             } catch (NumberParseException $e) {
                 $this->addViolation($value, $constraint);
 
@@ -124,6 +134,42 @@ class PhoneNumberValidator extends ConstraintValidator
                 return;
             }
         }
+    }
+
+    private function getRegion(Constraint $constraint): ?string
+    {
+        $defaultRegion = null;
+        if (null !== $path = $constraint->regionPath) {
+            $object = $this->context->getObject();
+            if (null === $object) {
+                throw new \LogicException('The current validation does not concern an object');
+            }
+
+            try {
+                $defaultRegion = $this->getPropertyAccessor()->getValue($object, $path);
+            } catch (NoSuchPropertyException $e) {
+                throw new ConstraintDefinitionException(sprintf('Invalid property path "%s" provided to "%s" constraint: ', $path, get_debug_type($constraint)).$e->getMessage(), 0, $e);
+            }
+        }
+
+        return $defaultRegion ?? $constraint->defaultRegion ?? $this->defaultRegion;
+    }
+
+    public function setPropertyAccessor(PropertyAccessorInterface $propertyAccessor): void
+    {
+        $this->propertyAccessor = $propertyAccessor;
+    }
+
+    private function getPropertyAccessor(): PropertyAccessorInterface
+    {
+        if (null === $this->propertyAccessor) {
+            if (!class_exists(PropertyAccess::class)) {
+                throw new LogicException('Unable to use property path as the Symfony PropertyAccess component is not installed.');
+            }
+            $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
+        }
+
+        return $this->propertyAccessor;
     }
 
     /**

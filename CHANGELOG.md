@@ -4,6 +4,8 @@ Changelog
 Unreleased
 ----------
 
+* Can now define a property path for the region on `PhoneNumber` constraint
+
 3.3.2
 -----
 
