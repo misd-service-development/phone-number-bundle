@@ -61,11 +61,12 @@ The following services are available:
 | `libphonenumber\PhoneNumberToCarrierMapper`           | `libphonenumber.phone_number_to_carrier_mapper`    | >=5.8.8                |
 | `libphonenumber\PhoneNumberToTimeZonesMapper`         | `libphonenumber.phone_number_to_time_zones_mapper` | >=5.8.8                |
 
-So to parse a string into a `libphonenumber\PhoneNumber` object:
+To parse a string into a `libphonenumber\PhoneNumber` object, [inject the service](https://symfony.com/doc/current/service_container.html) and:
 
 ```php
-    $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string, PhoneNumberUtil::UNKNOWN_REGION);
+    $phoneNumber = $this->phoneNumberUtil->parse($string, PhoneNumberUtil::UNKNOWN_REGION);
 ```
+
 
 ### Doctrine mapping
 
