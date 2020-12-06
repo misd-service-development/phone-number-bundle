@@ -17,6 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: PHP-CS-Fixer
-        uses: docker://jakzal/phpqa:latest
+        uses: docker://jakzal/phpqa:php7.4
         with:
           args: php-cs-fixer fix --dry-run --diff-format udiff

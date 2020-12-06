@@ -31,7 +31,7 @@ class PhoneNumberTest extends TestCase
     /**
      * @dataProvider messageProvider
      */
-    public function testMessage($message = null, $type = null, $expectedMessage)
+    public function testMessage($message, $type, $expectedMessage)
     {
         $phoneNumber = new PhoneNumber();
 
