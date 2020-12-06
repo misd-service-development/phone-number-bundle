@@ -83,12 +83,7 @@ class PhoneNumberTypeTest extends TestCase
     public function testCountryChoiceValues($input, $options, $output)
     {
         $options['widget'] = PhoneNumberType::WIDGET_COUNTRY_CHOICE;
-        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
-            $type = new PhoneNumberType();
-        } else {
-            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
-        }
-        $form = $this->factory->create($type, null, $options);
+        $form = $this->factory->create(PhoneNumberType::class, null, $options);
 
         $form->submit($input);
 
@@ -127,12 +122,7 @@ class PhoneNumberTypeTest extends TestCase
     {
         IntlTestHelper::requireIntl($this);
 
-        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
-            $type = new PhoneNumberType();
-        } else {
-            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
-        }
-        $form = $this->factory->create($type, null, ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices]);
+        $form = $this->factory->create(PhoneNumberType::class, null, ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices]);
 
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];
@@ -186,12 +176,7 @@ class PhoneNumberTypeTest extends TestCase
     public function testCountryChoicePlaceholder($placeholder, $expectedPlaceholder)
     {
         IntlTestHelper::requireIntl($this);
-        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
-            $type = new PhoneNumberType();
-        } else {
-            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
-        }
-        $form = $this->factory->create($type, null, ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_placeholder' => $placeholder]);
+        $form = $this->factory->create(PhoneNumberType::class, null, ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_placeholder' => $placeholder]);
 
         $view = $form->createView();
         $renderedPlaceholder = $view['country']->vars['placeholder'];
