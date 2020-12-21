@@ -101,6 +101,6 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return 'libphonenumber\PhoneNumber' === $type;
+        return 'libphonenumber\PhoneNumber' === $type && \is_string($data);
     }
 }
