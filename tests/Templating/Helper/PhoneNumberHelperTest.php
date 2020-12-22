@@ -26,7 +26,7 @@ class PhoneNumberHelperTest extends TestCase
     protected $phoneNumberUtil;
     protected $helper;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->phoneNumberUtil = $this->prophesize(PhoneNumberUtil::class);
         $this->helper = new PhoneNumberHelper($this->phoneNumberUtil->reveal());
