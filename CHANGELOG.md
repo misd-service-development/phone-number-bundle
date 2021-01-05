@@ -4,6 +4,12 @@ Changelog
 Unreleased
 ----------
 
+3.3.0
+-----
+
+* Add PHP 8 support
+* Improve `PhoneNumberNormalizer`
+
 3.2.1
 -----
 
