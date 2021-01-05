@@ -59,6 +59,7 @@ class PhoneNumberNormalizerTest extends TestCase
         $normalizer = new PhoneNumberNormalizer($this->prophesize(PhoneNumberUtil::class)->reveal());
 
         $this->assertTrue($normalizer->supportsDenormalization('+33193166989', 'libphonenumber\PhoneNumber'));
+        $this->assertFalse($normalizer->supportsDenormalization(new PhoneNumber(), 'libphonenumber\PhoneNumber'));
         $this->assertFalse($normalizer->supportsDenormalization('+33193166989', 'stdClass'));
     }
 
