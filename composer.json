@@ -1,6 +1,7 @@
 {
     "name": "misd/phone-number-bundle",
     "type": "symfony-bundle",
+    "abandoned": "odolbeau/phone-number-bundle",
     "description": "Integrates libphonenumber into your Symfony2-Symfony4 application",
     "keywords": ["bundle", "phone-number", "phonenumber", "telephone number", "libphonenumber"],
     "homepage": "https://github.com/misd-service-development/phone-number-bundle",
