@@ -1,7 +1,7 @@
 PhoneNumberBundle
 =================
 
-This package has been abandonned in favour of [odolbeau/phone-number-bundle](https://github.com/odolbeau/phone-number-bundle).
+This package has been abandoned in favour of [odolbeau/phone-number-bundle](https://github.com/odolbeau/phone-number-bundle).
 
 [![Build Status](https://img.shields.io/travis/misd-service-development/phone-number-bundle.svg?style=flat-square)](https://travis-ci.org/misd-service-development/phone-number-bundle)
 [![Total Downloads](https://img.shields.io/packagist/dt/misd/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/misd/phone-number-bundle)
