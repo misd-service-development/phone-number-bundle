@@ -21,12 +21,22 @@ use PHPUnit_Framework_TestCase as TestCase;
  */
 class PhoneNumberHelperTest extends TestCase
 {
-    public function testConstructor()
+    public function testDeprecatedConstructor()
     {
         $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
             ->disableOriginalConstructor()->getMock();
 
         $helper = new PhoneNumberHelper($phoneNumberUtil);
+
+        $this->assertInstanceOf('Symfony\Component\Templating\Helper\HelperInterface', $helper);
+    }
+
+    public function testConstructor()
+    {
+        $phoneNumberFormatter = $this->getMockBuilder('Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter')
+            ->disableOriginalConstructor()->getMock();
+
+        $helper = new PhoneNumberHelper($phoneNumberFormatter);
 
         $this->assertInstanceOf('Symfony\Component\Templating\Helper\HelperInterface', $helper);
     }
@@ -53,47 +63,34 @@ class PhoneNumberHelperTest extends TestCase
         $this->assertTrue(is_string($helper->getName()));
     }
 
-    /**
-     * @dataProvider processProvider
-     */
-    public function testProcess($format, $expectedFormat)
+    public function testFormat()
     {
         $phoneNumber = $this->getMock('libphonenumber\PhoneNumber');
 
-        $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
+        $phoneNumberFormatter = $this->getMockBuilder('Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter')
             ->disableOriginalConstructor()->getMock();
-        $phoneNumberUtil->expects($this->once())->method('format')->with($phoneNumber, $expectedFormat);
+        $phoneNumberFormatter->expects($this->once())->method('format')->with($phoneNumber, PhoneNumberFormat::NATIONAL)->willReturn('foo');
 
-        $helper = new PhoneNumberHelper($phoneNumberUtil);
+        $helper = new PhoneNumberHelper($phoneNumberFormatter);
 
-        $helper->format($phoneNumber, $format);
+        $result = $helper->format($phoneNumber, PhoneNumberFormat::NATIONAL);
+
+        $this->assertSame('foo', $result);
     }
 
-    /**
-     * 0 => Format
-     * 1 => Expected format
-     */
-    public function processProvider()
-    {
-        return array(
-            array(PhoneNumberFormat::NATIONAL, PhoneNumberFormat::NATIONAL),
-            array('NATIONAL', PhoneNumberFormat::NATIONAL),
-        );
-    }
-
-    /**
-     * @expectedException \Misd\PhoneNumberBundle\Exception\InvalidArgumentException
-     */
-    public function testProcessInvalidArgumentException()
+    public function testIsType()
     {
         $phoneNumber = $this->getMock('libphonenumber\PhoneNumber');
 
-        $phoneNumberUtil = $this->getMockBuilder('libphonenumber\PhoneNumberUtil')
+        $phoneNumberFormatter = $this->getMockBuilder('Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter')
             ->disableOriginalConstructor()->getMock();
+        $phoneNumberFormatter->expects($this->once())->method('isType')->with($phoneNumber, PhoneNumberFormat::NATIONAL)->willReturn(true);
 
-        $helper = new PhoneNumberHelper($phoneNumberUtil);
+        $helper = new PhoneNumberHelper($phoneNumberFormatter);
 
-        $helper->format($phoneNumber, 'foo');
+        $result = $helper->isType($phoneNumber, PhoneNumberFormat::NATIONAL);
+
+        $this->assertTrue($result);
     }
 
     public function testDeprecatedClassName() {

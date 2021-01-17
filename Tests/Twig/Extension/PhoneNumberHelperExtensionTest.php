@@ -21,9 +21,9 @@ use Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension;
 class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter
      */
-    private $helper;
+    private $formatter;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\Misd\PhoneNumberBundle\Twig\Extension\PhoneNumberHelperExtension
@@ -32,11 +32,22 @@ class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->helper = $this->getMockBuilder('Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper')
+        $this->formatter = $this->getMockBuilder('Misd\PhoneNumberBundle\Formatter\PhoneNumberFormatter')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->extension = new PhoneNumberHelperExtension($this->helper);
+        $this->extension = new PhoneNumberHelperExtension($this->formatter);
+    }
+
+    public function testDeprecatedConstructor()
+    {
+        $helper = $this->getMockBuilder('Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $extension = new PhoneNumberHelperExtension($helper);
+
+        $this->assertInstanceOf('Twig_Extension', $extension);
     }
 
     public function testConstructor()
@@ -54,7 +65,7 @@ class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 
         $callable = $functions[0]->getCallable();
 
-        $this->assertSame($this->helper, $callable[0]);
+        $this->assertSame($this->formatter, $callable[0]);
         $this->assertSame('format', $callable[1]);
 
         $this->assertInstanceOf('Twig_SimpleFunction', $functions[1]);
@@ -62,7 +73,7 @@ class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 
         $callable = $functions[1]->getCallable();
 
-        $this->assertSame($this->helper, $callable[0]);
+        $this->assertSame($this->formatter, $callable[0]);
         $this->assertSame('isType', $callable[1]);
     }
 
@@ -76,7 +87,7 @@ class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 
         $callable = $filters[0]->getCallable();
 
-        $this->assertSame($this->helper, $callable[0]);
+        $this->assertSame($this->formatter, $callable[0]);
         $this->assertSame('format', $callable[1]);
     }
 
@@ -90,7 +101,7 @@ class PhoneNumberHelperExtensionTest extends \PHPUnit_Framework_TestCase
 
         $callable = $tests[0]->getCallable();
 
-        $this->assertSame($this->helper, $callable[0]);
+        $this->assertSame($this->formatter, $callable[0]);
         $this->assertSame('isType', $callable[1]);
     }
 
