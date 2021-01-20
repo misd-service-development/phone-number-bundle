@@ -45,7 +45,7 @@ class PhoneNumber extends Constraint
 
     public function getType(): ?string
     {
-        @trigger_error(__METHOD__.' is deprecated and will be removed in 4.0. Use "getTypes" instead.', E_USER_DEPRECATED);
+        @trigger_error(__METHOD__.' is deprecated and will be removed in 4.0. Use "getTypes" instead.', \E_USER_DEPRECATED);
 
         $types = $this->getTypes();
         if (0 === \count($types)) {
