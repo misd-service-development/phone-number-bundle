@@ -39,6 +39,9 @@ class MisdPhoneNumberExtension extends Extension
         }
         if ($config['serializer']['enabled']) {
             $loader->load('serializer.xml');
+
+            $container->setParameter('misd_phone_number.serializer.default_region', $config['serializer']['default_region']);
+            $container->setParameter('misd_phone_number.serializer.format', $config['serializer']['format']);
         }
         if ($config['validator']['enabled']) {
             $loader->load('validator.xml');

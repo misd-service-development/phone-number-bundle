@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\DependencyInjection;
 
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\DependencyInjection\MisdPhoneNumberExtension;
 use PHPUnit\Framework\TestCase;
@@ -94,6 +95,23 @@ class MisdPhoneNumberExtensionTest extends TestCase
         ], $this->container);
 
         $this->assertSame('GB', $this->container->getParameter('misd_phone_number.validator.default_region'));
+    }
+
+    public function testNormalizerParameters()
+    {
+        $extension = new MisdPhoneNumberExtension();
+        $this->container = new ContainerBuilder();
+        $extension->load([
+            'misd_phone_number' => [
+                'serializer' => [
+                    'default_region' => 'FR',
+                    'format' => PhoneNumberFormat::INTERNATIONAL,
+                ],
+            ],
+        ], $this->container);
+
+        $this->assertSame('FR', $this->container->getParameter('misd_phone_number.serializer.default_region'));
+        $this->assertSame(PhoneNumberFormat::INTERNATIONAL, $this->container->getParameter('misd_phone_number.serializer.format'));
     }
 
     public function testValidatorDefaultRegionUppercase()
