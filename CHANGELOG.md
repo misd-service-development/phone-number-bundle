@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+3.3.2
+-----
+
+* Revert "Improve `PhoneNumber` constraint"
+
 3.3.1
 -----
 
