@@ -43,15 +43,6 @@ class PhoneNumber extends Constraint
     public $type = self::ANY;
     public $defaultRegion = null;
 
-    /**
-     * @param array|string $type
-     */
-    public function __construct($type = self::ANY, ?string $defaultRegion = null)
-    {
-        $this->type = $type;
-        $this->defaultRegion = $defaultRegion;
-    }
-
     public function getType(): ?string
     {
         @trigger_error(__METHOD__.' is deprecated and will be removed in 4.0. Use "getTypes" instead.', \E_USER_DEPRECATED);
