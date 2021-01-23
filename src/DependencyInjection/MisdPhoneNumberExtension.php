@@ -47,6 +47,7 @@ class MisdPhoneNumberExtension extends Extension
             $loader->load('validator.xml');
 
             $container->setParameter('misd_phone_number.validator.default_region', $config['validator']['default_region']);
+            $container->setParameter('misd_phone_number.validator.format', $config['validator']['format']);
         }
     }
 }

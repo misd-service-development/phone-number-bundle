@@ -46,6 +46,7 @@ class ConfigurationTest extends TestCase
             'validator' => [
                 'enabled' => true,
                 'default_region' => 'ZZ',
+                'format' => PhoneNumberFormat::INTERNATIONAL,
             ],
         ]];
 
@@ -71,6 +72,7 @@ class ConfigurationTest extends TestCase
             'validator' => [
                 'enabled' => false,
                 'default_region' => 'ZZ',
+                'format' => PhoneNumberFormat::INTERNATIONAL,
             ],
         ]];
 
@@ -90,6 +92,7 @@ class ConfigurationTest extends TestCase
                 'validator' => [
                     'enabled' => false,
                     'default_region' => 'GB',
+                    'format' => PhoneNumberFormat::INTERNATIONAL,
                 ],
             ],
         ], [
@@ -107,6 +110,7 @@ class ConfigurationTest extends TestCase
             'validator' => [
                 'enabled' => false,
                 'default_region' => 'GB',
+                'format' => PhoneNumberFormat::INTERNATIONAL,
             ],
         ]];
     }

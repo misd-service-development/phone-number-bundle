@@ -43,6 +43,7 @@ class PhoneNumber extends Constraint
     public $type = self::ANY;
     public $defaultRegion = null;
     public $regionPath = null;
+    public $format = null;
 
     public function getType(): ?string
     {

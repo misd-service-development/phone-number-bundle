@@ -45,10 +45,16 @@ class PhoneNumberValidator extends ConstraintValidator
      */
     private $propertyAccessor;
 
-    public function __construct(PhoneNumberUtil $phoneUtil = null, string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION)
+    /**
+     * @var int
+     */
+    private $format;
+
+    public function __construct(PhoneNumberUtil $phoneUtil = null, string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION, int $format = PhoneNumberFormat::INTERNATIONAL)
     {
         $this->phoneUtil = $phoneUtil ?? PhoneNumberUtil::getInstance();
         $this->defaultRegion = $defaultRegion;
+        $this->format = $format;
     }
 
     /**
@@ -76,7 +82,7 @@ class PhoneNumberValidator extends ConstraintValidator
             }
         } else {
             $phoneNumber = $value;
-            $value = $this->phoneUtil->format($phoneNumber, PhoneNumberFormat::INTERNATIONAL);
+            $value = $this->phoneUtil->format($phoneNumber, $constraint->format ?? $this->format);
         }
 
         if (false === $this->phoneUtil->isValidNumber($phoneNumber)) {
