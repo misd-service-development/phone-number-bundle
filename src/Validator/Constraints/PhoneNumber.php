@@ -42,6 +42,7 @@ class PhoneNumber extends Constraint
     public $message = null;
     public $type = self::ANY;
     public $defaultRegion = null;
+    public $regionPath = null;
 
     public function getType(): ?string
     {

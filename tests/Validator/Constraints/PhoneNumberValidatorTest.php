@@ -11,8 +11,6 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Validator\Constraints;
 
-use libphonenumber\PhoneNumber as PhoneNumberObject;
-use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
@@ -43,12 +41,14 @@ class PhoneNumberValidatorTest extends TestCase
 
         $this->validator = new PhoneNumberValidator(PhoneNumberUtil::getInstance());
         $this->validator->initialize($this->context->reveal());
+
+        $this->context->getObject()->willReturn(new Foo());
     }
 
     /**
      * @dataProvider validateProvider
      */
-    public function testValidate($value, $violates, $type = null, $defaultRegion = null)
+    public function testValidate($value, $violates, $type = null, $defaultRegion = null, $regionPath = null)
     {
         $constraint = new PhoneNumber();
 
@@ -60,13 +60,11 @@ class PhoneNumberValidatorTest extends TestCase
             $constraint->defaultRegion = $defaultRegion;
         }
 
-        if (true === $violates) {
-            if ($value instanceof PhoneNumberObject) {
-                $constraintValue = PhoneNumberUtil::getInstance()->format($value, PhoneNumberFormat::INTERNATIONAL);
-            } else {
-                $constraintValue = (string) $value;
-            }
+        if (null !== $regionPath) {
+            $constraint->regionPath = $regionPath;
+        }
 
+        if (true === $violates) {
             $constraintViolationBuilder = $this->prophesize(ConstraintViolationBuilderInterface::class);
             $constraintViolationBuilder->setParameter(Argument::type('string'), Argument::type('string'))->willReturn($constraintViolationBuilder->reveal());
             $constraintViolationBuilder->setCode(Argument::type('string'))->willReturn($constraintViolationBuilder->reveal());
@@ -85,6 +83,7 @@ class PhoneNumberValidatorTest extends TestCase
      * 1 => Violates?
      * 2 => Type (optional)
      * 3 => Default region (optional).
+     * 4 => Region Path (optional).
      */
     public function validateProvider()
     {
@@ -128,6 +127,8 @@ class PhoneNumberValidatorTest extends TestCase
             ['2015555555', false, 'mobile', 'US'],
             ['01234 567890', false, null, 'GB'],
             ['foo', true],
+            ['+441234567890', true, 'mobile', null, 'regionPath'],
+            ['+33606060606', false, 'mobile', null, 'regionPath'],
         ];
     }
 
@@ -142,4 +143,9 @@ class PhoneNumberValidatorTest extends TestCase
     {
         return new PhoneNumberValidator(PhoneNumberUtil::getInstance());
     }
+}
+
+class Foo
+{
+    public $regionPath = 'GB';
 }

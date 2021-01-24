@@ -20,14 +20,16 @@
         "doctrine/doctrine-bundle": "^1.12|^2.0",
         "phpunit/phpunit": "^8.4",
         "symfony/form": "^3.4|^4.3|^5.0",
+        "symfony/property-access": "^3.4|^4.3|^5.0",
         "symfony/serializer": "^3.4|^4.3|^5.0",
         "symfony/twig-bundle": "^3.4|^4.3|^5.0",
         "symfony/validator": "^3.4|^4.3|^5.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
-        "symfony/serializer": "Serialize/deserialize phone numbers using Symfony library",
         "symfony/form": "Add a data transformer",
+        "symfony/property-access": "Choose a path in the validation constraint",
+        "symfony/serializer": "Serialize/deserialize phone numbers using Symfony library",
         "symfony/twig-bundle": "Format phone numbers in Twig templates",
         "symfony/validator": "Add a validation constraint"
     },
