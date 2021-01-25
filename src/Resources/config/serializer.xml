@@ -8,6 +8,8 @@
         <service id="Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer">
             <tag name="serializer.normalizer" />
             <argument type="service" id="libphonenumber\PhoneNumberUtil" />
+            <argument>%misd_phone_number.serializer.default_region%</argument>
+            <argument>%misd_phone_number.serializer.format%</argument>
         </service>
     </services>
 

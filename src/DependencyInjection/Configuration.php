@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\DependencyInjection;
 
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -67,6 +68,15 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('enabled')
                             ->defaultValue(interface_exists(NormalizerInterface::class))
                         ->end()
+                        ->scalarNode('default_region')
+                            ->defaultValue(PhoneNumberUtil::UNKNOWN_REGION)
+                            ->beforeNormalization()->always(function ($value) {
+                                return strtoupper($value);
+                            })->end()
+                        ->end()
+                        ->scalarNode('format')
+                            ->defaultValue(PhoneNumberFormat::E164)
+                        ->end()
                     ->end()
                 ->end()
                 ->arrayNode('validator')
@@ -78,7 +88,11 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(PhoneNumberUtil::UNKNOWN_REGION)
                             ->beforeNormalization()->always(function ($value) {
                                 return strtoupper($value);
-                            })
+                            })->end()
+                        ->end()
+                        ->scalarNode('format')
+                            // The difference between serializer and validator is historical, they are here to keep the BC
+                            ->defaultValue(PhoneNumberFormat::INTERNATIONAL)
                         ->end()
                     ->end()
                 ->end()

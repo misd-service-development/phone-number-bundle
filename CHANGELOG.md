@@ -4,7 +4,12 @@ Changelog
 Unreleased
 ----------
 
+
+### Added
+
 * Can now define a property path for the region on `PhoneNumber` constraint
+* New option to specify default region for serialization
+* New option to specify the format of the serialization
 
 3.3.2
 -----

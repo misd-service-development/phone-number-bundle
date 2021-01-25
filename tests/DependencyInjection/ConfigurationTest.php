@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\DependencyInjection;
 
+use libphonenumber\PhoneNumberFormat;
 use Misd\PhoneNumberBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
@@ -39,10 +40,13 @@ class ConfigurationTest extends TestCase
             ],
             'serializer' => [
                 'enabled' => true,
+                'default_region' => 'ZZ',
+                'format' => PhoneNumberFormat::E164,
             ],
             'validator' => [
                 'enabled' => true,
                 'default_region' => 'ZZ',
+                'format' => PhoneNumberFormat::INTERNATIONAL,
             ],
         ]];
 
@@ -62,10 +66,13 @@ class ConfigurationTest extends TestCase
             ],
             'serializer' => [
                 'enabled' => false,
+                'default_region' => 'ZZ',
+                'format' => PhoneNumberFormat::E164,
             ],
             'validator' => [
                 'enabled' => false,
                 'default_region' => 'ZZ',
+                'format' => PhoneNumberFormat::INTERNATIONAL,
             ],
         ]];
 
@@ -79,10 +86,13 @@ class ConfigurationTest extends TestCase
                 ],
                 'serializer' => [
                     'enabled' => false,
+                    'default_region' => 'GB',
+                    'format' => PhoneNumberFormat::E164,
                 ],
                 'validator' => [
                     'enabled' => false,
                     'default_region' => 'GB',
+                    'format' => PhoneNumberFormat::INTERNATIONAL,
                 ],
             ],
         ], [
@@ -94,10 +104,13 @@ class ConfigurationTest extends TestCase
             ],
             'serializer' => [
                 'enabled' => false,
+                'default_region' => 'GB',
+                'format' => PhoneNumberFormat::E164,
             ],
             'validator' => [
                 'enabled' => false,
                 'default_region' => 'GB',
+                'format' => PhoneNumberFormat::INTERNATIONAL,
             ],
         ]];
     }
