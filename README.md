@@ -45,7 +45,7 @@ Update your composer.json:
 
 Then run `composer update misd/phone-number-bundle odolbeau/phone-number-bundle`.
 
-If you're using a container paremeter or alias defined by `misd/phone-number-bundle` you can use `"odolbeau/phone-number-bundle": "^2.0"` until your project is cleaned.
+If you're using a container parameter or alias defined by `misd/phone-number-bundle` you can use `"odolbeau/phone-number-bundle": "^2.0"` until your project is cleaned.
 
 ## Usage
 
