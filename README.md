@@ -74,14 +74,15 @@ You can then use the `phone_number` mapping:
 
 ```php
     /**
-     * @ORM\Column(type="phone_number")
+     * @ORM\Column(type="phone_number", nullable=true)
      */
     private $phoneNumber;
 ```
 
 This creates a `varchar(35)` column with a Doctrine mapping comment.
 
-Note that if you're putting the `phone_number` type on an already-existing schema the current values must be converted to the `libphonenumber\PhoneNumberFormat::E164` format.
+Note that if you're putting the `phone_number` type on an already-existing schema the current values must be converted to the `libphonenumber\PhoneNumberFormat::E164` format. 
+Also make sure that your field is `nullable` or convert `""` empty strings manually otherwise you will get a ConversionException `Could not convert database value "" to Doctrine Type phone_number`
 
 ### Templating
 
