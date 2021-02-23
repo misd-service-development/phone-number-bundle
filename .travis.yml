@@ -2,6 +2,8 @@ dist: trusty
 
 sudo: false
 
+dist: trusty
+
 language: php
 
 php:
