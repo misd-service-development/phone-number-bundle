@@ -58,6 +58,7 @@ class PhoneNumberHelperExtension extends AbstractExtension
     {
         return [
             new TwigFilter('phone_number_format', [$this->helper, 'format']),
+            new TwigFilter('phone_number_format_out_of_country_calling_number', [$this->helper, 'formatOutOfCountryCallingNumber']),
         ];
     }
 
