@@ -61,4 +61,30 @@ class PhoneNumberHelperTest extends TestCase
 
         $this->helper->format($phoneNumber->reveal(), 'foo');
     }
+
+    /**
+     * @dataProvider formatOutOfCountryCallingNumberProvider
+     */
+    public function testFormatOutOfCountryCallingNumber($phoneNumber, $defaultRegion, $regionCode, $expectedResult)
+    {
+        $phoneNumberUtil = PhoneNumberUtil::getInstance();
+        $helper = new PhoneNumberHelper($phoneNumberUtil);
+
+        $phoneNumber = $phoneNumberUtil->parse($phoneNumber, $defaultRegion);
+
+        $this->assertSame($expectedResult, $helper->formatOutOfCountryCallingNumber($phoneNumber, $regionCode));
+    }
+
+    /**
+     * 0 => The phone number.
+     * 1 => Phone number default region.
+     * 2 => Country calling from.
+     * 3 => Expected format.
+     */
+    public function formatOutOfCountryCallingNumberProvider()
+    {
+        yield ['1-800-854-3680', 'US', 'US', '1 (800) 854-3680'];
+        yield ['1-800-854-3680', 'US', 'NL', '00 1 800-854-3680'];
+        yield ['1-800-854-3680', 'US', null, '+1 800-854-3680'];
+    }
 }

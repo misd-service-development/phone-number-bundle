@@ -65,6 +65,19 @@ class PhoneNumberHelper
     }
 
     /**
+     * Formats this phone number for out-of-country dialing purposes.
+     *
+     * @param PhoneNumber $phoneNumber phone number
+     * @param string|null $regionCode  The ISO 3166-1 alpha-2 country code
+     *
+     * @return string
+     */
+    public function formatOutOfCountryCallingNumber(PhoneNumber $phoneNumber, $regionCode)
+    {
+        return $this->phoneNumberUtil->formatOutOfCountryCallingNumber($phoneNumber, $regionCode);
+    }
+
+    /**
      * @param PhoneNumber $phoneNumber phone number
      * @param int|string  $type        phoneNumberType, or PhoneNumberType constant name
      *
