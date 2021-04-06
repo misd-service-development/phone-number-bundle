@@ -29,13 +29,23 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
     private $countryChoices;
 
     /**
+     * @var int
+     */
+    private $format;
+
+    /**
      * Constructor.
      *
      * @param array $countryChoices
+     * @param int $format
      */
-    public function __construct(array $countryChoices)
+    public function __construct(
+        array $countryChoices,
+        $format = PhoneNumberFormat::NATIONAL
+    )
     {
         $this->countryChoices = $countryChoices;
+        $this->format = $format;
     }
 
     /**
@@ -57,7 +67,7 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
 
         return array(
             'country' => $util->getRegionCodeForNumber($phoneNumber),
-            'number' => $util->format($phoneNumber, PhoneNumberFormat::NATIONAL),
+            'number' => $util->format($phoneNumber, $this->format),
         );
     }
 
