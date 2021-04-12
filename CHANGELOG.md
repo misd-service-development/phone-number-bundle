@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.4.1] - 2021-04-012
+
+### Added
+- New twig template for Bootstrap 4
+
 ## [3.4.0] - 2021-04-06
 
-- Added new twig filter `phone_number_format_out_of_country_calling_number`
+### Added
+- New twig filter `phone_number_format_out_of_country_calling_number`
 
 ## [3.3.3] - 2021-02-04
 
