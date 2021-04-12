@@ -2,7 +2,6 @@
 .DEFAULT_GOAL := help
 
 DIR := ${CURDIR}
-SYMFONY = php bin/console
 QA_IMAGE := jakzal/phpqa:latest
 
 help:

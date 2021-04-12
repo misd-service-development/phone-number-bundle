@@ -98,6 +98,7 @@ Note that if you're putting the `phone_number` type on an already-existing schem
 
 ### Twig Templating
 
+If any of the `form_div_layout`, `bootstrap_3_*` or `bootstrap_4_*` layouts are registered in your twig configuration, the bundle will automatically register the template used to render the `Misd\PhoneNumberBundle\Form\Type` form type. 
 #### phone_number_format
 
 The `phone_number_format` filter can be used to format a phone number object. A `libphonenumber\PhoneNumberFormat` constant can be passed as argument to specify in which format the number should be printed.

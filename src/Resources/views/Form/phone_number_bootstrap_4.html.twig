@@ -1,0 +1,13 @@
+{% block phone_number_widget -%}
+    {% if widget is constant('Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType::WIDGET_COUNTRY_CHOICE') %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' input-group')|trim}) %}
+        <div {{ block('widget_container_attributes') }}>
+            <div class="input-group-prepend">
+                {{- form_widget(form.country) -}}
+            </div>
+            {{- form_widget(form.number) -}}
+        </div>
+    {% else -%}
+        {{- block('form_widget_simple') -}}
+    {%- endif %}
+{%- endblock phone_number_widget %}
