@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.4.1] - 2021-04-012
+## [3.4.2] - 2021-06-28
+
+### Added
+- New twig template for Bootstrap 5
+- Add `symfony/intl` as a required dependency
+
+## [3.4.1] - 2021-04-12
 
 ### Added
 - New twig template for Bootstrap 4
