@@ -22,6 +22,7 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
     private $phoneNumberLayout = '@MisdPhoneNumber/Form/phone_number.html.twig';
     private $phoneNumberBootstrapLayout = '@MisdPhoneNumber/Form/phone_number_bootstrap.html.twig';
     private $phoneNumberBootstrap4Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_4.html.twig';
+    private $phoneNumberBootstrap5Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_5.html.twig';
 
     /**
      * {@inheritdoc}
@@ -39,7 +40,11 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
         }
 
         // Insert right after base template if it exists.
-        if (false !== ($key = array_search('bootstrap_4_horizontal_layout.html.twig', $parameter))) {
+        if (false !== ($key = array_search('bootstrap_5_horizontal_layout.html.twig', $parameter))) {
+            array_splice($parameter, ++$key, 0, [$this->phoneNumberBootstrap5Layout]);
+        } elseif (false !== ($key = array_search('bootstrap_5_layout.html.twig', $parameter))) {
+            array_splice($parameter, ++$key, 0, [$this->phoneNumberBootstrap5Layout]);
+        } elseif (false !== ($key = array_search('bootstrap_4_horizontal_layout.html.twig', $parameter))) {
             array_splice($parameter, ++$key, 0, [$this->phoneNumberBootstrap4Layout]);
         } elseif (false !== ($key = array_search('bootstrap_4_layout.html.twig', $parameter))) {
             array_splice($parameter, ++$key, 0, [$this->phoneNumberBootstrap4Layout]);
