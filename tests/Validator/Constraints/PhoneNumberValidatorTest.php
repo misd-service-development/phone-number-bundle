@@ -18,6 +18,8 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
@@ -76,6 +78,23 @@ class PhoneNumberValidatorTest extends TestCase
         }
 
         $this->validator->validate($value, $constraint);
+    }
+
+    /**
+     * @requires PHP 8
+     */
+    public function testValidateFromAttribute()
+    {
+        $classMetadata = new ClassMetadata(PhoneNumberDummy::class);
+        (new AnnotationLoader())->loadClassMetadata($classMetadata);
+
+        [$constraint1] = $classMetadata->properties['phoneNumber1']->constraints;
+        [$constraint2] = $classMetadata->properties['phoneNumber2']->constraints;
+
+        $this->validator->validate('+33606060606', $constraint1);
+        $this->validator->validate('+441234567890', $constraint2);
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -147,5 +166,16 @@ class PhoneNumberValidatorTest extends TestCase
 
 class Foo
 {
+    public $regionPath = 'GB';
+}
+
+class PhoneNumberDummy
+{
+    #[PhoneNumber(type: [PhoneNumber::MOBILE], defaultRegion: 'FR')]
+    private $phoneNumber1;
+
+    #[PhoneNumber(regionPath: 'regionPath')]
+    private $phoneNumber2;
+
     public $regionPath = 'GB';
 }

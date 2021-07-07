@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraint;
  *
  * @Annotation
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class PhoneNumber extends Constraint
 {
     const ANY = 'any';
@@ -44,6 +45,29 @@ class PhoneNumber extends Constraint
     public $defaultRegion = null;
     public $regionPath = null;
     public $format = null;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string|array|null $format
+     * @param string|array|null $type
+     */
+    public function __construct($format = null, $type = null, string $defaultRegion = null, string $regionPath = null, string $message = null, array $groups = null, $payload = null, array $options = [])
+    {
+        if (\is_array($format)) {
+            $options = array_merge($format, $options);
+        } elseif (null !== $format) {
+            $options['value'] = $format;
+        }
+
+        parent::__construct($options, $groups, $payload);
+
+        $this->message = $message ?? $this->message;
+        $this->format = $format ?? $this->format;
+        $this->type = $type ?? $this->type;
+        $this->defaultRegion = $defaultRegion ?? $this->defaultRegion;
+        $this->regionPath = $regionPath ?? $this->regionPath;
+    }
 
     public function getType(): ?string
     {
