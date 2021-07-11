@@ -154,25 +154,13 @@ class PhoneNumberType extends AbstractType
             )
         );
 
-        if (method_exists($resolver, 'setDefault')) {
-            $resolver->setAllowedValues(
-                'widget',
-                array(
-                    self::WIDGET_SINGLE_TEXT,
-                    self::WIDGET_COUNTRY_CHOICE,
-                )
-            );
-        } else {
-            // To be removed when dependency on Symfony OptionsResolver is bumped to 2.6.
-            $resolver->setAllowedValues(
-                array(
-                    'widget' => array(
-                        self::WIDGET_SINGLE_TEXT,
-                        self::WIDGET_COUNTRY_CHOICE,
-                    ),
-                )
-            );
-        }
+        $resolver->setAllowedValues(
+            'widget',
+            array(
+                self::WIDGET_SINGLE_TEXT,
+                self::WIDGET_COUNTRY_CHOICE,
+            )
+        );
     }
 
     /**
