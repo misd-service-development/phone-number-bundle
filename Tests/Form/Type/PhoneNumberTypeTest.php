@@ -231,6 +231,22 @@ class PhoneNumberTypeTest extends TypeTestCase
     }
 
     /**
+     * @dataProvider countryProvider
+     */
+    public function testDefaultRegionAsSelectedInCountryWidget($country)
+    {
+        if (method_exists('Symfony\\Component\\Form\\FormTypeInterface', 'getName')) {
+            $type = new PhoneNumberType();
+        } else {
+            $type = 'Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType';
+        }
+        $form = $this->factory->create($type, null, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'default_region' => $country));
+
+        $countryViewData = $form->get('country')->getViewData();
+
+        $this->assertEquals($country, $countryViewData);
+    }
+    /**
      * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testInvalidWidget()
@@ -260,5 +276,19 @@ class PhoneNumberTypeTest extends TypeTestCase
         }
 
         return new $class($code, $code, $label);
+    }
+
+    public function countryProvider()
+    {
+        return array(
+            array('AF'),
+            array('AO'),
+            array('BZ'),
+            array('CZ'),
+            array('FR'),
+            array('GR'),
+            array('KG'),
+            array('MQ')
+        );
     }
 }
