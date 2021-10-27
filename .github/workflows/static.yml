@@ -19,4 +19,4 @@ jobs:
       - name: PHP-CS-Fixer
         uses: docker://jakzal/phpqa:php8.0
         with:
-          args: php-cs-fixer fix --dry-run --diff-format udiff
+          args: php-cs-fixer fix --dry-run

@@ -25,12 +25,8 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('misd_phone_number');
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('misd_phone_number');
-        }
+        $rootNode = $treeBuilder->getRootNode();
+
         $normalizer = function ($value) {
             if (\is_bool($value)) {
                 return [
