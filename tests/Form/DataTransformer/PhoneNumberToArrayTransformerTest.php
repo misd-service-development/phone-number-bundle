@@ -24,7 +24,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  */
 class PhoneNumberToArrayTransformerTest extends TestCase
 {
-    const TRANSFORMATION_FAILED = 'transformation_failed';
+    public const TRANSFORMATION_FAILED = 'transformation_failed';
 
     /**
      * @var PhoneNumberUtil

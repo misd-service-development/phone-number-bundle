@@ -22,7 +22,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Intl\Countries;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,8 +30,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PhoneNumberType extends AbstractType
 {
-    const WIDGET_SINGLE_TEXT = 'single_text';
-    const WIDGET_COUNTRY_CHOICE = 'country_choice';
+    public const WIDGET_SINGLE_TEXT = 'single_text';
+    public const WIDGET_COUNTRY_CHOICE = 'country_choice';
 
     /**
      * {@inheritdoc}
@@ -62,7 +61,7 @@ class PhoneNumberType extends AbstractType
 
             $countryChoices = [];
 
-            foreach ($this->getCountryNames() as $region => $name) {
+            foreach (Countries::getNames() as $region => $name) {
                 if (false === isset($countries[$region])) {
                     continue;
                 }
@@ -158,17 +157,5 @@ class PhoneNumberType extends AbstractType
     public function getBlockPrefix()
     {
         return 'phone_number';
-    }
-
-    /**
-     * When we'll use sf ^4.3, remove this method to simply use `Countries::getNames`.
-     */
-    private function getCountryNames(): array
-    {
-        if (!class_exists(Countries::class)) {
-            return Intl::getRegionBundle()->getCountryNames();
-        }
-
-        return Countries::getNames();
     }
 }

@@ -22,19 +22,19 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class PhoneNumber extends Constraint
 {
-    const ANY = 'any';
-    const FIXED_LINE = 'fixed_line';
-    const MOBILE = 'mobile';
-    const PAGER = 'pager';
-    const PERSONAL_NUMBER = 'personal_number';
-    const PREMIUM_RATE = 'premium_rate';
-    const SHARED_COST = 'shared_cost';
-    const TOLL_FREE = 'toll_free';
-    const UAN = 'uan';
-    const VOIP = 'voip';
-    const VOICEMAIL = 'voicemail';
+    public const ANY = 'any';
+    public const FIXED_LINE = 'fixed_line';
+    public const MOBILE = 'mobile';
+    public const PAGER = 'pager';
+    public const PERSONAL_NUMBER = 'personal_number';
+    public const PREMIUM_RATE = 'premium_rate';
+    public const SHARED_COST = 'shared_cost';
+    public const TOLL_FREE = 'toll_free';
+    public const UAN = 'uan';
+    public const VOIP = 'voip';
+    public const VOICEMAIL = 'voicemail';
 
-    const INVALID_PHONE_NUMBER_ERROR = 'ca23f4ca-38f4-4325-9bcc-eb570a4abe7f';
+    public const INVALID_PHONE_NUMBER_ERROR = 'ca23f4ca-38f4-4325-9bcc-eb570a4abe7f';
 
     protected static $errorNames = [
         self::INVALID_PHONE_NUMBER_ERROR => 'INVALID_PHONE_NUMBER_ERROR',
