@@ -4,7 +4,3 @@ parameters:
       - src
       - tests
     inferPrivatePropertyTypeFromConstructor: true
-    ignoreErrors:
-        -
-            message: '#Call to an undefined static method Symfony\\Component\\Intl\\Intl::getRegionBundle\(\).#'
-            path: %currentWorkingDirectory%/src/Form/Type/PhoneNumberType.php

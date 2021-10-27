@@ -1,5 +1,11 @@
 <?php
 
+$finder = (new PhpCsFixer\Finder())
+    ->files()
+    ->in(__DIR__)
+    ->exclude(__DIR__.'/vendor')
+;
+
 $config = new PhpCsFixer\Config();
 
 return $config
@@ -9,4 +15,5 @@ return $config
         '@Symfony:risky' => true,
         'array_syntax' => ['syntax' => 'short'],
     ])
+    ->setFinder($finder)
 ;

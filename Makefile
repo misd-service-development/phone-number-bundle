@@ -16,7 +16,7 @@ cs-lint: ## Verify check styles
 	@docker run --rm -v $(DIR):/project -w /project $(QA_IMAGE) php-cs-fixer fix --allow-risky=yes --dry-run -vvv
 
 cs-fix: ## Apply Check styles
-	@docker run --rm -v $(DIR):/project -w /project $(QA_IMAGE) php-cs-fixer fix --allow-risky=yes -vvv
+	@docker run --rm -v $(DIR):/project -w /project $(QA_IMAGE) php-cs-fixer fix --config=.php_cs.dist.php --allow-risky=yes -vvv
 
 phpstan: ## Run PHPStan
 	@docker run --rm -v $(DIR):/project -w /project $(QA_IMAGE) phpstan analyse
