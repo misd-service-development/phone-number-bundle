@@ -164,14 +164,15 @@ The option `country_placeholder` can be specified to create a placeholder option
 
 ### Validating phone numbers
 
+ℹ️ _Using a Symfony or PHP version that does not support attributes? This bundle also supports validation as annotation.
+Take a look at the [old documentation](https://github.com/odolbeau/phone-number-bundle/blob/v3.4.2/README.md#validating-phone-numbers)._
+
 You can use the `Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber` constraint to make sure that either a `libphonenumber\PhoneNumber` object or a plain string is a valid phone number. For example:
 
 ```php
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
-/**
- * @AssertPhoneNumber
- */
+ #[AssertPhoneNumber()]
 private $phoneNumber;
 ```
 
@@ -180,9 +181,7 @@ You can set the default region through the `defaultRegion` property:
 ```php
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
-/**
- * @AssertPhoneNumber(defaultRegion="GB")
- */
+ #[AssertPhoneNumber(defaultRegion: 'GB')]
 private $phoneNumber;
 ```
 
@@ -199,9 +198,7 @@ You can also define a region dynamically according to the context of the validat
 ```php
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 
-/**
- * @AssertPhoneNumber(regionPath="countryCode")
- */
+#[AssertPhoneNumber(regionPath: 'countryCode')]
 private $phoneNumber;
 
 private $countryCode;
@@ -229,14 +226,10 @@ By default any valid phone number will be accepted. You can restrict the type th
 (Note that libphonenumber cannot always distinguish between mobile and fixed-line numbers (eg in the USA), in which case it will be accepted.)
 
 ```php
-/**
- * @AssertPhoneNumber(type="mobile")
- */
+#[AssertPhoneNumber(type: [PhoneNumber::MOBILE])]
 private $mobilePhoneNumber;
 
-/**
- * @AssertPhoneNumber(type={"fixed_line", "voip"})
- */
+#[AssertPhoneNumber(type: [PhoneNumber::FIXED_LINE, PhoneNumber::VOIP])]
 private $fixedOrVoipPhoneNumber;
 ```
 
