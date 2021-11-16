@@ -33,6 +33,10 @@ class PhoneNumberType extends AbstractType
     public const WIDGET_SINGLE_TEXT = 'single_text';
     public const WIDGET_COUNTRY_CHOICE = 'country_choice';
 
+    public const DISPLAY_COUNTRY_FULL = 'display_country_full';
+    public const DISPLAY_COUNTRY_MEDIUM = 'display_country_medium';
+    public const DISPLAY_COUNTRY_SHORT = 'display_country_short';
+
     /**
      * {@inheritdoc}
      */
@@ -66,7 +70,8 @@ class PhoneNumberType extends AbstractType
                     continue;
                 }
 
-                $countryChoices[sprintf('%s (+%s)', $name, $countries[$region])] = $region;
+                $label = $this->formatDisplayChoice($options['country_display_type'], $name, $region, $countries[$region]);
+                $countryChoices[$label] = $region;
             }
 
             $transformerChoices = array_values($countryChoices);
@@ -128,6 +133,7 @@ class PhoneNumberType extends AbstractType
             'by_reference' => false,
             'error_bubbling' => false,
             'country_choices' => [],
+            'country_display_type' => self::DISPLAY_COUNTRY_FULL,
             'country_placeholder' => false,
             'preferred_country_choices' => [],
             'country_options' => [],
@@ -137,6 +143,12 @@ class PhoneNumberType extends AbstractType
         $resolver->setAllowedValues('widget', [
             self::WIDGET_SINGLE_TEXT,
             self::WIDGET_COUNTRY_CHOICE,
+        ]);
+
+        $resolver->setAllowedValues('country_display_type', [
+            self::DISPLAY_COUNTRY_FULL,
+            self::DISPLAY_COUNTRY_MEDIUM,
+            self::DISPLAY_COUNTRY_SHORT,
         ]);
 
         $resolver->setAllowedTypes('country_options', 'array');
@@ -157,5 +169,18 @@ class PhoneNumberType extends AbstractType
     public function getBlockPrefix()
     {
         return 'phone_number';
+    }
+
+    private function formatDisplayChoice(string $displayType, string $regionName, string $regionCode, string $countryCode): string
+    {
+        if (self::DISPLAY_COUNTRY_MEDIUM === $displayType) {
+            return sprintf('%s +%s', $regionCode, $countryCode);
+        }
+
+        if (self::DISPLAY_COUNTRY_SHORT === $displayType) {
+            return sprintf('+%s', $countryCode);
+        }
+
+        return sprintf('%s (+%s)', $regionName, $countryCode);
     }
 }

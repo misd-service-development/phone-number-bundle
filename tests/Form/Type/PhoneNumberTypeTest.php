@@ -19,6 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
@@ -143,7 +144,9 @@ class PhoneNumberTypeTest extends TestCase
         return [
             [
                 [],
-                \count(PhoneNumberUtil::getInstance()->getSupportedRegions()),
+                // 3 regions have an already used label "TA", "AC" and XK
+                // @see https://fr.wikipedia.org/wiki/ISO_3166-2#cite_note-UPU-1
+                242,
                 [
                     $this->createChoiceView('United Kingdom (+44)', 'GB'),
                 ],
@@ -162,6 +165,51 @@ class PhoneNumberTypeTest extends TestCase
                 [
                     $this->createChoiceView('United Kingdom (+44)', 'GB'),
                     $this->createChoiceView('United States (+1)', 'US'),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider countryChoiceFormatProvider
+     */
+    public function testCountryChoiceFormat(string $displayType, array $expectedChoices)
+    {
+        $options['widget'] = PhoneNumberType::WIDGET_COUNTRY_CHOICE;
+        $options['country_display_type'] = $displayType;
+        $form = $this->factory->create(PhoneNumberType::class, null, $options);
+
+        $view = $form->createView();
+        $choices = $view['country']->vars['choices'];
+
+        foreach ($expectedChoices as $expectedChoice) {
+            $this->assertContainsEquals($expectedChoice, $choices);
+        }
+    }
+
+    /**
+     * 0 => Display type
+     * 2 => Expected choices.
+     */
+    public function countryChoiceFormatProvider()
+    {
+        return [
+            [
+                PhoneNumberType::DISPLAY_COUNTRY_FULL,
+                [
+                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
+                ],
+            ],
+            [
+                PhoneNumberType::DISPLAY_COUNTRY_MEDIUM,
+                [
+                    $this->createChoiceView('GB +44', 'GB'),
+                ],
+            ],
+            [
+                PhoneNumberType::DISPLAY_COUNTRY_SHORT,
+                [
+                    $this->createChoiceView('+44', 'GB'),
                 ],
             ],
         ];
