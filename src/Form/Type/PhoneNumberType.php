@@ -64,13 +64,13 @@ class PhoneNumberType extends AbstractType
 
             $countryChoices = [];
 
-            foreach (Countries::getNames() as $region => $name) {
-                if (false === isset($countries[$region])) {
+            foreach ($countries as $regionCode => $countryCode) {
+                if (!Countries::exists($regionCode)) {
                     continue;
                 }
 
-                $label = $this->formatDisplayChoice($options['country_display_type'], $name, $region, $countries[$region]);
-                $countryChoices[$label] = $region;
+                $label = $this->formatDisplayChoice($options['country_display_type'], Countries::getName($regionCode), $regionCode, $countryCode);
+                $countryChoices[$label] = $regionCode;
             }
 
             $transformerChoices = array_values($countryChoices);
