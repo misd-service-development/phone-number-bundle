@@ -201,15 +201,9 @@ class PhoneNumberTypeTest extends TestCase
                 ],
             ],
             [
-                PhoneNumberType::DISPLAY_COUNTRY_MEDIUM,
-                [
-                    $this->createChoiceView('GB +44', 'GB'),
-                ],
-            ],
-            [
                 PhoneNumberType::DISPLAY_COUNTRY_SHORT,
                 [
-                    $this->createChoiceView('+44', 'GB'),
+                    $this->createChoiceView('GB +44', 'GB'),
                 ],
             ],
         ];

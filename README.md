@@ -166,8 +166,7 @@ The option `country_display_type` can be specified to change the country dropdow
 | display type                      | Result                 |
 | ----------------------------------| -----------------------|
 | `display_country_full` (default)  |  United Kingdom (+44)  |
-| `display_country_medium`          |  GB +44                |
-| `display_country_short`           | +44                    |
+| `display_country_short`           |  GB +44                |
 
 ### Validating phone numbers
 

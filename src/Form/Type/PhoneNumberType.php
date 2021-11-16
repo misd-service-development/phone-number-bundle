@@ -34,7 +34,6 @@ class PhoneNumberType extends AbstractType
     public const WIDGET_COUNTRY_CHOICE = 'country_choice';
 
     public const DISPLAY_COUNTRY_FULL = 'display_country_full';
-    public const DISPLAY_COUNTRY_MEDIUM = 'display_country_medium';
     public const DISPLAY_COUNTRY_SHORT = 'display_country_short';
 
     /**
@@ -147,7 +146,6 @@ class PhoneNumberType extends AbstractType
 
         $resolver->setAllowedValues('country_display_type', [
             self::DISPLAY_COUNTRY_FULL,
-            self::DISPLAY_COUNTRY_MEDIUM,
             self::DISPLAY_COUNTRY_SHORT,
         ]);
 
@@ -173,12 +171,8 @@ class PhoneNumberType extends AbstractType
 
     private function formatDisplayChoice(string $displayType, string $regionName, string $regionCode, string $countryCode): string
     {
-        if (self::DISPLAY_COUNTRY_MEDIUM === $displayType) {
-            return sprintf('%s +%s', $regionCode, $countryCode);
-        }
-
         if (self::DISPLAY_COUNTRY_SHORT === $displayType) {
-            return sprintf('+%s', $countryCode);
+            return sprintf('%s +%s', $regionCode, $countryCode);
         }
 
         return sprintf('%s (+%s)', $regionName, $countryCode);
