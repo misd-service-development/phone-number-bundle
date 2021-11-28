@@ -17,12 +17,15 @@ use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * Phone number templating helper test.
  */
 class PhoneNumberHelperTest extends TestCase
 {
+    use ProphecyTrait;
+
     protected $phoneNumberUtil;
     protected $helper;
 

@@ -18,6 +18,7 @@ use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Serializer\Normalizer\PhoneNumberNormalizer;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\Serializer;
 
@@ -26,6 +27,8 @@ use Symfony\Component\Serializer\Serializer;
  */
 class PhoneNumberNormalizerTest extends TestCase
 {
+    use ProphecyTrait;
+
     protected function setUp(): void
     {
         if (!class_exists(Serializer::class)) {
