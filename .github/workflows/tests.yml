@@ -21,7 +21,7 @@ jobs:
             symfony-require: 6.0.*
             stability: dev
           - php: '8.1'
-            mode: experimental
+            stability: dev
       fail-fast: false
 
     steps:
