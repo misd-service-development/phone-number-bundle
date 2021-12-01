@@ -41,6 +41,8 @@ class PhoneNumberHelperExtension extends AbstractExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
     public function getFunctions()
     {
@@ -53,6 +55,8 @@ class PhoneNumberHelperExtension extends AbstractExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
     public function getFilters()
     {
@@ -64,6 +68,8 @@ class PhoneNumberHelperExtension extends AbstractExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
     public function getTests()
     {
