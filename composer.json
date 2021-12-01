@@ -23,7 +23,7 @@
         "phpunit/phpunit": "^9.5",
         "symfony/form": "^4.4|^5.3|^6.0",
         "symfony/property-access": "^4.4|^5.3|^6.0",
-        "symfony/serializer": "^4.4|^5.3|^6.0",
+        "symfony/serializer": "^4.4|^5.3|^6.0.1",
         "symfony/twig-bundle": "^4.4|^5.3|^6.0",
         "symfony/validator": "^4.4|^5.3|^6.0"
     },
@@ -52,5 +52,8 @@
         "branch-alias": {
             "dev-master": "3.5.x-dev"
         }
+    },
+    "conflict": {
+        "symfony/serializer": "6.0.0"
     }
 }
