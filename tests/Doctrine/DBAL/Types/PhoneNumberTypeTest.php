@@ -18,12 +18,15 @@ use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * Phone number type test.
  */
 class PhoneNumberTypeTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var AbstractPlatform
      */

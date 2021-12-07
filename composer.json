@@ -14,17 +14,18 @@
     "require": {
         "php": ">=7.4",
         "giggsey/libphonenumber-for-php": "^8.0",
-        "symfony/framework-bundle": "^4.4|^5.3",
-        "symfony/intl": "^4.4|^5.3"
+        "symfony/framework-bundle": "^4.4|^5.3|^6.0",
+        "symfony/intl": "^4.4|^5.3|^6.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "^1.12|^2.0",
-        "phpunit/phpunit": "^8.4",
-        "symfony/form": "^4.4|^5.3",
-        "symfony/property-access": "^4.4|^5.3",
-        "symfony/serializer": "^4.4|^5.3",
-        "symfony/twig-bundle": "^4.4|^5.3",
-        "symfony/validator": "^4.4|^5.3"
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^9.5",
+        "symfony/form": "^4.4|^5.3|^6.0",
+        "symfony/property-access": "^4.4|^5.3|^6.0",
+        "symfony/serializer": "^4.4|^5.3|^6.0.1",
+        "symfony/twig-bundle": "^4.4|^5.3|^6.0",
+        "symfony/validator": "^4.4|^5.3|^6.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
@@ -51,5 +52,8 @@
         "branch-alias": {
             "dev-master": "3.5.x-dev"
         }
+    },
+    "conflict": {
+        "symfony/serializer": "6.0.0"
     }
 }

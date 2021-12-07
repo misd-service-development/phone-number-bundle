@@ -14,8 +14,8 @@ namespace Misd\PhoneNumberBundle\Tests\Validator\Constraints;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 class PhoneNumberValidatorTest extends TestCase
 {
     /**
-     * @var \Symfony\Component\Validator\Context\ExecutionContextInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Symfony\Component\Validator\Context\ExecutionContextInterface|MockObject
      */
     protected $context;
 
@@ -39,12 +39,12 @@ class PhoneNumberValidatorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->context = $this->prophesize(ExecutionContextInterface::class);
+        $this->context = $this->createMock(ExecutionContextInterface::class);
 
         $this->validator = new PhoneNumberValidator(PhoneNumberUtil::getInstance());
-        $this->validator->initialize($this->context->reveal());
+        $this->validator->initialize($this->context);
 
-        $this->context->getObject()->willReturn(new Foo());
+        $this->context->method('getObject')->willReturn(new Foo());
     }
 
     /**
@@ -67,14 +67,28 @@ class PhoneNumberValidatorTest extends TestCase
         }
 
         if (true === $violates) {
-            $constraintViolationBuilder = $this->prophesize(ConstraintViolationBuilderInterface::class);
-            $constraintViolationBuilder->setParameter(Argument::type('string'), Argument::type('string'))->willReturn($constraintViolationBuilder->reveal());
-            $constraintViolationBuilder->setCode(Argument::type('string'))->willReturn($constraintViolationBuilder->reveal());
-            $constraintViolationBuilder->addViolation()->willReturn($constraintViolationBuilder->reveal());
+            $constraintViolationBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
+            $constraintViolationBuilder
+                ->expects($this->exactly(2))
+                ->method('setParameter')
+                ->with($this->isType('string'), $this->isType('string'))
+                ->willReturn($constraintViolationBuilder);
+            $constraintViolationBuilder
+                ->expects($this->once())
+                ->method('setCode')
+                ->with($this->isType('string'))
+                ->willReturn($constraintViolationBuilder);
+            $constraintViolationBuilder
+                ->method('addViolation')
+                ->willReturn($constraintViolationBuilder);
 
-            $this->context->buildViolation($constraint->getMessage())->shouldBeCalledTimes(1)->willReturn($constraintViolationBuilder->reveal());
+            $this->context
+                ->expects($this->once())
+                ->method('buildViolation')
+                ->with($constraint->getMessage())
+                ->willReturn($constraintViolationBuilder);
         } else {
-            $this->context->buildViolation()->shouldNotBeCalled();
+            $this->context->expects($this->never())->method('buildViolation');
         }
 
         $this->validator->validate($value, $constraint);
