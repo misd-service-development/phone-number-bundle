@@ -59,6 +59,8 @@ class PhoneNumberValidator extends ConstraintValidator
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
@@ -183,6 +185,8 @@ class PhoneNumberValidator extends ConstraintValidator
      *
      * @param mixed      $value      the value that should be validated
      * @param Constraint $constraint the constraint for the validation
+     *
+     * @return void
      */
     private function addViolation($value, Constraint $constraint)
     {

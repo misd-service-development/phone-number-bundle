@@ -23,6 +23,8 @@ class MisdPhoneNumberExtension extends Extension
 {
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function load(array $configs, ContainerBuilder $container)
     {

@@ -80,6 +80,8 @@ class PhoneNumberHelperExtension extends AbstractExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getName()
     {

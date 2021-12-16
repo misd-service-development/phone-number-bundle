@@ -38,6 +38,8 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
     public function transform($phoneNumber)
     {
@@ -61,6 +63,8 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return ?PhoneNumber
      */
     public function reverseTransform($value)
     {
