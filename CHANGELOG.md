@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.1] - 2021-12-29
+
+- Added return types
+
 ## [3.6.0] - 2021-12-07
 
 - Added support for Symfony ^6.0
