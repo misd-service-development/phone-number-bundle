@@ -54,12 +54,6 @@ class PhoneNumber extends Constraint
      */
     public function __construct($format = null, $type = null, string $defaultRegion = null, string $regionPath = null, string $message = null, array $groups = null, $payload = null, array $options = [])
     {
-        if (\is_array($format)) {
-            $options = array_merge($format, $options);
-        } elseif (null !== $format) {
-            $options['value'] = $format;
-        }
-
         parent::__construct($options, $groups, $payload);
 
         $this->message = $message ?? $this->message;
