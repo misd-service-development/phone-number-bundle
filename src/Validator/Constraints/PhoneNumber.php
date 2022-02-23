@@ -49,15 +49,23 @@ class PhoneNumber extends Constraint
     /**
      * {@inheritdoc}
      *
-     * @param string|array|null $format
+     * @param int|array|null    $format Specify the format (\libphonenumber\PhoneNumberFormat::*)
+     *                                  or options (an associative array)
      * @param string|array|null $type
      */
     public function __construct($format = null, $type = null, string $defaultRegion = null, string $regionPath = null, string $message = null, array $groups = null, $payload = null, array $options = [])
     {
+        if (\is_array($format)) {
+            @trigger_error('Usage of the argument $format to specify options is deprecated and will be removed in 4.0. Use "$option" argument instead.', \E_USER_DEPRECATED);
+            $options = array_merge($format, $options);
+        } else {
+            $phoneFormat = $format;
+        }
+
         parent::__construct($options, $groups, $payload);
 
         $this->message = $message ?? $this->message;
-        $this->format = $format ?? $this->format;
+        $this->format = $phoneFormat ?? $this->format;
         $this->type = $type ?? $this->type;
         $this->defaultRegion = $defaultRegion ?? $this->defaultRegion;
         $this->regionPath = $regionPath ?? $this->regionPath;
