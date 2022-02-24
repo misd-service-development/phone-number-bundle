@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.2] - 2022-02-24
+
+### Fixed
+
+- Fix option format while using the validation constraint as attribute
+
 ## [3.6.1] - 2021-12-29
 
 - Added return types
