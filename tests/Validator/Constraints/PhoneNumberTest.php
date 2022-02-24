@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Validator\Constraints;
 
+use libphonenumber\PhoneNumberFormat;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use PHPUnit\Framework\TestCase;
 
@@ -32,44 +33,39 @@ class PhoneNumberTest extends TestCase
     /**
      * @dataProvider messageProvider
      */
-    public function testMessage($message, $type, $expectedMessage)
+    public function testMessage($message, $type, $format, $expectedMessage)
     {
-        $phoneNumber = new PhoneNumber();
-
-        if (null !== $message) {
-            $phoneNumber->message = $message;
-        }
-        if (null !== $type) {
-            $phoneNumber->type = $type;
-        }
-
+        $phoneNumber = new PhoneNumber($format, $type, null, null, $message);
         $this->assertSame($expectedMessage, $phoneNumber->getMessage());
+        $this->assertSame($format, $phoneNumber->format);
     }
 
     /**
      * 0 => Message (optional)
      * 1 => Type (optional)
-     * 2 => Expected message.
+     * 2 => Format (optional)
+     * 3 => Expected message.
      */
     public function messageProvider()
     {
         return [
-            [null, null, 'This value is not a valid phone number.'],
-            [null, 'fixed_line', 'This value is not a valid fixed-line number.'],
-            [null, 'mobile', 'This value is not a valid mobile number.'],
-            [null, 'pager', 'This value is not a valid pager number.'],
-            [null, 'personal_number', 'This value is not a valid personal number.'],
-            [null, 'premium_rate', 'This value is not a valid premium-rate number.'],
-            [null, 'shared_cost', 'This value is not a valid shared-cost number.'],
-            [null, 'toll_free', 'This value is not a valid toll-free number.'],
-            [null, 'uan', 'This value is not a valid UAN.'],
-            [null, 'voip', 'This value is not a valid VoIP number.'],
-            [null, 'voicemail', 'This value is not a valid voicemail access number.'],
-            [null, ['fixed_line', 'voip'], 'This value is not a valid number.'],
-            [null, ['uan', 'fixed_line'], 'This value is not a valid number.'],
-            ['foo', null, 'foo'],
-            ['foo', 'fixed_line', 'foo'],
-            ['foo', 'mobile', 'foo'],
+            [null, null, null, 'This value is not a valid phone number.'],
+            [null, 'fixed_line', null, 'This value is not a valid fixed-line number.'],
+            [null, 'mobile', null, 'This value is not a valid mobile number.'],
+            [null, 'pager', null, 'This value is not a valid pager number.'],
+            [null, 'personal_number', null, 'This value is not a valid personal number.'],
+            [null, 'premium_rate', null, 'This value is not a valid premium-rate number.'],
+            [null, 'shared_cost', null, 'This value is not a valid shared-cost number.'],
+            [null, 'toll_free', null, 'This value is not a valid toll-free number.'],
+            [null, 'uan', null, 'This value is not a valid UAN.'],
+            [null, 'voip', null, 'This value is not a valid VoIP number.'],
+            [null, 'voicemail', null, 'This value is not a valid voicemail access number.'],
+            [null, ['fixed_line', 'voip'], null, 'This value is not a valid number.'],
+            [null, ['uan', 'fixed_line'], null, 'This value is not a valid number.'],
+            ['foo', null, null, 'foo'],
+            ['foo', 'fixed_line', null, 'foo'],
+            ['foo', 'mobile', null, 'foo'],
+            [null, null, PhoneNumberFormat::E164, 'This value is not a valid phone number.'],
         ];
     }
 }

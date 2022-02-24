@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Validator\Constraints;
 
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator;
@@ -50,21 +51,9 @@ class PhoneNumberValidatorTest extends TestCase
     /**
      * @dataProvider validateProvider
      */
-    public function testValidate($value, $violates, $type = null, $defaultRegion = null, $regionPath = null)
+    public function testValidate($value, $violates, $type = null, $defaultRegion = null, $regionPath = null, $format = null)
     {
-        $constraint = new PhoneNumber();
-
-        if (null !== $type) {
-            $constraint->type = $type;
-        }
-
-        if (null !== $defaultRegion) {
-            $constraint->defaultRegion = $defaultRegion;
-        }
-
-        if (null !== $regionPath) {
-            $constraint->regionPath = $regionPath;
-        }
+        $constraint = new PhoneNumber($format, $type, $defaultRegion, $regionPath);
 
         if (true === $violates) {
             $constraintViolationBuilder = $this->createMock(ConstraintViolationBuilderInterface::class);
@@ -162,6 +151,8 @@ class PhoneNumberValidatorTest extends TestCase
             ['foo', true],
             ['+441234567890', true, 'mobile', null, 'regionPath'],
             ['+33606060606', false, 'mobile', null, 'regionPath'],
+            ['+33606060606', false, 'mobile', null, null, PhoneNumberFormat::E164],
+            ['2015555555', true, null, null, null, PhoneNumberFormat::E164],
         ];
     }
 
