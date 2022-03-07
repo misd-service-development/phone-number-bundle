@@ -4,6 +4,9 @@
 [![Latest stable version](https://img.shields.io/packagist/v/odolbeau/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/odolbeau/phone-number-bundle)
 [![License](http://img.shields.io/packagist/l/odolbeau/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/odolbeau/phone-number-bundle)
 
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
+
+
 **This bundle is a fork of [misd-service-development/phone-number-bundle](https://github.com/misd-service-development/phone-number-bundle). As this project doesn't look maintained anymore, we decided to create & maintain a fork.**
 
 This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
