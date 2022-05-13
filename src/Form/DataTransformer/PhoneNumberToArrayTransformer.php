@@ -76,7 +76,7 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Expected an array.');
         }
 
-        if ('' === trim($value['number'])) {
+        if ('' === trim($value['number'] ?? '')) {
             return null;
         }
 
