@@ -36,9 +36,14 @@ class PhoneNumber extends Constraint
 
     public const INVALID_PHONE_NUMBER_ERROR = 'ca23f4ca-38f4-4325-9bcc-eb570a4abe7f';
 
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::INVALID_PHONE_NUMBER_ERROR => 'INVALID_PHONE_NUMBER_ERROR',
     ];
+
+    /**
+     * @deprecated since PhoneNumberBundle 3.6, use const ERROR_NAMES instead
+     */
+    protected static $errorNames = self::ERROR_NAMES;
 
     public $message = null;
     public $type = self::ANY;
