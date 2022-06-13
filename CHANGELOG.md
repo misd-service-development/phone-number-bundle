@@ -6,9 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.6.3] - 2022-06-14
+
+### Added
+
+- Add catalan translation
+
 ### Changed 
 
 - Deprecate `PhoneNumber::$errorNames` in favour of `PhoneNumber::ERROR_NAMES`.
+
+### Fixed
+
+- Deprecation notice on Symfony >= 6.1
 
 ## [3.6.2] - 2022-02-24
 
