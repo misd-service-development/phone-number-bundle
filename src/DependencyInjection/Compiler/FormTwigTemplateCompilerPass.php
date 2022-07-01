@@ -58,7 +58,7 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
             array_splice($parameter, ++$key, 0, [$this->phoneNumberLayout]);
         } else {
             // Put it in first position.
-            array_unshift($parameter, [$this->phoneNumberLayout]);
+            array_unshift($parameter, $this->phoneNumberLayout);
         }
 
         $container->setParameter('twig.form.resources', $parameter);
