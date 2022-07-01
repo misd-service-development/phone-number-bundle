@@ -49,7 +49,7 @@ class PhoneNumberHelper
      *
      * @throws InvalidArgumentException if an argument is invalid
      */
-    public function format(PhoneNumber $phoneNumber, $format = PhoneNumberFormat::INTERNATIONAL)
+    public function format(PhoneNumber $phoneNumber, $format = PhoneNumberFormat::INTERNATIONAL): string
     {
         if (true === \is_string($format)) {
             $constant = '\libphonenumber\PhoneNumberFormat::'.$format;
@@ -69,10 +69,8 @@ class PhoneNumberHelper
      *
      * @param PhoneNumber $phoneNumber phone number
      * @param string|null $regionCode  The ISO 3166-1 alpha-2 country code
-     *
-     * @return string
      */
-    public function formatOutOfCountryCallingNumber(PhoneNumber $phoneNumber, $regionCode)
+    public function formatOutOfCountryCallingNumber(PhoneNumber $phoneNumber, $regionCode): string
     {
         return $this->phoneNumberUtil->formatOutOfCountryCallingNumber($phoneNumber, $regionCode);
     }
@@ -81,11 +79,9 @@ class PhoneNumberHelper
      * @param PhoneNumber $phoneNumber phone number
      * @param int|string  $type        phoneNumberType, or PhoneNumberType constant name
      *
-     * @return bool
-     *
      * @throws InvalidArgumentException if type argument is invalid
      */
-    public function isType(PhoneNumber $phoneNumber, $type = PhoneNumberType::UNKNOWN)
+    public function isType(PhoneNumber $phoneNumber, $type = PhoneNumberType::UNKNOWN): bool
     {
         if (true === \is_string($type)) {
             $constant = '\libphonenumber\PhoneNumberType::'.$type;
@@ -97,6 +93,6 @@ class PhoneNumberHelper
             $type = \constant('\libphonenumber\PhoneNumberType::'.$type);
         }
 
-        return $this->phoneNumberUtil->getNumberType($phoneNumber) === $type ? true : false;
+        return $this->phoneNumberUtil->getNumberType($phoneNumber) === $type;
     }
 }

@@ -36,7 +36,7 @@ class PhoneNumberType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (self::WIDGET_COUNTRY_CHOICE === $options['widget']) {
             $util = PhoneNumberUtil::getInstance();
@@ -106,7 +106,7 @@ class PhoneNumberType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['type'] = 'tel';
         $view->vars['widget'] = $options['widget'];
@@ -115,7 +115,7 @@ class PhoneNumberType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'widget' => self::WIDGET_SINGLE_TEXT,
@@ -145,20 +145,16 @@ class PhoneNumberType extends AbstractType
 
     /**
      * {@inheritdoc}
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'phone_number';
     }

@@ -6,7 +6,7 @@ use Misd\PhoneNumberBundle\DependencyInjection\Compiler\FormTwigTemplateCompiler
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class FormTwigTemplateCompilerPassTest extends TestCase
+final class FormTwigTemplateCompilerPassTest extends TestCase
 {
     public function testItDoesNothingWhenWithIsNotEnabled(): void
     {
@@ -27,7 +27,7 @@ class FormTwigTemplateCompilerPassTest extends TestCase
 
         $subject->process($container);
 
-        $this->assertEquals(
+        $this->assertSame(
             $inputParameter,
             $container->getParameter('twig.form.resources')
         );
@@ -48,7 +48,7 @@ class FormTwigTemplateCompilerPassTest extends TestCase
         $this->assertTrue(\in_array($phoneTemplate, $container->getParameter('twig.form.resources'), true));
     }
 
-    public function themesProvider()
+    public function themesProvider(): iterable
     {
         yield 'Bootstrap 5 horizontal' => [
             'bootstrap_5_horizontal_layout.html.twig',
