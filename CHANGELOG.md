@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Name of the catalan translation file is now accurate #116
+- Remove deprecation notice when using annotations
 
 ## [3.6.3] - 2022-06-14
 
