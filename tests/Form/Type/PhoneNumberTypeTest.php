@@ -122,7 +122,11 @@ class PhoneNumberTypeTest extends TestCase
     {
         IntlTestHelper::requireIntl($this);
 
-        $form = $this->factory->create(PhoneNumberType::class, null, ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices]);
+        $form = $this->factory->create(
+            PhoneNumberType::class,
+            null,
+            ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => $choices]
+        );
 
         $view = $form->createView();
         $choices = $view['country']->vars['choices'];

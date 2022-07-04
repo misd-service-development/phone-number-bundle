@@ -41,7 +41,10 @@ class PhoneNumberHelperTest extends TestCase
     public function testProcess($format, $expectedFormat)
     {
         $phoneNumber = $this->prophesize(PhoneNumber::class);
-        $this->phoneNumberUtil->format($phoneNumber->reveal(), $expectedFormat)->shouldBeCalledTimes(1);
+        $this->phoneNumberUtil
+            ->format($phoneNumber->reveal(), $expectedFormat)
+            ->shouldBeCalledTimes(1)
+            ->willReturn('+33600000000');
 
         $this->helper->format($phoneNumber->reveal(), $format);
     }

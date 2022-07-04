@@ -53,10 +53,8 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return string
      */
-    public function transform($phoneNumber)
+    public function transform($phoneNumber): string
     {
         if (null === $phoneNumber) {
             return '';
@@ -75,10 +73,8 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return ?PhoneNumber
      */
-    public function reverseTransform($string)
+    public function reverseTransform($string): ?PhoneNumber
     {
         if (!$string && '0' !== $string) {
             return null;

@@ -59,10 +59,8 @@ class PhoneNumberValidator extends ConstraintValidator
 
     /**
      * {@inheritdoc}
-     *
-     * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (null === $value || '' === $value) {
             return;
@@ -138,8 +136,6 @@ class PhoneNumberValidator extends ConstraintValidator
 
             if (!\in_array($type, $validTypes, true)) {
                 $this->addViolation($value, $constraint);
-
-                return;
             }
         }
     }
@@ -185,10 +181,8 @@ class PhoneNumberValidator extends ConstraintValidator
      *
      * @param mixed      $value      the value that should be validated
      * @param Constraint $constraint the constraint for the validation
-     *
-     * @return void
      */
-    private function addViolation($value, Constraint $constraint)
+    private function addViolation($value, Constraint $constraint): void
     {
         $this->context->buildViolation($constraint->getMessage())
             ->setParameter('{{ types }}', implode(', ', $constraint->getTypeNames()))

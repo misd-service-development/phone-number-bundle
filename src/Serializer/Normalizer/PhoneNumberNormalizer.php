@@ -64,10 +64,8 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
      * {@inheritdoc}
      *
      * @throws InvalidArgumentException
-     *
-     * @return array|string|int|float|bool|\ArrayObject|null
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = []): string
     {
         return $this->phoneNumberUtil->format($object, $this->format);
     }
@@ -84,13 +82,11 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
      * {@inheritdoc}
      *
      * @throws UnexpectedValueException
-     *
-     * @return mixed
      */
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize($data, $class, $format = null, array $context = []): ?PhoneNumber
     {
         if (null === $data) {
-            return;
+            return null;
         }
 
         try {
@@ -102,10 +98,8 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
 
     /**
      * {@inheritdoc}
-     *
-     * @return bool
      */
-    public function supportsDenormalization($data, $type, $format = null, array $context = [])
+    public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
         return 'libphonenumber\PhoneNumber' === $type && \is_string($data);
     }

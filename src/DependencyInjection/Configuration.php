@@ -22,10 +22,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('misd_phone_number');
         $rootNode = $treeBuilder->getRootNode();

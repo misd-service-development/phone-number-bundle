@@ -26,10 +26,8 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return void
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasParameter('twig.form.resources')) {
             return;
@@ -58,7 +56,7 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
             array_splice($parameter, ++$key, 0, [$this->phoneNumberLayout]);
         } else {
             // Put it in first position.
-            array_unshift($parameter, [$this->phoneNumberLayout]);
+            array_unshift($parameter, $this->phoneNumberLayout);
         }
 
         $container->setParameter('twig.form.resources', $parameter);

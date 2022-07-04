@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Maintenance: added return types on methods, avoid deprecation trigger, make the bundle future-proof
+
 ### Fixed
 
 - Name of the catalan translation file is now accurate #116
