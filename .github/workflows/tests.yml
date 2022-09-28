@@ -37,9 +37,6 @@ jobs:
         if: matrix.stability
         run: composer config minimum-stability ${{ matrix.stability }}
 
-      - name: Install symfony/flex
-        run: composer global require symfony/flex
-
       - name: Install dependencies
         env:
           SYMFONY_REQUIRE: "${{ matrix.symfony-require }}"
