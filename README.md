@@ -229,10 +229,12 @@ By default any valid phone number will be accepted. You can restrict the type th
 (Note that libphonenumber cannot always distinguish between mobile and fixed-line numbers (eg in the USA), in which case it will be accepted.)
 
 ```php
-#[AssertPhoneNumber(type: [PhoneNumber::MOBILE])]
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+
+#[AssertPhoneNumber(type: [AssertPhoneNumber::MOBILE])]
 private $mobilePhoneNumber;
 
-#[AssertPhoneNumber(type: [PhoneNumber::FIXED_LINE, PhoneNumber::VOIP])]
+#[AssertPhoneNumber(type: [AssertPhoneNumber::FIXED_LINE, AssertPhoneNumber::VOIP])]
 private $fixedOrVoipPhoneNumber;
 ```
 
