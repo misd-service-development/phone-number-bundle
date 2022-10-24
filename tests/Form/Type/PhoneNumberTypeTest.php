@@ -173,9 +173,6 @@ class PhoneNumberTypeTest extends TestCase
 
     /**
      * @dataProvider countryChoicePlaceholderProvider
-     *
-     * @param $placeholder
-     * @param $expectedPlaceholder
      */
     public function testCountryChoicePlaceholder($placeholder, $expectedPlaceholder)
     {
