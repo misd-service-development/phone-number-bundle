@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.8.0] - 2022-10-24
+
+### Added
+
+- Add portuguese translations in #126
+
 ## [3.7.0] - 2022-07-04
 
 ### Added
