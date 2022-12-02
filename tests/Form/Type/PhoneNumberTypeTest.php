@@ -13,7 +13,6 @@ namespace Misd\PhoneNumberBundle\Tests\Form\Type;
 
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
-use Locale;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
@@ -34,7 +33,7 @@ class PhoneNumberTypeTest extends TestCase
 
     protected function setUp(): void
     {
-        Locale::setDefault('en');
+        \Locale::setDefault('en');
 
         $this->factory = Forms::createFormFactoryBuilder()->getFormFactory();
     }
@@ -210,7 +209,7 @@ class PhoneNumberTypeTest extends TestCase
     public function testCountryChoiceTranslations()
     {
         IntlTestHelper::requireFullIntl($this);
-        Locale::setDefault('fr');
+        \Locale::setDefault('fr');
 
         $form = $this->factory->create(PhoneNumberType::class, null, ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE]);
 
