@@ -139,7 +139,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
-    $builder->add('phoneNumber', PhoneNumberType::class, array('default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL));
+    $builder->add('phoneNumber', PhoneNumberType::class, ['default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL]);
 }
 ```
 
@@ -156,7 +156,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
-    $builder->add('phoneNumber', PhoneNumberType::class, array('widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_choices' => array('GB', 'JE', 'FR', 'US'), 'preferred_country_choices' => array('GB', 'JE')));
+    $builder->add('phoneNumber', PhoneNumberType::class, [
+        'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+        'country_choices' => ['GB', 'JE', 'FR', 'US'],
+        'preferred_country_choices' => ['GB', 'JE']
+    ]);
 }
 ```
 
