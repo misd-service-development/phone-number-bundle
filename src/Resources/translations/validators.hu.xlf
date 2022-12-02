@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>This value is not a valid phone number.</source>
+                <target>Hibás telefonszám.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>This value is not a valid fixed-line number.</source>
+                <target>Hibás vonalas telefonszám.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>This value is not a valid mobile number.</source>
+                <target>Hibás mobil szám.</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>This value is not a valid pager number.</source>
+                <target>Hibás csipogó szám.</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>This value is not a valid personal number.</source>
+                <target>Hibás központi telefonszám (follow me number).</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>This value is not a valid premium-rate number.</source>
+                <target>Hibás emelt díjas telefonszám.</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>This value is not a valid shared-cost number.</source>
+                <target>Hibás normál díjas telefonszám (shared-cost number).</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>This value is not a valid toll-free number.</source>
+                <target>Hibás ingyenes telefonszám.</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>This value is not a valid UAN.</source>
+                <target>Hibás központi telefonszám (UAN).</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>This value is not a valid VoIP number.</source>
+                <target>Hibás VoIP telefonszám.</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>This value is not a valid voicemail access number.</source>
+                <target>Hibás hangposta hozzáférési szám.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
