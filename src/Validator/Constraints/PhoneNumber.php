@@ -112,7 +112,7 @@ class PhoneNumber extends Constraint
             return "This value is not a valid $typeName.";
         }
 
-        return 'This value is not a valid number.';
+        return 'This value is not a valid phone number.';
     }
 
     public function getTypeNames(): array
