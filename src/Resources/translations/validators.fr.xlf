@@ -14,6 +14,38 @@
                 <source>This value is not a valid mobile number.</source>
                 <target>Cette valeur n'est pas un numéro de téléphone mobile valide.</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>This value is not a valid pager number.</source>
+                <target>Cette valeur n'est pas un numéro de téléphone bipeur valide.</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>This value is not a valid personal number.</source>
+                <target>Cette valeur n'est pas un numéro de téléphone personnel valide.</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>This value is not a valid premium-rate number.</source>
+                <target>Cette valeur n'est pas un numéro de téléphone premium valide.</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>This value is not a valid shared-cost number.</source>
+                <target>Cette valeur n'est pas un numéro à coût partagé valide.</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>This value is not a valid toll-free number.</source>
+                <target>Cette valeur n'est pas un numéro vert valide.</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>This value is not a valid UAN.</source>
+                <target>Cette valeur n'est pas un numéro de téléphone UAN valide.</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>This value is not a valid VoIP number.</source>
+                <target>Cette valeur n'est pas un numéro de téléphone VoIP valide.</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>This value is not a valid voicemail access number.</source>
+                <target>Cette valeur n'est pas un numéro de répondeur valide.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

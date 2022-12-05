@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Add Hungarian translations #129
+- Add more french translations #130
 
 ## [3.8.0] - 2022-10-24
 
