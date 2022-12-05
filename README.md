@@ -1,6 +1,6 @@
 # PhoneNumberBundle
 
-[![Build Status](https://travis-ci.com/odolbeau/phone-number-bundle.svg?branch=master)](https://travis-ci.com/odolbeau/phone-number-bundle)
+[![Build Status](https://github.com/odolbeau/phone-number-bundle/actions/workflows/tests.yml/badge.svg)](https://github.com/odolbeau/phone-number-bundle/actions)
 [![Latest stable version](https://img.shields.io/packagist/v/odolbeau/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/odolbeau/phone-number-bundle)
 [![License](http://img.shields.io/packagist/l/odolbeau/phone-number-bundle.svg?style=flat-square)](https://packagist.org/packages/odolbeau/phone-number-bundle)
 
