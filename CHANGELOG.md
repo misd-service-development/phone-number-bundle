@@ -5,8 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Added
+
 - Add Hungarian translations #129
 - Add more french translations #130
+
+### Changed
+
+- The message `This value is not a valid number.` that was not translated inside the bundle is now `This value is not a valid phone number.` (and is translated in many languages #128
 
 ## [3.8.0] - 2022-10-24
 
