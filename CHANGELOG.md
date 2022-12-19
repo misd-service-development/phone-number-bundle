@@ -5,12 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Add a feature to change country display format in form
+
+## [3.9.0] - 2022-12-19
 
 ### Added
 
 - Add Hungarian translations #129
 - Add more french translations #130
+- Add new (short) render format for countries in form type #95
 
 ### Changed
 
