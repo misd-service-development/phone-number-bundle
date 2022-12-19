@@ -33,6 +33,9 @@ class PhoneNumberType extends AbstractType
     public const WIDGET_SINGLE_TEXT = 'single_text';
     public const WIDGET_COUNTRY_CHOICE = 'country_choice';
 
+    public const DISPLAY_COUNTRY_FULL = 'display_country_full';
+    public const DISPLAY_COUNTRY_SHORT = 'display_country_short';
+
     /**
      * {@inheritdoc}
      */
@@ -60,13 +63,15 @@ class PhoneNumberType extends AbstractType
             }
 
             $countryChoices = [];
+            $intlCountries = Countries::getNames();
 
-            foreach (Countries::getNames() as $region => $name) {
-                if (false === isset($countries[$region])) {
+            foreach ($countries as $regionCode => $countryCode) {
+                if (!isset($intlCountries[$regionCode])) {
                     continue;
                 }
 
-                $countryChoices[sprintf('%s (+%s)', $name, $countries[$region])] = $region;
+                $label = $this->formatDisplayChoice($options['country_display_type'], $intlCountries[$regionCode], $regionCode, $countryCode);
+                $countryChoices[$label] = $regionCode;
             }
 
             $transformerChoices = array_values($countryChoices);
@@ -128,6 +133,7 @@ class PhoneNumberType extends AbstractType
             'by_reference' => false,
             'error_bubbling' => false,
             'country_choices' => [],
+            'country_display_type' => self::DISPLAY_COUNTRY_FULL,
             'country_placeholder' => false,
             'preferred_country_choices' => [],
             'country_options' => [],
@@ -137,6 +143,11 @@ class PhoneNumberType extends AbstractType
         $resolver->setAllowedValues('widget', [
             self::WIDGET_SINGLE_TEXT,
             self::WIDGET_COUNTRY_CHOICE,
+        ]);
+
+        $resolver->setAllowedValues('country_display_type', [
+            self::DISPLAY_COUNTRY_FULL,
+            self::DISPLAY_COUNTRY_SHORT,
         ]);
 
         $resolver->setAllowedTypes('country_options', 'array');
@@ -157,5 +168,14 @@ class PhoneNumberType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'phone_number';
+    }
+
+    private function formatDisplayChoice(string $displayType, string $regionName, string $regionCode, string $countryCode): string
+    {
+        if (self::DISPLAY_COUNTRY_SHORT === $displayType) {
+            return sprintf('%s +%s', $regionCode, $countryCode);
+        }
+
+        return sprintf('%s (+%s)', $regionName, $countryCode);
     }
 }

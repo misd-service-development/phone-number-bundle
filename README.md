@@ -169,6 +169,12 @@ This produces the preferred choices of 'Jersey' and 'United Kingdom', and regula
 By default the `country_choices` is empty, which means all countries are included, as is `preferred_country_choices`.
 The option `country_placeholder` can be specified to create a placeholder option on above the whole list.
 
+The option `country_display_type` can be specified to change the country dropdown label format. There are two formats available :
+| display type                      | Result                 |
+| ----------------------------------| -----------------------|
+| `display_country_full` (default)  |  United Kingdom (+44)  |
+| `display_country_short`           |  GB +44                |
+
 ### Validating phone numbers
 
 ℹ️ _Using a Symfony or PHP version that does not support attributes? This bundle also supports validation as annotation.
