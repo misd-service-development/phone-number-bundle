@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.9.1] - 2023-01-16
+
+### Fixed
+
+- Remove deprecation notice while using the PhoneNumber validation constraint with Symfony 6.1+ #139
+
 ## [3.9.0] - 2022-12-19
 
 ### Added
