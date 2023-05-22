@@ -101,6 +101,14 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
      */
     public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
-        return 'libphonenumber\PhoneNumber' === $type && \is_string($data);
+        return PhoneNumber::class === $type && \is_string($data);
+    }
+
+    /**
+     * for symfony/serializer >= 6.3.
+     */
+    public function getSupportedTypes(?string $format): array
+    {
+        return [PhoneNumber::class => false];
     }
 }

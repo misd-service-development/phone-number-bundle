@@ -22,6 +22,7 @@
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
         "symfony/form": "^4.4|^5.3|^6.0",
+        "symfony/phpunit-bridge": "^6.2",
         "symfony/property-access": "^4.4|^5.3|^6.0",
         "symfony/serializer": "^4.4|^5.3|^6.0.1",
         "symfony/twig-bundle": "^4.4|^5.3|^6.0",

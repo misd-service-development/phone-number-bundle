@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
+    <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="999999" />
+    </php>
     <testsuites>
         <testsuite name="MisdPhoneNumberBundle Test Suite">
             <directory>tests</directory>
@@ -11,4 +14,7 @@
             <directory>src</directory>
         </whitelist>
     </filter>
+    <listeners>
+        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
 </phpunit>
