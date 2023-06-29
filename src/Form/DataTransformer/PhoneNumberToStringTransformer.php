@@ -51,9 +51,6 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
         $this->format = $format;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform($phoneNumber): string
     {
         if (null === $phoneNumber) {
@@ -71,9 +68,6 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
         return $util->format($phoneNumber, $this->format);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform($string): ?PhoneNumber
     {
         if (!$string && '0' !== $string) {

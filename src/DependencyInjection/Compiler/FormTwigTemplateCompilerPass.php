@@ -24,9 +24,6 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
     private $phoneNumberBootstrap4Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_4.html.twig';
     private $phoneNumberBootstrap5Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_5.html.twig';
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasParameter('twig.form.resources')) {

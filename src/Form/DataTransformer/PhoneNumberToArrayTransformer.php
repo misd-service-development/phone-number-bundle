@@ -36,9 +36,6 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
         $this->countryChoices = $countryChoices;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform($phoneNumber): array
     {
         if (null === $phoneNumber) {
@@ -59,9 +56,6 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform($value): ?PhoneNumber
     {
         if (!$value) {

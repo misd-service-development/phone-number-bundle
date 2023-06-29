@@ -39,9 +39,6 @@ class PhoneNumberHelperExtension extends AbstractExtension
         $this->helper = $helper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -51,9 +48,6 @@ class PhoneNumberHelperExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [
@@ -62,9 +56,6 @@ class PhoneNumberHelperExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTests(): array
     {
         return [
@@ -73,8 +64,6 @@ class PhoneNumberHelperExtension extends AbstractExtension
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string
      */
     public function getName()

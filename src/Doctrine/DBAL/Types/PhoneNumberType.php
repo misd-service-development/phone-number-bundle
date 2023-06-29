@@ -29,25 +29,16 @@ class PhoneNumberType extends Type
      */
     public const NAME = 'phone_number';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return self::NAME;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return $platform->getVarcharTypeDeclarationSQL(['length' => 35]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if (null === $value) {
@@ -63,9 +54,6 @@ class PhoneNumberType extends Type
         return $util->format($value, PhoneNumberFormat::E164);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertToPHPValue($value, AbstractPlatform $platform): ?PhoneNumber
     {
         if (null === $value || $value instanceof PhoneNumber) {
@@ -81,9 +69,6 @@ class PhoneNumberType extends Type
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;

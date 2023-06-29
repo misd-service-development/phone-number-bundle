@@ -48,15 +48,13 @@ class PhoneNumber extends Constraint
      */
     protected static $errorNames = self::ERROR_NAMES;
 
-    public $message = null;
+    public $message;
     public $type = self::ANY;
-    public $defaultRegion = null;
-    public $regionPath = null;
-    public $format = null;
+    public $defaultRegion;
+    public $regionPath;
+    public $format;
 
     /**
-     * {@inheritdoc}
-     *
      * @param int|array|null    $format Specify the format (\libphonenumber\PhoneNumberFormat::*)
      *                                  or options (an associative array)
      * @param string|array|null $type

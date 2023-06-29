@@ -61,8 +61,6 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws InvalidArgumentException
      */
     public function normalize($object, $format = null, array $context = []): string
@@ -70,17 +68,12 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
         return $this->phoneNumberUtil->format($object, $this->format);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceof PhoneNumber;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws UnexpectedValueException
      */
     public function denormalize($data, $class, $format = null, array $context = []): ?PhoneNumber
@@ -96,9 +89,6 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
         return PhoneNumber::class === $type && \is_string($data);

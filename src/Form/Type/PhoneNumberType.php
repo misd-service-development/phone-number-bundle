@@ -36,9 +36,6 @@ class PhoneNumberType extends AbstractType
     public const DISPLAY_COUNTRY_FULL = 'display_country_full';
     public const DISPLAY_COUNTRY_SHORT = 'display_country_short';
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (self::WIDGET_COUNTRY_CHOICE === $options['widget']) {
@@ -108,18 +105,12 @@ class PhoneNumberType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['type'] = 'tel';
         $view->vars['widget'] = $options['widget'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -154,17 +145,11 @@ class PhoneNumberType extends AbstractType
         $resolver->setAllowedTypes('number_options', 'array');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'phone_number';
