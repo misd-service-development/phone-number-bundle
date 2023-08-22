@@ -175,6 +175,12 @@ The option `country_display_type` can be specified to change the country dropdow
 | `display_country_full` (default)  |  United Kingdom (+44)  |
 | `display_country_short`           |  GB +44                |
 
+And with the option `country_display_emoji_flag` set to `true` (default is `false`) you can add the emoji flag of the country before the label :
+| display type                      | Result                    |
+| ----------------------------------| --------------------------|
+| `display_country_full` (default)  |  🇬🇧 United Kingdom (+44)  |
+| `display_country_short`           |  🇬🇧 GB +44                |
+
 ### Validating phone numbers
 
 ℹ️ _Using a Symfony or PHP version that does not support attributes? This bundle also supports validation as annotation.

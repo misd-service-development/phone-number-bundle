@@ -67,7 +67,7 @@ class PhoneNumberType extends AbstractType
                     continue;
                 }
 
-                $label = $this->formatDisplayChoice($options['country_display_type'], $intlCountries[$regionCode], $regionCode, $countryCode);
+                $label = $this->formatDisplayChoice($options['country_display_type'], $intlCountries[$regionCode], $regionCode, $countryCode, $options['country_display_emoji_flag']);
                 $countryChoices[$label] = $regionCode;
             }
 
@@ -125,6 +125,7 @@ class PhoneNumberType extends AbstractType
             'error_bubbling' => false,
             'country_choices' => [],
             'country_display_type' => self::DISPLAY_COUNTRY_FULL,
+            'country_display_emoji_flag' => false,
             'country_placeholder' => false,
             'preferred_country_choices' => [],
             'country_options' => [],
@@ -155,12 +156,25 @@ class PhoneNumberType extends AbstractType
         return 'phone_number';
     }
 
-    private function formatDisplayChoice(string $displayType, string $regionName, string $regionCode, string $countryCode): string
+    private function formatDisplayChoice(string $displayType, string $regionName, string $regionCode, string $countryCode, bool $displayEmojiFlag): string
     {
+        $formattedDisplay = sprintf('%s (+%s)', $regionName, $countryCode);
         if (self::DISPLAY_COUNTRY_SHORT === $displayType) {
-            return sprintf('%s +%s', $regionCode, $countryCode);
+            $formattedDisplay = sprintf('%s +%s', $regionCode, $countryCode);
         }
 
-        return sprintf('%s (+%s)', $regionName, $countryCode);
+        if ($displayEmojiFlag) {
+            $formattedDisplay = self::getEmojiFlag($regionCode).' '.$formattedDisplay;
+        }
+
+        return $formattedDisplay;
+    }
+
+    private static function getEmojiFlag(string $countryCode): string
+    {
+        $regionalOffset = 0x1F1A5;
+
+        return mb_chr($regionalOffset + mb_ord($countryCode[0], 'UTF-8'), 'UTF-8')
+            .mb_chr($regionalOffset + mb_ord($countryCode[1], 'UTF-8'), 'UTF-8');
     }
 }

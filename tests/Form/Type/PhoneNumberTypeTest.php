@@ -175,10 +175,11 @@ class PhoneNumberTypeTest extends TestCase
     /**
      * @dataProvider countryChoiceFormatProvider
      */
-    public function testCountryChoiceFormat(string $displayType, array $expectedChoices)
+    public function testCountryChoiceFormat(string $displayType, bool $displayEmojiFlag, array $expectedChoices)
     {
         $options['widget'] = PhoneNumberType::WIDGET_COUNTRY_CHOICE;
         $options['country_display_type'] = $displayType;
+        $options['country_display_emoji_flag'] = $displayEmojiFlag;
         $form = $this->factory->create(PhoneNumberType::class, null, $options);
 
         $view = $form->createView();
@@ -191,6 +192,7 @@ class PhoneNumberTypeTest extends TestCase
 
     /**
      * 0 => Display type
+     * 1 => Display emoji flag
      * 2 => Expected choices.
      */
     public function countryChoiceFormatProvider()
@@ -198,14 +200,30 @@ class PhoneNumberTypeTest extends TestCase
         return [
             [
                 PhoneNumberType::DISPLAY_COUNTRY_FULL,
+                false,
                 [
                     $this->createChoiceView('United Kingdom (+44)', 'GB'),
                 ],
             ],
             [
                 PhoneNumberType::DISPLAY_COUNTRY_SHORT,
+                false,
                 [
                     $this->createChoiceView('GB +44', 'GB'),
+                ],
+            ],
+            [
+                PhoneNumberType::DISPLAY_COUNTRY_FULL,
+                true,
+                [
+                    $this->createChoiceView('🇬🇧 United Kingdom (+44)', 'GB'),
+                ],
+            ],
+            [
+                PhoneNumberType::DISPLAY_COUNTRY_SHORT,
+                true,
+                [
+                    $this->createChoiceView('🇬🇧 GB +44', 'GB'),
                 ],
             ],
         ];
