@@ -36,7 +36,7 @@ class PhoneNumberType extends Type
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        return $platform->getVarcharTypeDeclarationSQL(['length' => 35]);
+        return $platform->getVarcharTypeDeclarationSQL(['length' => $fieldDeclaration['length'] ?? 35]);
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
