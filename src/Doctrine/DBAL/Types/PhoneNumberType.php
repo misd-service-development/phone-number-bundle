@@ -78,6 +78,7 @@ class PhoneNumberType extends Type
             }
 
             // DBAL 4
+            // @phpstan-ignore-next-line
             throw InvalidType::new($value, self::NAME, ['null', 'string']);
         }
     }
