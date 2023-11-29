@@ -13,13 +13,16 @@ help:
 		| awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%s\033[0m___%s\n", $$1, $$2}' | column -ts___
 
 cs-lint: ## Verify check styles
-	@docker run --rm -v $(DIR):/project -w /project $(QA_IMAGE) php-cs-fixer fix --allow-risky=yes --dry-run -vvv
+	composer install --working-dir=tools/php-cs-fixer
+	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php_cs.dist.php
 
 cs-fix: ## Apply Check styles
-	@docker run --rm -v $(DIR):/project -w /project $(QA_IMAGE) php-cs-fixer fix --config=.php_cs.dist.php --allow-risky=yes -vvv
+	composer install --working-dir=tools/php-cs-fixer
+	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --diff --config=.php_cs.dist.php
 
 phpstan: ## Run PHPStan
-	@docker run --rm -v $(DIR):/project -w /project $(QA_IMAGE) phpstan analyse
+	composer install --working-dir=tools/phpstan
+	tools/phpstan/vendor/bin/phpstan analyze
 
 phpunit: ## Run phpunit
 	-./vendor/bin/phpunit
