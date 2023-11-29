@@ -4,19 +4,44 @@ jobs:
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@master
-      - name: PHPStan
-        uses: docker://jakzal/phpqa:php8.2
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          args: phpstan analyze --no-progress
+          php-version: 8.2
+
+      - name: Download dependencies
+        uses: ramsey/composer-install@v2
+
+      - name: Install PHPStan
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--working-dir=tools/phpstan"
+
+      - name: PHPStan
+        run: tools/phpstan/vendor/bin/phpstan analyze --no-progress --error-format=checkstyle
 
   php-cs-fixer:
     name: PHP-CS-Fixer
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@master
-      - name: PHP-CS-Fixer
-        uses: docker://jakzal/phpqa:php8.2
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          args: php-cs-fixer fix --config=.php_cs.dist.php --dry-run --diff
+          php-version: 8.2
+
+      - name: Install php-cs-fixer
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--working-dir=tools/php-cs-fixer"
+
+      - name: PHP-CS-Fixer
+        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php_cs.dist.php
