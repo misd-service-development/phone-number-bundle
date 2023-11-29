@@ -36,23 +36,25 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
         $this->countryChoices = $countryChoices;
     }
 
-    public function transform($phoneNumber): array
+    public function transform($value): array
     {
-        if (null === $phoneNumber) {
+        if (null === $value) {
             return ['country' => '', 'number' => ''];
-        } elseif (false === $phoneNumber instanceof PhoneNumber) {
+        }
+
+        if (false === $value instanceof PhoneNumber) {
             throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
         }
 
         $util = PhoneNumberUtil::getInstance();
 
-        if (false === \in_array($util->getRegionCodeForNumber($phoneNumber), $this->countryChoices)) {
+        if (false === \in_array($util->getRegionCodeForNumber($value), $this->countryChoices)) {
             throw new TransformationFailedException('Invalid country.');
         }
 
         return [
-            'country' => $util->getRegionCodeForNumber($phoneNumber),
-            'number' => $util->format($phoneNumber, PhoneNumberFormat::NATIONAL),
+            'country' => $util->getRegionCodeForNumber($value),
+            'number' => $util->format($value, PhoneNumberFormat::NATIONAL),
         ];
     }
 
@@ -78,7 +80,7 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
             throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
         }
 
-        if (false === \in_array($util->getRegionCodeForNumber($phoneNumber), $this->countryChoices)) {
+        if (null !== $phoneNumber && false === \in_array($util->getRegionCodeForNumber($phoneNumber), $this->countryChoices)) {
             throw new TransformationFailedException('Invalid country.');
         }
 

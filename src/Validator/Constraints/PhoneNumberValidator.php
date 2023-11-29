@@ -16,6 +16,7 @@ use libphonenumber\PhoneNumber as PhoneNumberObject;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
 use libphonenumber\PhoneNumberUtil;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as PhoneNumberConstraint;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -59,6 +60,10 @@ class PhoneNumberValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint): void
     {
+        if (!$constraint instanceof PhoneNumberConstraint) {
+            return;
+        }
+
         if (null === $value || '' === $value) {
             return;
         }
@@ -137,7 +142,7 @@ class PhoneNumberValidator extends ConstraintValidator
         }
     }
 
-    private function getRegion(Constraint $constraint): ?string
+    private function getRegion(PhoneNumberConstraint $constraint): ?string
     {
         $defaultRegion = null;
         if (null !== $path = $constraint->regionPath) {
@@ -176,10 +181,10 @@ class PhoneNumberValidator extends ConstraintValidator
     /**
      * Add a violation.
      *
-     * @param mixed      $value      the value that should be validated
-     * @param Constraint $constraint the constraint for the validation
+     * @param mixed                 $value      the value that should be validated
+     * @param PhoneNumberConstraint $constraint the constraint for the validation
      */
-    private function addViolation($value, Constraint $constraint): void
+    private function addViolation($value, PhoneNumberConstraint $constraint): void
     {
         $this->context->buildViolation($constraint->getMessage())
             ->setParameter('{{ types }}', implode(', ', $constraint->getTypeNames()))

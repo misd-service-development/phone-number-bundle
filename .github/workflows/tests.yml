@@ -13,14 +13,24 @@ jobs:
     strategy:
       matrix:
         include:
-          - php: '8.0'
+          # Lowest Deps
+          - php: 8.0
             symfony-require: 5.4.*
-          - php: '8.0'
-            symfony-require: 6.3.*
-          - php: '8.2'
+            composer-flags: '--prefer-stable --prefer-lowest'
+          # LTS with latest stable PHP
+          - php: 8.2
+            symfony-require: 6.4.*
+            composer-flags: '--prefer-stable'
+          # Active release
+          - php: 8.3
             symfony-require: 7.0.*
+            composer-flags: '--prefer-stable --ignore-platform-req=php+'
+          # Development release
+          - php: nightly
+            symfony-require: 7.1.*@dev
+            composer-flags: '--ignore-platform-req=php+'
             stability: dev
-          - php: '8.1'
+            can-fail: true
       fail-fast: false
 
     steps:
@@ -30,7 +40,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "${{ matrix.php }}"
+          php-version: ${{ matrix.php }}
+          extensions: intl-74.1
           coverage: none
 
       - name: Configure Composer minimum stability
@@ -39,8 +50,8 @@ jobs:
 
       - name: Install dependencies
         env:
-          SYMFONY_REQUIRE: "${{ matrix.symfony-require }}"
-        run: composer update --prefer-dist
+          SYMFONY_REQUIRE: ${{ matrix.symfony-require }}
+        run: composer update ${{ matrix.composer-flags }} --no-interaction --no-progress --optimize-autoloader
 
-      - name: "Run PHPUnit"
-        run: "vendor/bin/phpunit"
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit

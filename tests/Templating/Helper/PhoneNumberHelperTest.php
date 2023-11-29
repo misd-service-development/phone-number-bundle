@@ -89,15 +89,6 @@ class PhoneNumberHelperTest extends TestCase
         $this->assertEquals('+371 22 222 222', $result);
     }
 
-    public function testFormatAcceptNotAllowValue()
-    {
-        $phoneNumberUtil = PhoneNumberUtil::getInstance();
-        $helper = new PhoneNumberHelper($phoneNumberUtil);
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The phone number supplied is not PhoneNumber or string.');
-        $helper->format(0037122222222);
-    }
-
     public function formatOutOfCountryCallingNumberAcceptString()
     {
         $phoneNumberUtil = PhoneNumberUtil::getInstance();

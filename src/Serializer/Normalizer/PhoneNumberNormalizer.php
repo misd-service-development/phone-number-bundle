@@ -76,7 +76,7 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
     /**
      * @throws UnexpectedValueException
      */
-    public function denormalize($data, $class, $format = null, array $context = []): ?PhoneNumber
+    public function denormalize($data, $type, $format = null, array $context = []): ?PhoneNumber
     {
         if (null === $data) {
             return null;

@@ -3,7 +3,6 @@
 /.phpunit.result.cache
 /composer.lock
 /composer.phar
-/phpunit.xml
 /tools/*/composer.lock
 /tools/*/vendor
 /vendor/

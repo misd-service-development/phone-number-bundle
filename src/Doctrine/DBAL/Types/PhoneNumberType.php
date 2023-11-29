@@ -35,15 +35,15 @@ class PhoneNumberType extends Type
         return self::NAME;
     }
 
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         // DBAL < 4
         if (method_exists(AbstractPlatform::class, 'getVarcharTypeDeclarationSQL')) {
-            return $platform->getVarcharTypeDeclarationSQL(['length' => $fieldDeclaration['length'] ?? 35]);
+            return $platform->getVarcharTypeDeclarationSQL(['length' => $column['length'] ?? 35]);
         }
 
         // DBAL 4
-        return $platform->getStringTypeDeclarationSQL(['length' => $fieldDeclaration['length'] ?? 35]);
+        return $platform->getStringTypeDeclarationSQL(['length' => $column['length'] ?? 35]);
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
@@ -56,9 +56,7 @@ class PhoneNumberType extends Type
             throw new ConversionException('Expected \libphonenumber\PhoneNumber, got '.\gettype($value));
         }
 
-        $util = PhoneNumberUtil::getInstance();
-
-        return $util->format($value, PhoneNumberFormat::E164);
+        return PhoneNumberUtil::getInstance()->format($value, PhoneNumberFormat::E164);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?PhoneNumber

@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+
 - Remove support of Symfony 4.x, 5.3 & < 6.3
 - Add support for Symfony 7
+- Remove support of PHP 7.4
 
 ## [3.9.3] - 2023-11-29
 

@@ -51,33 +51,33 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
         $this->format = $format;
     }
 
-    public function transform($phoneNumber): string
+    public function transform($value): string
     {
-        if (null === $phoneNumber) {
+        if (null === $value) {
             return '';
-        } elseif (false === $phoneNumber instanceof PhoneNumber) {
+        }
+
+        if (false === $value instanceof PhoneNumber) {
             throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
         }
 
         $util = PhoneNumberUtil::getInstance();
 
         if (PhoneNumberFormat::NATIONAL === $this->format) {
-            return $util->formatOutOfCountryCallingNumber($phoneNumber, $this->defaultRegion);
+            return $util->formatOutOfCountryCallingNumber($value, $this->defaultRegion);
         }
 
-        return $util->format($phoneNumber, $this->format);
+        return $util->format($value, $this->format);
     }
 
-    public function reverseTransform($string): ?PhoneNumber
+    public function reverseTransform($value): ?PhoneNumber
     {
-        if (!$string && '0' !== $string) {
+        if (!$value && '0' !== $value) {
             return null;
         }
 
-        $util = PhoneNumberUtil::getInstance();
-
         try {
-            return $util->parse($string, $this->defaultRegion);
+            return PhoneNumberUtil::getInstance()->parse($value, $this->defaultRegion);
         } catch (NumberParseException $e) {
             throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
         }
