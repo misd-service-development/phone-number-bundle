@@ -38,7 +38,7 @@ class PhoneNumberType extends Type
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         // DBAL < 4
-        if (method_exists($platform, 'getVarcharTypeDeclarationSQL')) {
+        if (method_exists(AbstractPlatform::class, 'getVarcharTypeDeclarationSQL')) {
             return $platform->getVarcharTypeDeclarationSQL(['length' => $fieldDeclaration['length'] ?? 35]);
         }
 
