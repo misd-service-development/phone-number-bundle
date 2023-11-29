@@ -13,6 +13,7 @@ namespace Misd\PhoneNumberBundle\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Type;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumber;
@@ -36,7 +37,13 @@ class PhoneNumberType extends Type
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        return $platform->getVarcharTypeDeclarationSQL(['length' => $fieldDeclaration['length'] ?? 35]);
+        // DBAL < 4
+        if (method_exists($platform, 'getVarcharTypeDeclarationSQL')) {
+            return $platform->getVarcharTypeDeclarationSQL(['length' => $fieldDeclaration['length'] ?? 35]);
+        }
+
+        // DBAL 4
+        return $platform->getStringTypeDeclarationSQL(['length' => $fieldDeclaration['length'] ?? 35]);
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
@@ -65,7 +72,13 @@ class PhoneNumberType extends Type
         try {
             return $util->parse($value, PhoneNumberUtil::UNKNOWN_REGION);
         } catch (NumberParseException $e) {
-            throw ConversionException::conversionFailed($value, self::NAME);
+            if (method_exists(ConversionException::class, 'conversionFailed')) {
+                // DBAL < 4
+                throw ConversionException::conversionFailed($value, self::NAME);
+            }
+
+            // DBAL 4
+            throw InvalidType::new($value, self::NAME, ['null', 'string']);
         }
     }
 
