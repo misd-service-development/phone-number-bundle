@@ -14,20 +14,20 @@
     "require": {
         "php": ">=7.4",
         "giggsey/libphonenumber-for-php": "^8.0",
-        "symfony/framework-bundle": "^4.4|^5.3|^6.0",
-        "symfony/intl": "^4.4|^5.3|^6.0",
+        "symfony/framework-bundle": "^5.4 || ^6.3 || ^7.0",
+        "symfony/intl": "^5.4 || ^6.3 || ^7.0",
         "symfony/polyfill-mbstring": "^1.28"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "^1.12|^2.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
-        "symfony/form": "^4.4|^5.3|^6.0",
-        "symfony/phpunit-bridge": "^6.2",
-        "symfony/property-access": "^4.4|^5.3|^6.0",
-        "symfony/serializer": "^4.4|^5.3|^6.0.1",
-        "symfony/twig-bundle": "^4.4|^5.3|^6.0",
-        "symfony/validator": "^4.4|^5.3|^6.0"
+        "symfony/form": "^5.4 || ^6.3 || ^7.0",
+        "symfony/phpunit-bridge": "^6.3 || ^7.0",
+        "symfony/property-access": "^5.4 || ^6.3 || ^7.0",
+        "symfony/serializer": "^5.4 || ^6.3 || ^7.0",
+        "symfony/twig-bundle": "^5.4 || ^6.3 || ^7.0",
+        "symfony/validator": "^5.4 || ^6.3 || ^7.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Add a DBAL mapping type",
@@ -54,8 +54,5 @@
         "branch-alias": {
             "dev-master": "3.9.x-dev"
         }
-    },
-    "conflict": {
-        "symfony/serializer": "6.0.0"
     }
 }

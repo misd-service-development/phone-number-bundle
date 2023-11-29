@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Validator\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
@@ -67,9 +68,6 @@ class PhoneNumberValidatorTest extends TestCase
                 ->method('setCode')
                 ->with($this->isType('string'))
                 ->willReturn($constraintViolationBuilder);
-            $constraintViolationBuilder
-                ->method('addViolation')
-                ->willReturn($constraintViolationBuilder);
 
             $this->context
                 ->expects($this->once())
@@ -89,7 +87,11 @@ class PhoneNumberValidatorTest extends TestCase
     public function testValidateFromAttribute()
     {
         $classMetadata = new ClassMetadata(PhoneNumberDummy::class);
-        (new AnnotationLoader())->loadClassMetadata($classMetadata);
+        if (class_exists(AnnotationLoader::class)) {
+            (new AnnotationLoader())->loadClassMetadata($classMetadata);
+        } else {
+            (new AttributeLoader())->loadClassMetadata($classMetadata);
+        }
 
         [$constraint1] = $classMetadata->properties['phoneNumber1']->constraints;
         [$constraint2] = $classMetadata->properties['phoneNumber2']->constraints;

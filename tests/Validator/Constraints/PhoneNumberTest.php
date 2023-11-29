@@ -24,10 +24,10 @@ class PhoneNumberTest extends TestCase
     {
         $phoneNumber = new PhoneNumber();
 
-        $this->assertObjectHasAttribute('message', $phoneNumber);
-        $this->assertObjectHasAttribute('type', $phoneNumber);
-        $this->assertObjectHasAttribute('defaultRegion', $phoneNumber);
-        $this->assertObjectHasAttribute('regionPath', $phoneNumber);
+        $this->assertObjectHasProperty('message', $phoneNumber);
+        $this->assertObjectHasProperty('type', $phoneNumber);
+        $this->assertObjectHasProperty('defaultRegion', $phoneNumber);
+        $this->assertObjectHasProperty('regionPath', $phoneNumber);
     }
 
     /**

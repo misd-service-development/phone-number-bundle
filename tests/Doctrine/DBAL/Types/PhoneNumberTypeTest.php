@@ -50,7 +50,13 @@ class PhoneNumberTypeTest extends TestCase
     protected function setUp(): void
     {
         $this->platform = $this->prophesize(AbstractPlatform::class);
-        $this->platform->getVarcharTypeDeclarationSQL()->willReturn('DUMMYVARCHAR()');
+        if (method_exists(AbstractPlatform::class, 'getVarcharTypeDeclarationSQL')) {
+            // DBAL < 4
+            $this->platform->getVarcharTypeDeclarationSQL()->willReturn('DUMMYVARCHAR()');
+        } else {
+            // DBAL 4
+            $this->platform->getStringTypeDeclarationSQL()->willReturn('DUMMYVARCHAR()');
+        }
 
         $this->type = Type::getType('phone_number');
         $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
@@ -68,7 +74,13 @@ class PhoneNumberTypeTest extends TestCase
 
     public function testGetSQLDeclaration()
     {
-        $this->platform->getVarcharTypeDeclarationSQL(['length' => 35])->willReturn('DUMMYVARCHAR()');
+        if (method_exists(AbstractPlatform::class, 'getVarcharTypeDeclarationSQL')) {
+            // DBAL < 4
+            $this->platform->getVarcharTypeDeclarationSQL(['length' => 35])->willReturn('DUMMYVARCHAR()');
+        } else {
+            // DBAL 4
+            $this->platform->getStringTypeDeclarationSQL(['length' => 35])->willReturn('DUMMYVARCHAR()');
+        }
         $this->assertSame('DUMMYVARCHAR()', $this->type->getSQLDeclaration([], $this->platform->reveal()));
     }
 
