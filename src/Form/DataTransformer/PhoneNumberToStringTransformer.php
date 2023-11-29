@@ -76,6 +76,10 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
             return null;
         }
 
+        if (preg_match('/\p{L}/u', $value)) {
+            throw new TransformationFailedException('The number can not contain letters.');
+        }
+
         try {
             return PhoneNumberUtil::getInstance()->parse($value, $this->defaultRegion);
         } catch (NumberParseException $e) {

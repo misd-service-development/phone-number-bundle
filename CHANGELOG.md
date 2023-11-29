@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for Symfony 7
 - Remove support of PHP 7.4
 
+### Fixed
+
+- Prevent letters as number
+
 ## [3.9.3] - 2023-11-29
 
 ### Added

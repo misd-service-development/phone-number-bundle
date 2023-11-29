@@ -74,6 +74,10 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
 
         $util = PhoneNumberUtil::getInstance();
 
+        if (preg_match('/\p{L}/u', $value['number'])) {
+            throw new TransformationFailedException('The number can not contain letters.');
+        }
+
         try {
             $phoneNumber = $util->parse($value['number'], $value['country']);
         } catch (NumberParseException $e) {
