@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraint;
  * Phone number constraint.
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]

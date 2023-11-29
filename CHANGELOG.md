@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+## [3.9.3] - 2023-11-29
+
+### Added
+
 - The default value for the `PhoneNumberType` form type option `country_display_emoji_flag` will change from `false` to `true` on the next major release
 - The Doctrine column type length is configurable. Any existing `length` configuration (not taken into account before this release) will now be taken into account.
 
