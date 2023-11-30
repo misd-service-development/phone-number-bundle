@@ -14,6 +14,7 @@ return $config
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'declare_strict_types' => true,
     ])
     ->setFinder($finder)
 ;

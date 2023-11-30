@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Misd\PhoneNumberBundle\Tests\DependencyInjection\Compiler;
 
 use Misd\PhoneNumberBundle\DependencyInjection\Compiler\FormTwigTemplateCompilerPass;
