@@ -1,11 +1,7 @@
+on: [pull_request]
 name: PHPUnit
 
-on:
-  push:
-  pull_request:
-
 jobs:
-
   tests:
     name: Tests
     runs-on: Ubuntu-20.04
