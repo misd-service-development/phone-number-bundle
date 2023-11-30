@@ -44,22 +44,28 @@ class PhoneNumber extends Constraint
 
     /**
      * @deprecated since PhoneNumberBundle 3.6, use const ERROR_NAMES instead
+     *
+     * @var string[]
      */
-    protected static $errorNames = self::ERROR_NAMES;
+    protected static array $errorNames = self::ERROR_NAMES;
 
-    public $message;
-    public $type = self::ANY;
-    public $defaultRegion;
-    public $regionPath;
-    public $format;
+    public ?string $message = null;
+    /**
+     * @var string|string[]
+     */
+    public string|array $type = self::ANY;
+    public ?string $defaultRegion = null;
+    public ?string $regionPath = null;
+    public ?int $format = null;
 
     /**
-     * @param int|array|null    $format Specify the format (\libphonenumber\PhoneNumberFormat::*)
-     *                                  or options (an associative array)
-     * @param string|array|null $type
+     * @param int|array<mixed>|null $format  Specify the format (\libphonenumber\PhoneNumberFormat::*)
+     *                                       or options (an associative array)
+     * @param string|string[]|null  $type
+     * @param array<mixed>          $options
      */
     #[HasNamedArguments]
-    public function __construct($format = null, $type = null, string $defaultRegion = null, string $regionPath = null, string $message = null, array $groups = null, $payload = null, array $options = [])
+    public function __construct(int|array $format = null, string|array $type = null, string $defaultRegion = null, string $regionPath = null, string $message = null, array $groups = null, $payload = null, array $options = [])
     {
         if (\is_array($format)) {
             @trigger_error('Usage of the argument $format to specify options is deprecated and will be removed in 4.0. Use "$option" argument instead.', \E_USER_DEPRECATED);
@@ -89,6 +95,9 @@ class PhoneNumber extends Constraint
         return reset($types);
     }
 
+    /**
+     * @return string[]
+     */
     public function getTypes(): array
     {
         if (\is_array($this->type)) {
@@ -114,6 +123,9 @@ class PhoneNumber extends Constraint
         return 'This value is not a valid phone number.';
     }
 
+    /**
+     * @return string[]
+     */
     public function getTypeNames(): array
     {
         $types = \is_array($this->type) ? $this->type : [$this->type];

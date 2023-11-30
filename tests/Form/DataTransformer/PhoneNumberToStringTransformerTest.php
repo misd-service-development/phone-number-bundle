@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -26,17 +28,14 @@ class PhoneNumberToStringTransformerTest extends TestCase
 {
     public const TRANSFORMATION_FAILED = 'transformation_failed';
 
-    /**
-     * @var PhoneNumberUtil
-     */
-    protected $phoneNumberUtil;
+    private PhoneNumberUtil $phoneNumberUtil;
 
     protected function setUp(): void
     {
         $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $transformer = new PhoneNumberToStringTransformer();
 
@@ -46,18 +45,20 @@ class PhoneNumberToStringTransformerTest extends TestCase
     /**
      * @dataProvider transformProvider
      */
-    public function testTransform($defaultRegion, $format, $actual, $expected)
+    public function testTransform(string $defaultRegion, int $format, ?string $actual, string $expected): void
     {
         $transformer = new PhoneNumberToStringTransformer($defaultRegion, $format);
 
         $phoneNumberUtil = PhoneNumberUtil::getInstance();
         try {
+            /* @phpstan-ignore-next-line */
             $phoneNumber = $phoneNumberUtil->parse($actual, $defaultRegion);
         } catch (NumberParseException $e) {
             $phoneNumber = $actual;
         }
 
         try {
+            /* @phpstan-ignore-next-line */
             $transformed = $transformer->transform($phoneNumber);
         } catch (TransformationFailedException $e) {
             $transformed = self::TRANSFORMATION_FAILED;
@@ -71,27 +72,27 @@ class PhoneNumberToStringTransformerTest extends TestCase
      * 1 => Format
      * 2 => Actual value
      * 3 => Expected result.
+     *
+     * @return iterable<array{string, int, ?string, string}>
      */
-    public function transformProvider()
+    public function transformProvider(): iterable
     {
-        return [
-            [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, null, ''],
-            [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, 'foo', self::TRANSFORMATION_FAILED],
-            [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, '0', self::TRANSFORMATION_FAILED],
-            [
-                PhoneNumberUtil::UNKNOWN_REGION,
-                PhoneNumberFormat::INTERNATIONAL,
-                '+441234567890',
-                '+44 1234 567890',
-            ],
-            ['GB', PhoneNumberFormat::NATIONAL, '01234567890', '01234 567890'],
+        yield [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::INTERNATIONAL, null, ''];
+        yield [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, 'foo', self::TRANSFORMATION_FAILED];
+        yield [PhoneNumberUtil::UNKNOWN_REGION, PhoneNumberFormat::NATIONAL, '0', self::TRANSFORMATION_FAILED];
+        yield [
+            PhoneNumberUtil::UNKNOWN_REGION,
+            PhoneNumberFormat::INTERNATIONAL,
+            '+441234567890',
+            '+44 1234 567890',
         ];
+        yield ['GB', PhoneNumberFormat::NATIONAL, '01234567890', '01234 567890'];
     }
 
     /**
      * @dataProvider reverseTransformProvider
      */
-    public function testReverseTransform($defaultRegion, $actual, $expected)
+    public function testReverseTransform(string $defaultRegion, ?string $actual, ?string $expected): void
     {
         $transformer = new PhoneNumberToStringTransformer($defaultRegion);
 
@@ -112,15 +113,15 @@ class PhoneNumberToStringTransformerTest extends TestCase
      * 0 => Default region
      * 1 => Actual value
      * 2 => Expected result.
+     *
+     * @return iterable<array{string, ?string, ?string}>
      */
-    public function reverseTransformProvider()
+    public function reverseTransformProvider(): iterable
     {
-        return [
-            [PhoneNumberUtil::UNKNOWN_REGION, null, null],
-            [PhoneNumberUtil::UNKNOWN_REGION, 'foo', self::TRANSFORMATION_FAILED],
-            [PhoneNumberUtil::UNKNOWN_REGION, '0', self::TRANSFORMATION_FAILED],
-            [PhoneNumberUtil::UNKNOWN_REGION, '+44 1234 567890', '+441234567890'],
-            ['GB', '01234 567890', '+441234567890'],
-        ];
+        yield [PhoneNumberUtil::UNKNOWN_REGION, null, null];
+        yield [PhoneNumberUtil::UNKNOWN_REGION, 'foo', self::TRANSFORMATION_FAILED];
+        yield [PhoneNumberUtil::UNKNOWN_REGION, '0', self::TRANSFORMATION_FAILED];
+        yield [PhoneNumberUtil::UNKNOWN_REGION, '+44 1234 567890', '+441234567890'];
+        yield ['GB', '01234 567890', '+441234567890'];
     }
 }

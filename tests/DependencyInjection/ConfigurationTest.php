@@ -20,8 +20,11 @@ class ConfigurationTest extends TestCase
 {
     /**
      * @dataProvider configurationDataProvider
+     *
+     * @param array<mixed> $configs
+     * @param array<mixed> $expected
      */
-    public function testConfiguration(array $configs, array $expected)
+    public function testConfiguration(array $configs, array $expected): void
     {
         $processor = new Processor();
         $result = $processor->processConfiguration(new Configuration(), $configs);
@@ -29,7 +32,10 @@ class ConfigurationTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function configurationDataProvider()
+    /**
+     * @return iterable<array{array<mixed>, array<mixed>}>
+     */
+    public function configurationDataProvider(): iterable
     {
         yield [[], [
             'twig' => [

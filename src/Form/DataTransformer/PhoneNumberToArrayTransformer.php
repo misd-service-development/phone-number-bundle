@@ -19,30 +19,33 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
- * Phone number to array transformer.
+ * @implements DataTransformerInterface<PhoneNumber, array{country: string, number: string}>
  */
 class PhoneNumberToArrayTransformer implements DataTransformerInterface
 {
     /**
-     * @var array
+     * @var string[]
      */
-    private $countryChoices;
+    private array $countryChoices;
 
     /**
-     * Constructor.
+     * @param string[] $countryChoices
      */
     public function __construct(array $countryChoices)
     {
         $this->countryChoices = $countryChoices;
     }
 
-    public function transform($value): array
+    /**
+     * @return array{country: string, number: string}
+     */
+    public function transform(mixed $value): array
     {
         if (null === $value) {
             return ['country' => '', 'number' => ''];
         }
 
-        if (false === $value instanceof PhoneNumber) {
+        if (!$value instanceof PhoneNumber) {
             throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
         }
 
@@ -53,12 +56,12 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
         }
 
         return [
-            'country' => $util->getRegionCodeForNumber($value),
+            'country' => (string) $util->getRegionCodeForNumber($value),
             'number' => $util->format($value, PhoneNumberFormat::NATIONAL),
         ];
     }
 
-    public function reverseTransform($value): ?PhoneNumber
+    public function reverseTransform(mixed $value): ?PhoneNumber
     {
         if (!$value) {
             return null;
@@ -68,6 +71,7 @@ class PhoneNumberToArrayTransformer implements DataTransformerInterface
             throw new TransformationFailedException('Expected an array.');
         }
 
+        /* @phpstan-ignore-next-line */
         if ('' === trim($value['number'] ?? '')) {
             return null;
         }

@@ -11,6 +11,7 @@
 
 namespace Misd\PhoneNumberBundle\Tests\Validator\Constraints;
 
+use libphonenumber\PhoneNumber as LibPhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
@@ -29,15 +30,8 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
  */
 class PhoneNumberValidatorTest extends TestCase
 {
-    /**
-     * @var \Symfony\Component\Validator\Context\ExecutionContextInterface|MockObject
-     */
-    protected $context;
-
-    /**
-     * @var \Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator
-     */
-    protected $validator;
+    private ExecutionContextInterface&MockObject $context;
+    private PhoneNumberValidator $validator;
 
     protected function setUp(): void
     {
@@ -51,9 +45,17 @@ class PhoneNumberValidatorTest extends TestCase
 
     /**
      * @dataProvider validateProvider
+     *
+     * @param string[]|string|null $type
      */
-    public function testValidate($value, $violates, $type = null, $defaultRegion = null, $regionPath = null, $format = null)
-    {
+    public function testValidate(
+        string|LibPhoneNumber|null $value,
+        bool $violates,
+        array|string $type = null,
+        string $defaultRegion = null,
+        string $regionPath = null,
+        int $format = null
+    ): void {
         $constraint = new PhoneNumber($format, $type, $defaultRegion, $regionPath);
 
         if (true === $violates) {
@@ -84,7 +86,7 @@ class PhoneNumberValidatorTest extends TestCase
     /**
      * @requires PHP 8
      */
-    public function testValidateFromAttribute()
+    public function testValidateFromAttribute(): void
     {
         $classMetadata = new ClassMetadata(PhoneNumberDummy::class);
         if (class_exists(AnnotationLoader::class)) {
@@ -108,64 +110,64 @@ class PhoneNumberValidatorTest extends TestCase
      * 2 => Type (optional)
      * 3 => Default region (optional).
      * 4 => Region Path (optional).
+     *
+     * @return iterable<array{string|LibPhoneNumber|null, bool, 2?: string|string[]|null, 3?: ?string, 4?: ?string, 5?: ?int}>
      */
-    public function validateProvider()
+    public function validateProvider(): iterable
     {
-        return [
-            [null, false],
-            ['', false],
-            [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false],
-            [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, 'fixed_line'],
-            [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), true, 'mobile'],
-            [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, ['fixed_line', 'mobile']],
-            [PhoneNumberUtil::getInstance()->parse('+44123456789', PhoneNumberUtil::UNKNOWN_REGION), true],
-            ['+441234567890', false],
-            ['+441234567890', false, 'fixed_line'],
-            ['+441234567890', true, 'mobile'],
-            ['+441234567890', false, ['mobile', 'fixed_line']],
-            ['+441234567890', true, ['mobile', 'voip']],
-            ['+44123456789', true],
-            ['+44123456789', true, 'mobile'],
-            ['+12015555555', false],
-            ['+12015555555', false, 'fixed_line'],
-            ['+12015555555', false, 'mobile'],
-            ['+12015555555', false, ['mobile', 'fixed_line']],
-            ['+12015555555', true, ['pager', 'voip', 'uan']],
-            ['+447640123456', false, 'pager'],
-            ['+441234567890', true, 'pager'],
-            ['+447012345678', false, 'personal_number'],
-            ['+441234567890', true, 'personal_number'],
-            ['+449012345678', false, 'premium_rate'],
-            ['+441234567890', true, 'premium_rate'],
-            ['+441234567890', true, 'shared_cost'],
-            ['+448001234567', false, 'toll_free'],
-            ['+441234567890', true, 'toll_free'],
-            ['+445512345678', false, 'uan'],
-            ['+441234567890', true, 'uan'],
-            ['+445612345678', false, 'voip'],
-            ['+441234567890', true, 'voip'],
-            ['+41860123456789', false, 'voicemail'],
-            ['+441234567890', true, 'voicemail'],
-            ['2015555555', false, null, 'US'],
-            ['2015555555', false, 'fixed_line', 'US'],
-            ['2015555555', false, 'mobile', 'US'],
-            ['01234 567890', false, null, 'GB'],
-            ['foo', true],
-            ['+441234567890', true, 'mobile', null, 'regionPath'],
-            ['+33606060606', false, 'mobile', null, 'regionPath'],
-            ['+33606060606', false, 'mobile', null, null, PhoneNumberFormat::E164],
-            ['2015555555', true, null, null, null, PhoneNumberFormat::E164],
-        ];
+        yield [null, false];
+        yield ['', false];
+        yield [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false];
+        yield [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, 'fixed_line'];
+        yield [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), true, 'mobile'];
+        yield [PhoneNumberUtil::getInstance()->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION), false, ['fixed_line', 'mobile']];
+        yield [PhoneNumberUtil::getInstance()->parse('+44123456789', PhoneNumberUtil::UNKNOWN_REGION), true];
+        yield ['+441234567890', false];
+        yield ['+441234567890', false, 'fixed_line'];
+        yield ['+441234567890', true, 'mobile'];
+        yield ['+441234567890', false, ['mobile', 'fixed_line']];
+        yield ['+441234567890', true, ['mobile', 'voip']];
+        yield ['+44123456789', true];
+        yield ['+44123456789', true, 'mobile'];
+        yield ['+12015555555', false];
+        yield ['+12015555555', false, 'fixed_line'];
+        yield ['+12015555555', false, 'mobile'];
+        yield ['+12015555555', false, ['mobile', 'fixed_line']];
+        yield ['+12015555555', true, ['pager', 'voip', 'uan']];
+        yield ['+447640123456', false, 'pager'];
+        yield ['+441234567890', true, 'pager'];
+        yield ['+447012345678', false, 'personal_number'];
+        yield ['+441234567890', true, 'personal_number'];
+        yield ['+449012345678', false, 'premium_rate'];
+        yield ['+441234567890', true, 'premium_rate'];
+        yield ['+441234567890', true, 'shared_cost'];
+        yield ['+448001234567', false, 'toll_free'];
+        yield ['+441234567890', true, 'toll_free'];
+        yield ['+445512345678', false, 'uan'];
+        yield ['+441234567890', true, 'uan'];
+        yield ['+445612345678', false, 'voip'];
+        yield ['+441234567890', true, 'voip'];
+        yield ['+41860123456789', false, 'voicemail'];
+        yield ['+441234567890', true, 'voicemail'];
+        yield ['2015555555', false, null, 'US'];
+        yield ['2015555555', false, 'fixed_line', 'US'];
+        yield ['2015555555', false, 'mobile', 'US'];
+        yield ['01234 567890', false, null, 'GB'];
+        yield ['foo', true];
+        yield ['+441234567890', true, 'mobile', null, 'regionPath'];
+        yield ['+33606060606', false, 'mobile', null, 'regionPath'];
+        yield ['+33606060606', false, 'mobile', null, null, PhoneNumberFormat::E164];
+        yield ['2015555555', true, null, null, null, PhoneNumberFormat::E164];
     }
 
-    public function testValidateThrowsUnexpectedTypeExceptionOnBadValue()
+    public function testValidateThrowsUnexpectedTypeExceptionOnBadValue(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate($this, new PhoneNumber());
     }
 
-    protected function createValidator()
+    protected function createValidator(): PhoneNumberValidator
     {
         return new PhoneNumberValidator(PhoneNumberUtil::getInstance());
     }
@@ -173,16 +175,18 @@ class PhoneNumberValidatorTest extends TestCase
 
 class Foo
 {
-    public $regionPath = 'GB';
+    public string $regionPath = 'GB';
 }
 
 class PhoneNumberDummy
 {
     #[PhoneNumber(type: [PhoneNumber::MOBILE], defaultRegion: 'FR')]
-    private $phoneNumber1;
+    /* @phpstan-ignore-next-line */
+    private PhoneNumber $phoneNumber1;
 
     #[PhoneNumber(regionPath: 'regionPath')]
-    private $phoneNumber2;
+    /* @phpstan-ignore-next-line */
+    private PhoneNumber $phoneNumber2;
 
-    public $regionPath = 'GB';
+    public string $regionPath = 'GB';
 }

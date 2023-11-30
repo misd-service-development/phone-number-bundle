@@ -14,11 +14,11 @@ help:
 
 cs-lint: ## Verify check styles
 	composer install --working-dir=tools/php-cs-fixer
-	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php_cs.dist.php
+	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 
 cs-fix: ## Apply Check styles
 	composer install --working-dir=tools/php-cs-fixer
-	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --diff --config=.php_cs.dist.php
+	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --diff
 
 phpstan: ## Run PHPStan
 	composer install --working-dir=tools/phpstan

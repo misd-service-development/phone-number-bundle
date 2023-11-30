@@ -22,18 +22,8 @@ use Misd\PhoneNumberBundle\Exception\InvalidArgumentException;
  */
 class PhoneNumberHelper
 {
-    /**
-     * Phone number utility.
-     *
-     * @var PhoneNumberUtil
-     */
-    protected $phoneNumberUtil;
+    protected PhoneNumberUtil $phoneNumberUtil;
 
-    /**
-     * Constructor.
-     *
-     * @param PhoneNumberUtil $phoneNumberUtil phone number utility
-     */
     public function __construct(PhoneNumberUtil $phoneNumberUtil)
     {
         $this->phoneNumberUtil = $phoneNumberUtil;
@@ -62,7 +52,7 @@ class PhoneNumberHelper
      * @param PhoneNumber|string $phoneNumber phone number
      * @param string|null        $regionCode  The ISO 3166-1 alpha-2 country code
      */
-    public function formatOutOfCountryCallingNumber($phoneNumber, $regionCode): string
+    public function formatOutOfCountryCallingNumber(PhoneNumber|string $phoneNumber, ?string $regionCode): string
     {
         $phoneNumber = $this->getPhoneNumber($phoneNumber);
 

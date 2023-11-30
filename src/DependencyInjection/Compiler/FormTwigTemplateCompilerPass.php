@@ -19,10 +19,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class FormTwigTemplateCompilerPass implements CompilerPassInterface
 {
-    private $phoneNumberLayout = '@MisdPhoneNumber/Form/phone_number.html.twig';
-    private $phoneNumberBootstrapLayout = '@MisdPhoneNumber/Form/phone_number_bootstrap.html.twig';
-    private $phoneNumberBootstrap4Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_4.html.twig';
-    private $phoneNumberBootstrap5Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_5.html.twig';
+    private string $phoneNumberLayout = '@MisdPhoneNumber/Form/phone_number.html.twig';
+    private string $phoneNumberBootstrapLayout = '@MisdPhoneNumber/Form/phone_number_bootstrap.html.twig';
+    private string $phoneNumberBootstrap4Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_4.html.twig';
+    private string $phoneNumberBootstrap5Layout = '@MisdPhoneNumber/Form/phone_number_bootstrap_5.html.twig';
 
     public function process(ContainerBuilder $container): void
     {
@@ -30,6 +30,9 @@ class FormTwigTemplateCompilerPass implements CompilerPassInterface
             return;
         }
 
+        /**
+         * @var string[] $parameter
+         */
         $parameter = $container->getParameter('twig.form.resources');
 
         if (\in_array($this->phoneNumberLayout, $parameter)) {

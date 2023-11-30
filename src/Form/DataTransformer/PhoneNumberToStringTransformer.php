@@ -19,33 +19,16 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
- * Phone number to string transformer.
+ * @implements DataTransformerInterface<PhoneNumber, string>
  */
 class PhoneNumberToStringTransformer implements DataTransformerInterface
 {
-    /**
-     * Default region code.
-     *
-     * @var string
-     */
-    private $defaultRegion;
+    private string $defaultRegion;
+    private int $format;
 
-    /**
-     * Display format.
-     *
-     * @var int
-     */
-    private $format;
-
-    /**
-     * Constructor.
-     *
-     * @param string $defaultRegion default region code
-     * @param int    $format        display format
-     */
     public function __construct(
-        $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION,
-        $format = PhoneNumberFormat::INTERNATIONAL
+        string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION,
+        int $format = PhoneNumberFormat::INTERNATIONAL
     ) {
         $this->defaultRegion = $defaultRegion;
         $this->format = $format;
@@ -57,7 +40,7 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
             return '';
         }
 
-        if (false === $value instanceof PhoneNumber) {
+        if (!$value instanceof PhoneNumber) {
             throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
         }
 

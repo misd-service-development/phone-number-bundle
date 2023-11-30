@@ -26,10 +26,7 @@ use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
  */
 class PhoneNumberTypeTest extends TestCase
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    protected $factory;
+    protected FormFactoryInterface $factory;
 
     protected function setUp(): void
     {
@@ -40,8 +37,10 @@ class PhoneNumberTypeTest extends TestCase
 
     /**
      * @dataProvider singleFieldProvider
+     *
+     * @param array<string, mixed> $options
      */
-    public function testSingleField($input, $options, $output)
+    public function testSingleField(string $input, array $options, string $output): void
     {
         $form = $this->factory->create(PhoneNumberType::class, null, $options);
 
@@ -63,25 +62,28 @@ class PhoneNumberTypeTest extends TestCase
      * 0 => Input
      * 1 => Options
      * 2 => Output.
+     *
+     * @return iterable<array{string, array<string, mixed>, string}>
      */
-    public function singleFieldProvider()
+    public function singleFieldProvider(): iterable
     {
-        return [
-            ['+441234567890', [], '+44 1234 567890'],
-            ['+44 1234 567890', ['format' => PhoneNumberFormat::NATIONAL], '+44 1234 567890'],
-            ['+44 1234 567890', ['default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL], '01234 567890'],
-            ['+1 650-253-0000', ['default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL], '00 1 650-253-0000'],
-            ['01234 567890', ['default_region' => 'GB'], '+44 1234 567890'],
-            ['', [], ''],
-        ];
+        yield ['+441234567890', [], '+44 1234 567890'];
+        yield ['+44 1234 567890', ['format' => PhoneNumberFormat::NATIONAL], '+44 1234 567890'];
+        yield ['+44 1234 567890', ['default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL], '01234 567890'];
+        yield ['+1 650-253-0000', ['default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL], '00 1 650-253-0000'];
+        yield ['01234 567890', ['default_region' => 'GB'], '+44 1234 567890'];
+        yield ['', [], ''];
     }
 
     /**
      * @dataProvider countryChoiceValuesProvider
+     *
+     * @param array<string, string> $input
+     * @param array<string, string> $output
      */
-    public function testCountryChoiceValues($input, $options, $output)
+    public function testCountryChoiceValues(array $input, array $output): void
     {
-        $options['widget'] = PhoneNumberType::WIDGET_COUNTRY_CHOICE;
+        $options = ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE];
         $form = $this->factory->create(PhoneNumberType::class, null, $options);
 
         $form->submit($input);
@@ -102,22 +104,25 @@ class PhoneNumberTypeTest extends TestCase
      * 0 => Input
      * 1 => Options
      * 2 => Output.
+     *
+     * @return iterable<array{array<string, string>, array<string, string>}>
      */
-    public function countryChoiceValuesProvider()
+    public function countryChoiceValuesProvider(): iterable
     {
-        return [
-            [['country' => 'GB', 'number' => '01234 567890'], [], ['country' => 'GB', 'number' => '01234 567890']],
-            [['country' => 'GB', 'number' => '+44 1234 567890'], [], ['country' => 'GB', 'number' => '01234 567890']],
-            [['country' => 'GB', 'number' => '1234 567890'], [], ['country' => 'GB', 'number' => '01234 567890']],
-            [['country' => 'GB', 'number' => '+1 650-253-0000'], [], ['country' => 'US', 'number' => '(650) 253-0000']],
-            [['country' => '', 'number' => ''], [], ['country' => '', 'number' => '']],
-        ];
+        yield [['country' => 'GB', 'number' => '01234 567890'], ['country' => 'GB', 'number' => '01234 567890']];
+        yield [['country' => 'GB', 'number' => '+44 1234 567890'], ['country' => 'GB', 'number' => '01234 567890']];
+        yield [['country' => 'GB', 'number' => '1234 567890'], ['country' => 'GB', 'number' => '01234 567890']];
+        yield [['country' => 'GB', 'number' => '+1 650-253-0000'], ['country' => 'US', 'number' => '(650) 253-0000']];
+        yield [['country' => '', 'number' => ''], ['country' => '', 'number' => '']];
     }
 
     /**
      * @dataProvider countryChoiceChoicesProvider
+     *
+     * @param string[]     $choices
+     * @param ChoiceView[] $expectedChoices
      */
-    public function testCountryChoiceChoices(array $choices, $expectedChoicesCount, array $expectedChoices)
+    public function testCountryChoiceChoices(array $choices, int $expectedChoicesCount, array $expectedChoices): void
     {
         IntlTestHelper::requireIntl($this);
 
@@ -140,42 +145,44 @@ class PhoneNumberTypeTest extends TestCase
      * 0 => Choices
      * 1 => Expected choices count
      * 2 => Expected choices.
+     *
+     * @return iterable<array{string[], int, ChoiceView[]}>
      */
-    public function countryChoiceChoicesProvider()
+    public function countryChoiceChoicesProvider(): iterable
     {
-        return [
+        yield [
+            [],
+            // 3 regions have an already used label "TA", "AC" and XK
+            // @see https://fr.wikipedia.org/wiki/ISO_3166-2#cite_note-UPU-1
+            242,
             [
-                [],
-                // 3 regions have an already used label "TA", "AC" and XK
-                // @see https://fr.wikipedia.org/wiki/ISO_3166-2#cite_note-UPU-1
-                242,
-                [
-                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
-                ],
+                $this->createChoiceView('United Kingdom (+44)', 'GB'),
             ],
+        ];
+        yield [
+            ['GB', 'US'],
+            2,
             [
-                ['GB', 'US'],
-                2,
-                [
-                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
-                    $this->createChoiceView('United States (+1)', 'US'),
-                ],
+                $this->createChoiceView('United Kingdom (+44)', 'GB'),
+                $this->createChoiceView('United States (+1)', 'US'),
             ],
+        ];
+        yield [
+            ['GB', 'US', PhoneNumberUtil::UNKNOWN_REGION],
+            2,
             [
-                ['GB', 'US', PhoneNumberUtil::UNKNOWN_REGION],
-                2,
-                [
-                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
-                    $this->createChoiceView('United States (+1)', 'US'),
-                ],
+                $this->createChoiceView('United Kingdom (+44)', 'GB'),
+                $this->createChoiceView('United States (+1)', 'US'),
             ],
         ];
     }
 
     /**
      * @dataProvider countryChoiceFormatProvider
+     *
+     * @param ChoiceView[] $expectedChoices
      */
-    public function testCountryChoiceFormat(string $displayType, bool $displayEmojiFlag, array $expectedChoices)
+    public function testCountryChoiceFormat(string $displayType, bool $displayEmojiFlag, array $expectedChoices): void
     {
         $options['widget'] = PhoneNumberType::WIDGET_COUNTRY_CHOICE;
         $options['country_display_type'] = $displayType;
@@ -194,37 +201,37 @@ class PhoneNumberTypeTest extends TestCase
      * 0 => Display type
      * 1 => Display emoji flag
      * 2 => Expected choices.
+     *
+     * @return iterable<array{string, bool, ChoiceView[]}>
      */
-    public function countryChoiceFormatProvider()
+    public function countryChoiceFormatProvider(): iterable
     {
-        return [
+        yield [
+            PhoneNumberType::DISPLAY_COUNTRY_FULL,
+            false,
             [
-                PhoneNumberType::DISPLAY_COUNTRY_FULL,
-                false,
-                [
-                    $this->createChoiceView('United Kingdom (+44)', 'GB'),
-                ],
+                $this->createChoiceView('United Kingdom (+44)', 'GB'),
             ],
+        ];
+        yield [
+            PhoneNumberType::DISPLAY_COUNTRY_SHORT,
+            false,
             [
-                PhoneNumberType::DISPLAY_COUNTRY_SHORT,
-                false,
-                [
-                    $this->createChoiceView('GB +44', 'GB'),
-                ],
+                $this->createChoiceView('GB +44', 'GB'),
             ],
+        ];
+        yield [
+            PhoneNumberType::DISPLAY_COUNTRY_FULL,
+            true,
             [
-                PhoneNumberType::DISPLAY_COUNTRY_FULL,
-                true,
-                [
-                    $this->createChoiceView('🇬🇧 United Kingdom (+44)', 'GB'),
-                ],
+                $this->createChoiceView('🇬🇧 United Kingdom (+44)', 'GB'),
             ],
+        ];
+        yield [
+            PhoneNumberType::DISPLAY_COUNTRY_SHORT,
+            true,
             [
-                PhoneNumberType::DISPLAY_COUNTRY_SHORT,
-                true,
-                [
-                    $this->createChoiceView('🇬🇧 GB +44', 'GB'),
-                ],
+                $this->createChoiceView('🇬🇧 GB +44', 'GB'),
             ],
         ];
     }
@@ -232,7 +239,7 @@ class PhoneNumberTypeTest extends TestCase
     /**
      * @dataProvider countryChoicePlaceholderProvider
      */
-    public function testCountryChoicePlaceholder($placeholder, $expectedPlaceholder)
+    public function testCountryChoicePlaceholder(?string $placeholder, ?string $expectedPlaceholder): void
     {
         IntlTestHelper::requireIntl($this);
         $form = $this->factory->create(PhoneNumberType::class, null, ['widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE, 'country_placeholder' => $placeholder]);
@@ -246,26 +253,17 @@ class PhoneNumberTypeTest extends TestCase
      * 0 => Filled
      * 1 => not filled
      * 2 => empty.
+     *
+     * @return iterable<array{?string, ?string}>
      */
-    public function countryChoicePlaceholderProvider()
+    public function countryChoicePlaceholderProvider(): iterable
     {
-        return [
-            [
-                'Choose a country',
-                'Choose a country',
-            ],
-            [
-                null,
-                null,
-            ],
-            [
-                '',
-                '',
-            ],
-        ];
+        yield ['Choose a country', 'Choose a country'];
+        yield [null, null];
+        yield ['', ''];
     }
 
-    public function testCountryChoiceTranslations()
+    public function testCountryChoiceTranslations(): void
     {
         IntlTestHelper::requireFullIntl($this);
         \Locale::setDefault('fr');
@@ -279,14 +277,14 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertFalse($view['country']->vars['choice_translation_domain']);
     }
 
-    public function testInvalidWidget()
+    public function testInvalidWidget(): void
     {
         $this->expectException(InvalidOptionsException::class);
 
         $this->factory->create(PhoneNumberType::class, null, ['widget' => 'foo']);
     }
 
-    public function testGetNameAndBlockPrefixAreTel()
+    public function testGetNameAndBlockPrefixAreTel(): void
     {
         $type = new PhoneNumberType();
 
@@ -294,7 +292,7 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertSame($type->getBlockPrefix(), $type->getName());
     }
 
-    public function testCountryChoiceCountryOptions()
+    public function testCountryChoiceCountryOptions(): void
     {
         $form = $this->factory->create(PhoneNumberType::class, null, [
             'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
@@ -309,7 +307,7 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertEquals(['class' => 'custom-select-class'], $view['country']->vars['attr']);
     }
 
-    public function testCountryChoiceNumberOptions()
+    public function testCountryChoiceNumberOptions(): void
     {
         $form = $this->factory->create(PhoneNumberType::class, null, [
             'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
@@ -324,7 +322,7 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertEquals(['placeholder' => '000 000'], $view['number']->vars['attr']);
     }
 
-    private function createChoiceView($label, $code)
+    private function createChoiceView(string $label, string $code): ChoiceView
     {
         return new ChoiceView($code, $code, $label);
     }
