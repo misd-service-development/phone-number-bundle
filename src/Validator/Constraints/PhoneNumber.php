@@ -44,13 +44,6 @@ class PhoneNumber extends Constraint
         self::INVALID_PHONE_NUMBER_ERROR => 'INVALID_PHONE_NUMBER_ERROR',
     ];
 
-    /**
-     * @deprecated since PhoneNumberBundle 3.6, use const ERROR_NAMES instead
-     *
-     * @var string[]
-     */
-    protected static array $errorNames = self::ERROR_NAMES;
-
     public ?string $message = null;
     /**
      * @var string|string[]
@@ -61,40 +54,20 @@ class PhoneNumber extends Constraint
     public ?int $format = null;
 
     /**
-     * @param int|array<mixed>|null $format  Specify the format (\libphonenumber\PhoneNumberFormat::*)
-     *                                       or options (an associative array)
-     * @param string|string[]|null  $type
-     * @param array<mixed>          $options
+     * @param int|null             $format  Specify the format (\libphonenumber\PhoneNumberFormat::*)
+     * @param string|string[]|null $type
+     * @param array<mixed>         $options
      */
     #[HasNamedArguments]
-    public function __construct(int|array $format = null, string|array $type = null, string $defaultRegion = null, string $regionPath = null, string $message = null, array $groups = null, $payload = null, array $options = [])
+    public function __construct(int $format = null, string|array $type = null, string $defaultRegion = null, string $regionPath = null, string $message = null, array $groups = null, $payload = null, array $options = [])
     {
-        if (\is_array($format)) {
-            @trigger_error('Usage of the argument $format to specify options is deprecated and will be removed in 4.0. Use "$option" argument instead.', \E_USER_DEPRECATED);
-            $options = array_merge($format, $options);
-        } else {
-            $phoneFormat = $format;
-        }
-
         parent::__construct($options, $groups, $payload);
 
         $this->message = $message ?? $this->message;
-        $this->format = $phoneFormat ?? $this->format;
+        $this->format = $format ?? $this->format;
         $this->type = $type ?? $this->type;
         $this->defaultRegion = $defaultRegion ?? $this->defaultRegion;
         $this->regionPath = $regionPath ?? $this->regionPath;
-    }
-
-    public function getType(): ?string
-    {
-        @trigger_error(__METHOD__.' is deprecated and will be removed in 4.0. Use "getTypes" instead.', \E_USER_DEPRECATED);
-
-        $types = $this->getTypes();
-        if (0 === \count($types)) {
-            return null;
-        }
-
-        return reset($types);
     }
 
     /**
