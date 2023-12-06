@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -23,12 +25,9 @@ use Symfony\Component\DependencyInjection\TaggedContainerInterface;
  */
 class MisdPhoneNumberExtensionTest extends TestCase
 {
-    /**
-     * @var TaggedContainerInterface
-     */
-    protected $container;
+    private TaggedContainerInterface $container;
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $extension = new MisdPhoneNumberExtension();
         $this->container = new ContainerBuilder();
@@ -61,7 +60,7 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $this->assertSame(PhoneNumberUtil::UNKNOWN_REGION, $this->container->getParameter('misd_phone_number.validator.default_region'));
     }
 
-    public function testDisabledServices()
+    public function testDisabledServices(): void
     {
         $extension = new MisdPhoneNumberExtension();
         $this->container = new ContainerBuilder();
@@ -82,7 +81,7 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $this->assertFalse($this->container->has('Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumberValidator'));
     }
 
-    public function testValidatorParameters()
+    public function testValidatorParameters(): void
     {
         $extension = new MisdPhoneNumberExtension();
         $this->container = new ContainerBuilder();
@@ -99,7 +98,7 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $this->assertSame(0, $this->container->getParameter('misd_phone_number.validator.format'));
     }
 
-    public function testNormalizerParameters()
+    public function testNormalizerParameters(): void
     {
         $extension = new MisdPhoneNumberExtension();
         $this->container = new ContainerBuilder();
@@ -116,7 +115,7 @@ class MisdPhoneNumberExtensionTest extends TestCase
         $this->assertSame(PhoneNumberFormat::INTERNATIONAL, $this->container->getParameter('misd_phone_number.serializer.format'));
     }
 
-    public function testValidatorDefaultRegionUppercase()
+    public function testValidatorDefaultRegionUppercase(): void
     {
         $extension = new MisdPhoneNumberExtension();
         $this->container = new ContainerBuilder();

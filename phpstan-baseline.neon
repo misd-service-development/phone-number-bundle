@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$regionCallingFrom of method libphonenumber\\\\PhoneNumberUtil\\:\\:formatOutOfCountryCallingNumber\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Templating/Helper/PhoneNumberHelper.php

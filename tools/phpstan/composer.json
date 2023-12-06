@@ -1,5 +1,6 @@
 {
   "require": {
-    "phpstan/phpstan": "^1.10.46"
+    "phpstan/phpstan": "^1.10.46",
+    "jangregor/phpstan-prophecy": "^1.0"
   }
 }

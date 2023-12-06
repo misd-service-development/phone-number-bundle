@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Misd\PhoneNumberBundle\Tests\DependencyInjection\Compiler;
 
 use Misd\PhoneNumberBundle\DependencyInjection\Compiler\FormTwigTemplateCompilerPass;
@@ -18,7 +20,7 @@ final class FormTwigTemplateCompilerPassTest extends TestCase
         $this->assertFalse($container->hasParameter('twig.form.resources'));
     }
 
-    public function testItDoesNothingIfThePhoneNumberTwigIsAlreadyConfigured()
+    public function testItDoesNothingIfThePhoneNumberTwigIsAlreadyConfigured(): void
     {
         $subject = new FormTwigTemplateCompilerPass();
         $container = new ContainerBuilder();
@@ -36,7 +38,7 @@ final class FormTwigTemplateCompilerPassTest extends TestCase
     /**
      * @dataProvider themesProvider
      */
-    public function testItAddsPhoneTemplatesAccordingToSymfonyTemplates($sfTemplate, $phoneTemplate)
+    public function testItAddsPhoneTemplatesAccordingToSymfonyTemplates(string $sfTemplate, string $phoneTemplate): void
     {
         $subject = new FormTwigTemplateCompilerPass();
         $container = new ContainerBuilder();
@@ -45,9 +47,15 @@ final class FormTwigTemplateCompilerPassTest extends TestCase
 
         $subject->process($container);
 
-        $this->assertTrue(\in_array($phoneTemplate, $container->getParameter('twig.form.resources'), true));
+        $resources = $container->getParameter('twig.form.resources');
+
+        $this->assertTrue(\is_array($resources));
+        $this->assertTrue(\in_array($phoneTemplate, $resources, true));
     }
 
+    /**
+     * @return iterable<array{string, string}>
+     */
     public function themesProvider(): iterable
     {
         yield 'Bootstrap 5 horizontal' => [

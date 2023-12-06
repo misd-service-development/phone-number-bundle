@@ -1,6 +1,12 @@
+includes:
+    - phpstan-baseline.neon
+    - tools/phpstan/vendor/jangregor/phpstan-prophecy/extension.neon
+
 parameters:
-    level: 1
+    level: 8
     paths:
       - src
       - tests
-    inferPrivatePropertyTypeFromConstructor: true
+
+    ignoreErrors:
+    - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'

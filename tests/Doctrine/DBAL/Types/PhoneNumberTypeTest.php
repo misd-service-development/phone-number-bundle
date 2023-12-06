@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -19,6 +21,7 @@ use libphonenumber\PhoneNumberUtil;
 use Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * Phone number type test.
@@ -28,23 +31,15 @@ class PhoneNumberTypeTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var AbstractPlatform
+     * @var ObjectProphecy<AbstractPlatform>
      */
-    protected $platform;
-
-    /**
-     * @var PhoneNumberType
-     */
-    protected $type;
-
-    /**
-     * @var PhoneNumberUtil
-     */
-    protected $phoneNumberUtil;
+    private ObjectProphecy $platform;
+    private Type $type;
+    private PhoneNumberUtil $phoneNumberUtil;
 
     public static function setUpBeforeClass(): void
     {
-        Type::addType('phone_number', 'Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType');
+        Type::addType('phone_number', PhoneNumberType::class);
     }
 
     protected function setUp(): void
@@ -62,17 +57,17 @@ class PhoneNumberTypeTest extends TestCase
         $this->phoneNumberUtil = PhoneNumberUtil::getInstance();
     }
 
-    public function testInstanceOf()
+    public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('Doctrine\DBAL\Types\Type', $this->type);
+        $this->assertInstanceOf(Type::class, $this->type);
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertSame('phone_number', $this->type->getName());
     }
 
-    public function testGetSQLDeclaration()
+    public function testGetSQLDeclaration(): void
     {
         if (method_exists(AbstractPlatform::class, 'getVarcharTypeDeclarationSQL')) {
             // DBAL < 4
@@ -84,31 +79,31 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertSame('DUMMYVARCHAR()', $this->type->getSQLDeclaration([], $this->platform->reveal()));
     }
 
-    public function testConvertToDatabaseValueWithNull()
+    public function testConvertToDatabaseValueWithNull(): void
     {
         $this->assertNull($this->type->convertToDatabaseValue(null, $this->platform->reveal()));
     }
 
-    public function testConvertToDatabaseValueWithPhoneNumber()
+    public function testConvertToDatabaseValueWithPhoneNumber(): void
     {
         $phoneNumber = $this->phoneNumberUtil->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION);
 
         $this->assertSame('+441234567890', $this->type->convertToDatabaseValue($phoneNumber, $this->platform->reveal()));
     }
 
-    public function testConvertToDatabaseValueFailure()
+    public function testConvertToDatabaseValueFailure(): void
     {
         $this->expectException(ConversionException::class);
 
         $this->type->convertToDatabaseValue('foo', $this->platform->reveal());
     }
 
-    public function testConvertToPHPValueWithNull()
+    public function testConvertToPHPValueWithNull(): void
     {
         $this->assertNull($this->type->convertToPHPValue(null, $this->platform->reveal()));
     }
 
-    public function testConvertToPHPValueWithPhoneNumber()
+    public function testConvertToPHPValueWithPhoneNumber(): void
     {
         $phoneNumber = $this->type->convertToPHPValue('+441234567890', $this->platform->reveal());
 
@@ -116,7 +111,7 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertSame('+441234567890', $this->phoneNumberUtil->format($phoneNumber, PhoneNumberFormat::E164));
     }
 
-    public function testConvertToPHPValueWithAPhoneNumberInstance()
+    public function testConvertToPHPValueWithAPhoneNumberInstance(): void
     {
         $expectedPhoneNumber = $this->phoneNumberUtil->parse('+441234567890', PhoneNumberUtil::UNKNOWN_REGION);
 
@@ -125,14 +120,14 @@ class PhoneNumberTypeTest extends TestCase
         $this->assertEquals($expectedPhoneNumber, $phoneNumber);
     }
 
-    public function testConvertToPHPValueFailure()
+    public function testConvertToPHPValueFailure(): void
     {
         $this->expectException(ConversionException::class);
 
         $this->type->convertToPHPValue('foo', $this->platform->reveal());
     }
 
-    public function testRequiresSQLCommentHint()
+    public function testRequiresSQLCommentHint(): void
     {
         $this->assertTrue($this->type->requiresSQLCommentHint($this->platform->reveal()));
     }

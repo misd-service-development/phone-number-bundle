@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -36,7 +38,7 @@ class PhoneNumberNormalizerTest extends TestCase
         }
     }
 
-    public function testSupportNormalization()
+    public function testSupportNormalization(): void
     {
         $normalizer = new PhoneNumberNormalizer($this->prophesize(PhoneNumberUtil::class)->reveal());
 
@@ -44,7 +46,7 @@ class PhoneNumberNormalizerTest extends TestCase
         $this->assertFalse($normalizer->supportsNormalization(new \stdClass()));
     }
 
-    public function testNormalize()
+    public function testNormalize(): void
     {
         $phoneNumber = new PhoneNumber();
         $phoneNumber->setRawInput('+33193166989');
@@ -57,7 +59,7 @@ class PhoneNumberNormalizerTest extends TestCase
         $this->assertEquals('+33193166989', $normalizer->normalize($phoneNumber));
     }
 
-    public function testSupportDenormalization()
+    public function testSupportDenormalization(): void
     {
         $normalizer = new PhoneNumberNormalizer($this->prophesize(PhoneNumberUtil::class)->reveal());
 
@@ -66,7 +68,7 @@ class PhoneNumberNormalizerTest extends TestCase
         $this->assertFalse($normalizer->supportsDenormalization('+33193166989', 'stdClass'));
     }
 
-    public function testDenormalize()
+    public function testDenormalize(): void
     {
         $phoneNumber = new PhoneNumber();
         $phoneNumber->setRawInput('+33193166989');
@@ -79,7 +81,7 @@ class PhoneNumberNormalizerTest extends TestCase
         $this->assertSame($phoneNumber, $normalizer->denormalize('+33193166989', 'libphonenumber\PhoneNumber'));
     }
 
-    public function testItDenormalizeNullToNull()
+    public function testItDenormalizeNullToNull(): void
     {
         $phoneNumberUtil = $this->prophesize(PhoneNumberUtil::class);
         $phoneNumberUtil->parse(Argument::cetera())->shouldNotBeCalled();
@@ -89,7 +91,7 @@ class PhoneNumberNormalizerTest extends TestCase
         $this->assertNull($normalizer->denormalize(null, 'libphonenumber\PhoneNumber'));
     }
 
-    public function testInvalidDateThrowException()
+    public function testInvalidDateThrowException(): void
     {
         $this->expectException(UnexpectedValueException::class);
 

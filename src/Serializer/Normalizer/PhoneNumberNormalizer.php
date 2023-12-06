@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -25,35 +27,16 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    /**
-     * Region code.
-     *
-     * @var string
-     */
-    private $region;
+    private PhoneNumberUtil $phoneNumberUtil;
+    private string $region;
+    private int $format;
 
     /**
-     * Display format.
-     *
-     * @var int
-     */
-    private $format;
-
-    /**
-     * Display format.
-     *
-     * @var PhoneNumberUtil
-     */
-    private $phoneNumberUtil;
-
-    /**
-     * Constructor.
-     *
      * @param PhoneNumberUtil $phoneNumberUtil phone number utility
      * @param string          $region          region code
      * @param int             $format          display format
      */
-    public function __construct(PhoneNumberUtil $phoneNumberUtil, $region = PhoneNumberUtil::UNKNOWN_REGION, $format = PhoneNumberFormat::E164)
+    public function __construct(PhoneNumberUtil $phoneNumberUtil, string $region = PhoneNumberUtil::UNKNOWN_REGION, int $format = PhoneNumberFormat::E164)
     {
         $this->phoneNumberUtil = $phoneNumberUtil;
         $this->region = $region;
@@ -61,22 +44,29 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
     }
 
     /**
+     * @param array<mixed> $context
+     *
      * @throws InvalidArgumentException
      */
-    public function normalize($object, $format = null, array $context = []): string
+    public function normalize(mixed $object, string $format = null, array $context = []): string
     {
         return $this->phoneNumberUtil->format($object, $this->format);
     }
 
-    public function supportsNormalization($data, $format = null, array $context = []): bool
+    /**
+     * @param array<mixed> $context
+     */
+    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
         return $data instanceof PhoneNumber;
     }
 
     /**
+     * @param array<mixed> $context
+     *
      * @throws UnexpectedValueException
      */
-    public function denormalize($data, $type, $format = null, array $context = []): ?PhoneNumber
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): ?PhoneNumber
     {
         if (null === $data) {
             return null;
@@ -89,7 +79,10 @@ class PhoneNumberNormalizer implements NormalizerInterface, DenormalizerInterfac
         }
     }
 
-    public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
+    /**
+     * @param array<mixed> $context
+     */
+    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return PhoneNumber::class === $type && \is_string($data);
     }

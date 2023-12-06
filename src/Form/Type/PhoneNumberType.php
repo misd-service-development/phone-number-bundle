@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -67,10 +69,20 @@ class PhoneNumberType extends AbstractType
                     continue;
                 }
 
-                $label = $this->formatDisplayChoice($options['country_display_type'], $intlCountries[$regionCode], $regionCode, $countryCode, $options['country_display_emoji_flag']);
+                $label = $this->formatDisplayChoice(
+                    $options['country_display_type'],
+                    $intlCountries[$regionCode],
+                    (string) $regionCode,
+                    (string) $countryCode,
+                    $options['country_display_emoji_flag']
+                );
+
                 $countryChoices[$label] = $regionCode;
             }
 
+            /**
+             * @var string[] $transformerChoices
+             */
             $transformerChoices = array_values($countryChoices);
 
             $countryOptions = array_replace([

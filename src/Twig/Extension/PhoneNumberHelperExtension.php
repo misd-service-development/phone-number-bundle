@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -14,7 +16,6 @@ namespace Misd\PhoneNumberBundle\Twig\Extension;
 use Misd\PhoneNumberBundle\Templating\Helper\PhoneNumberHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 use Twig\TwigTest;
 
 /**
@@ -37,15 +38,6 @@ class PhoneNumberHelperExtension extends AbstractExtension
     public function __construct(PhoneNumberHelper $helper)
     {
         $this->helper = $helper;
-    }
-
-    public function getFunctions(): array
-    {
-        return [
-            // Deprecated in favor of the phone_number_format filter
-            new TwigFunction('phone_number_format', [$this->helper, 'format'], ['deprecated' => '1.2']),
-            new TwigFunction('phone_number_is_type', [$this->helper, 'isType'], ['deprecated' => '1.2']),
-        ];
     }
 
     public function getFilters(): array

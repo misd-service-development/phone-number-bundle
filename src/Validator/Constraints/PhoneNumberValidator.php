@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Symfony2 PhoneNumberBundle.
  *
@@ -31,25 +33,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 class PhoneNumberValidator extends ConstraintValidator
 {
-    /**
-     * @var PhoneNumberUtil
-     */
-    private $phoneUtil;
-
-    /**
-     * @var string
-     */
-    private $defaultRegion;
-
-    /**
-     * @var PropertyAccessorInterface
-     */
-    private $propertyAccessor;
-
-    /**
-     * @var int
-     */
-    private $format;
+    private PhoneNumberUtil $phoneUtil;
+    private string $defaultRegion;
+    private ?PropertyAccessorInterface $propertyAccessor = null;
+    private int $format;
 
     public function __construct(PhoneNumberUtil $phoneUtil = null, string $defaultRegion = PhoneNumberUtil::UNKNOWN_REGION, int $format = PhoneNumberFormat::INTERNATIONAL)
     {
@@ -58,7 +45,7 @@ class PhoneNumberValidator extends ConstraintValidator
         $this->format = $format;
     }
 
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof PhoneNumberConstraint) {
             return;
